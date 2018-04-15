@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HouseholdExpensesTrackerServer.DomainEventBroker;
 using HouseholdExpensesTrackerServer.Web.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,10 +12,12 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
     public class ValuesController : Controller
     {
         private IUserManager _userManager;
+        private IDomainEventsDispatcher _dispatcher;
 
-        public ValuesController(IUserManager userManager)
+        public ValuesController(IUserManager userManager, IDomainEventsDispatcher dispatcher)
         {
             _userManager = userManager;
+            _dispatcher = dispatcher;
         }
 
         // GET api/values

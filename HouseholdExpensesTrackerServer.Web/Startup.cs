@@ -15,6 +15,9 @@ using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using HouseholdExpensesTrackerServer.Domain.Identity;
 using HouseholdExpensesTrackerServer.Web.Helpers;
+using HouseholdExpensesTrackerServer.CompositionRoot;
+using Autofac.Extensions.DependencyInjection;
+using Autofac;
 
 namespace HouseholdExpensesTrackerServer.Web
 {
@@ -28,7 +31,7 @@ namespace HouseholdExpensesTrackerServer.Web
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options =>
@@ -42,6 +45,12 @@ namespace HouseholdExpensesTrackerServer.Web
             services.AddScoped<IDbContext>(provider => provider.GetService<HouseholdDbContext>());
             services.AddScoped<IUserManager, UserManager>();
             services.AddMvc();
+
+            var containerBuilder = new ContainerBuilder();
+            containerBuilder.RegisterModule<DefaultModule>();
+            containerBuilder.Populate(services);
+            var container = containerBuilder.Build();
+            return new AutofacServiceProvider(container);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
