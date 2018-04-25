@@ -11,11 +11,12 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
 
         public string Name { get; set; }
 
-        public static CredentialType Create(string name, string code) 
-            => new CredentialType(name, code);
+        public static CredentialType Create(Guid identity, string name, string code) 
+            => new CredentialType(identity, name, code);
 
-        protected CredentialType(string name, string code)
+        protected CredentialType(Guid identity, string name, string code)
         {
+            this.Identity = identity;
             this.Name = name;
             this.Code = code;
         }

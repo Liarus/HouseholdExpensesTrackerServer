@@ -1,5 +1,4 @@
 ﻿using HouseholdExpensesTrackerServer.Domain.Definitions.Event;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Event;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,11 +7,11 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Event
 {
     public class UserCreatedEvent : BaseDomainEvent
     {
-        private readonly string name;
+        public string Name { get; private set; }
 
-        public UserCreatedEvent(string name)
+        public UserCreatedEvent(Guid identity, DateTimeOffset timeStamp, string name) : base(identity, timeStamp)
         {
-            this.name = name;
+            this.Name = name;
         }
     }
 }

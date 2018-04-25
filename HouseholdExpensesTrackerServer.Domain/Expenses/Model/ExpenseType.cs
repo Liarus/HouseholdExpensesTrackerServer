@@ -13,8 +13,8 @@ namespace HouseholdExpensesTrackerServer.Domain.Expenses.Model
 
         public string Symbol { get; protected set; }
 
-        public static ExpenseType Create(int userId, string name, string symbol) 
-            => new ExpenseType(userId, name, symbol);
+        public static ExpenseType Create(Guid identity, int userId, string name, string symbol) 
+            => new ExpenseType(identity, userId, name, symbol);
 
         public ExpenseType Modify(string name, string symbol)
         {
@@ -23,8 +23,9 @@ namespace HouseholdExpensesTrackerServer.Domain.Expenses.Model
             return this;
         }
 
-        protected ExpenseType(int userId, string name, string symbol)
+        protected ExpenseType(Guid identity, int userId, string name, string symbol)
         {
+            this.Identity = identity;
             this.UserId = userId;
             this.Name = name;
             this.Symbol = symbol;

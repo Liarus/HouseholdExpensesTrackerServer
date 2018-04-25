@@ -16,7 +16,7 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
 
         private readonly List<RolePermission> _rolePermissions;
 
-        public static Role Create(string name, string code) => new Role(name, code);
+        public static Role Create(Guid identity, string name, string code) => new Role(identity, name, code);
 
         public Role Modify(string name, string code)
         {
@@ -25,8 +25,9 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
             return this;
         }
 
-        protected Role(string name, string code)
+        protected Role(Guid identity, string name, string code)
         {
+            this.Identity = identity;
             this.Name = name;
             this.Code = code;
             _rolePermissions = new List<RolePermission>();

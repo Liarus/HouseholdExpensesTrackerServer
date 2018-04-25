@@ -22,7 +22,7 @@ namespace HouseholdExpensesTrackerServer.Application.Identities
 
         public async Task Handle(CreateUserCommand message, CancellationToken token = default(CancellationToken))
         {
-            var user = User.Create(message.Name);
+            var user = User.Create(Guid.NewGuid(), message.Name);
             _users.Add(user);
             await _users.SaveChangesAsync();
         }

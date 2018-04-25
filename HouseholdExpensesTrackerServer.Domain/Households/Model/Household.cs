@@ -19,8 +19,8 @@ namespace HouseholdExpensesTrackerServer.Domain.Households.Model
 
         public virtual Address Address { get; protected set; }
 
-        public static Household Create(int userId, string name, string symbol, string description,
-            Address address) => new Household(userId, name, symbol, description, address);
+        public static Household Create(Guid identity, int userId, string name, string symbol, string description,
+            Address address) => new Household(identity, userId, name, symbol, description, address);
 
         public Household Modify(string name, string description, Address address)
         {
@@ -30,8 +30,9 @@ namespace HouseholdExpensesTrackerServer.Domain.Households.Model
             return this;
         }
 
-        protected Household(int userId, string name, string symbol, string description, Address address)
+        protected Household(Guid identity, int userId, string name, string symbol, string description, Address address)
         {
+            this.Identity = identity;
             this.UserId = userId;
             this.Name = name;
             this.Symbol = symbol;

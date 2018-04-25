@@ -11,8 +11,8 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
 
         public string Name { get; protected set; }
 
-        public static Permission Create(string name, string code) 
-            => new Permission(name, code);
+        public static Permission Create(Guid identity, string name, string code) 
+            => new Permission(identity, name, code);
 
         public Permission Modify(string name, string code)
         {
@@ -21,8 +21,9 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
             return this;
         }
 
-        protected Permission(string name, string code)
+        protected Permission(Guid identity, string name, string code)
         {
+            this.Identity = identity;
             this.Name = name;
             this.Code = code;
         }

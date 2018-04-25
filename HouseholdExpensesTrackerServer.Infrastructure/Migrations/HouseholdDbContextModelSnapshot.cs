@@ -37,6 +37,9 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
 
                     b.Property<int>("HouseholdId");
 
+                    b.Property<Guid>("Identity")
+                        .HasColumnName("Identity");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255);
@@ -73,6 +76,9 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("Identity")
+                        .HasColumnName("Identity");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -117,6 +123,9 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
 
                     b.Property<string>("Description")
                         .HasMaxLength(255);
+
+                    b.Property<Guid>("Identity")
+                        .HasColumnName("Identity");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -205,6 +214,9 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(255);
 
+                    b.Property<Guid>("Identity")
+                        .HasColumnName("Identity");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255);
@@ -242,6 +254,9 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(255);
 
+                    b.Property<Guid>("Identity")
+                        .HasColumnName("Identity");
+
                     b.Property<string>("Name")
                         .HasMaxLength(255);
 
@@ -277,6 +292,9 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(255);
+
+                    b.Property<Guid>("Identity")
+                        .HasColumnName("Identity");
 
                     b.Property<string>("Name")
                         .HasMaxLength(255);
@@ -322,6 +340,9 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("Identity")
+                        .HasColumnName("Identity");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -379,6 +400,9 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
 
                     b.Property<int>("HouseholdId");
 
+                    b.Property<Guid>("Identity")
+                        .HasColumnName("Identity");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255);
@@ -417,6 +441,9 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("Identity")
+                        .HasColumnName("Identity");
 
                     b.Property<string>("Name")
                         .IsRequired()

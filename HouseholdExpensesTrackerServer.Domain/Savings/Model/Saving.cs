@@ -19,8 +19,8 @@ namespace HouseholdExpensesTrackerServer.Domain.Savings.Model
 
         public DateTime Date { get; protected set; }
 
-        public static Saving Create(int savingTypeId, string name, string description,
-            decimal amount, DateTime date) => new Saving(savingTypeId, name, description,
+        public static Saving Create(Guid identity, int savingTypeId, string name, string description,
+            decimal amount, DateTime date) => new Saving(identity, savingTypeId, name, description,
                 amount, date);
 
         public Saving Modify(int savingTypeId, string name, string description,
@@ -34,8 +34,9 @@ namespace HouseholdExpensesTrackerServer.Domain.Savings.Model
             return this;
         }
 
-        protected Saving(int savingTypeId, string name, string description, decimal amount, DateTime date)
+        protected Saving(Guid identity, int savingTypeId, string name, string description, decimal amount, DateTime date)
         {
+            this.Identity = identity;
             this.SavingTypeId = savingTypeId;
             this.Name = name;
             this.Description = description;

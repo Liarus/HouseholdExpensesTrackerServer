@@ -1,7 +1,4 @@
-﻿using HouseholdExpensesTrackerServer.Domain.Expenses;
-using HouseholdExpensesTrackerServer.Domain.Households;
-using HouseholdExpensesTrackerServer.Domain.Savings;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Object;
+﻿using HouseholdExpensesTrackerServer.Domain.SharedKernel.Object;
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -22,19 +19,30 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
 
         private readonly List<UserRole> _userRoles;
 
-        public static User Create(string name) => new User(name);
+        public static User Create(Guid identity, string name) => new User(identity, name);
+
+        public User Modify(string name, string rowVersion)
+        {
+            this.ApplyEvent(new UserModifiedEvent(this.Identity, DateTime.Now, this.Id, this.Name, name));
+            this.Name = name;
+            this.RowVersion = Convert.FromBase64String(rowVersion);
+            return this;
+        }
 
         public void AddCredential(Credential credential)
         {
             _credentials.Add(credential);
+            this.ApplyEvent(new CredentialAddedEvent(this.Identity, DateTime.Now, 
+                this.Id, credential.CredentialTypeId, credential.Identifier));
         }
 
-        protected User(string name)
+        protected User(Guid identity, string name)
         {
+            this.Identity = identity;
             this.Name = name;
             _credentials = new List<Credential>();
             _userRoles = new List<UserRole>();
-            this.ApplyEvent(new UserCreatedEvent(name));
+            this.ApplyEvent(new UserCreatedEvent(this.Identity, DateTime.Now, name));
         }
 
         protected User()

@@ -36,6 +36,9 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Context.Configurations
                 .HasColumnName("UpdatedDate");
             builder.Property(e => e.RowVersion)
                 .IsRowVersion();
+            builder.Property(e => e.Identity)
+                .IsRequired()
+                .HasColumnName("Identity");
 
             builder.Property(e => e.Id)
                 .ValueGeneratedOnAdd();

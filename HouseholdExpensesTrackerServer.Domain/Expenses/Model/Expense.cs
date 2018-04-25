@@ -21,8 +21,8 @@ namespace HouseholdExpensesTrackerServer.Domain.Expenses.Model
 
         public virtual Period Period { get; protected set; }
 
-        public static Expense Create(int expenseTypeId, string name, string description, decimal amount,
-            DateTime date, Period period) => new Expense(expenseTypeId, name, description,
+        public static Expense Create(Guid identity, int expenseTypeId, string name, string description, decimal amount,
+            DateTime date, Period period) => new Expense(identity, expenseTypeId, name, description,
                 amount, date, period);
 
         public Expense Modify(int expenseTypeId, string name, string description, decimal amount,
@@ -37,9 +37,10 @@ namespace HouseholdExpensesTrackerServer.Domain.Expenses.Model
             return this;
         }
 
-        protected Expense(int expenseTypeId, string name, string description, decimal amount, 
+        protected Expense(Guid identity, int expenseTypeId, string name, string description, decimal amount, 
             DateTime date, Period period)
         {
+            this.Identity = identity;
             this.ExpenseTypeId = expenseTypeId;
             this.Name = name;
             this.Description = description;

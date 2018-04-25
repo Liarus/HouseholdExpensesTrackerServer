@@ -7,6 +7,8 @@ namespace HouseholdExpensesTrackerServer.Domain.SharedKernel.Object
 {
     public interface IAggregateRoot
     {
+        Guid Identity { get; }
+
         IReadOnlyCollection<IDomainEvent> Events { get; }
 
         void ClearEvents();

@@ -5,8 +5,10 @@ using System.Text;
 
 namespace HouseholdExpensesTrackerServer.Domain.SharedKernel.Object
 {
-    public class AggregateRoot<TIdentity> : AuditableEntity<TIdentity>, IAggregateRoot
+    public abstract class AggregateRoot<TIdentity> : AuditableEntity<TIdentity>, IAggregateRoot
     {
+        public Guid Identity { get; protected set; }
+
         public IReadOnlyCollection<IDomainEvent> Events => _events;
 
         protected readonly List<IDomainEvent> _events = new List<IDomainEvent>();
