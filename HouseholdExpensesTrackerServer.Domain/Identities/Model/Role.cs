@@ -6,7 +6,7 @@ using System.Text;
 
 namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
 {
-    public class Role : AggregateRoot<int>
+    public class Role : AggregateRoot
     {
         public string Code { get; protected set; }
 
@@ -16,7 +16,7 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
 
         private readonly List<RolePermission> _rolePermissions;
 
-        public static Role Create(string name, string code) => new Role(name, code);
+        public static Role Create(Guid aggregateId, string name, string code) => new Role(aggregateId, name, code);
 
         public Role Modify(string name, string code)
         {
@@ -25,8 +25,9 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
             return this;
         }
 
-        protected Role(string name, string code)
+        protected Role(Guid aggregateId, string name, string code)
         {
+            this.AggregateId = aggregateId;
             this.Name = name;
             this.Code = code;
             _rolePermissions = new List<RolePermission>();

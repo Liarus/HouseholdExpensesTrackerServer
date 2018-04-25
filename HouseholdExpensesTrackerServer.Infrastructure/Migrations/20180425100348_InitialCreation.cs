@@ -15,6 +15,7 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AggregateId = table.Column<Guid>(nullable: false),
                     Code = table.Column<string>(maxLength: 255, nullable: false),
                     Name = table.Column<string>(maxLength: 255, nullable: false),
                     Version = table.Column<int>(nullable: false),
@@ -22,7 +23,7 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     UpdatedBy = table.Column<string>(maxLength: 255, nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: true),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
+                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -35,6 +36,7 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AggregateId = table.Column<Guid>(nullable: false),
                     Code = table.Column<string>(maxLength: 255, nullable: false),
                     Name = table.Column<string>(maxLength: 255, nullable: true),
                     Version = table.Column<int>(nullable: false),
@@ -42,7 +44,7 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     UpdatedBy = table.Column<string>(maxLength: 255, nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: true),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
+                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -55,6 +57,7 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AggregateId = table.Column<Guid>(nullable: false),
                     Code = table.Column<string>(maxLength: 255, nullable: false),
                     Name = table.Column<string>(maxLength: 255, nullable: true),
                     Version = table.Column<int>(nullable: false),
@@ -62,7 +65,7 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     UpdatedBy = table.Column<string>(maxLength: 255, nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: true),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
+                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -75,13 +78,14 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AggregateId = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(maxLength: 255, nullable: false),
                     Version = table.Column<int>(nullable: false),
                     CreatedBy = table.Column<string>(maxLength: 255, nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     UpdatedBy = table.Column<string>(maxLength: 255, nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: true),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
+                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -118,15 +122,15 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CredentialTypeId = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
+                    CredentialTypeId = table.Column<int>(nullable: false),
                     Identifier = table.Column<string>(maxLength: 255, nullable: false),
                     Secret = table.Column<string>(maxLength: 1024, nullable: true),
                     CreatedBy = table.Column<string>(maxLength: 255, nullable: false),
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     UpdatedBy = table.Column<string>(maxLength: 255, nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: true),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
+                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -151,6 +155,7 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AggregateId = table.Column<Guid>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
                     Name = table.Column<string>(maxLength: 255, nullable: false),
                     Symbol = table.Column<string>(maxLength: 20, nullable: false),
@@ -159,7 +164,7 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     UpdatedBy = table.Column<string>(maxLength: 255, nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: true),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
+                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -178,6 +183,7 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AggregateId = table.Column<Guid>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
                     Description = table.Column<string>(maxLength: 255, nullable: true),
                     Name = table.Column<string>(maxLength: 255, nullable: false),
@@ -191,7 +197,7 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     UpdatedBy = table.Column<string>(maxLength: 255, nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: true),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
+                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -210,6 +216,7 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    AggregateId = table.Column<Guid>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
                     Name = table.Column<string>(maxLength: 255, nullable: false),
                     Symbol = table.Column<string>(maxLength: 20, nullable: false),
@@ -218,7 +225,7 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     UpdatedBy = table.Column<string>(maxLength: 255, nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: true),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
+                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -261,8 +268,9 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ExpenseTypeId = table.Column<int>(nullable: false),
+                    AggregateId = table.Column<Guid>(nullable: false),
                     HouseholdId = table.Column<int>(nullable: false),
+                    ExpenseTypeId = table.Column<int>(nullable: false),
                     Amount = table.Column<decimal>(type: "money", nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
                     Description = table.Column<string>(maxLength: 255, nullable: true),
@@ -274,7 +282,7 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     UpdatedBy = table.Column<string>(maxLength: 255, nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: true),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
+                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -299,8 +307,9 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    SavingTypeId = table.Column<int>(nullable: false),
+                    AggregateId = table.Column<Guid>(nullable: false),
                     HouseholdId = table.Column<int>(nullable: false),
+                    SavingTypeId = table.Column<int>(nullable: false),
                     Amount = table.Column<decimal>(type: "money", nullable: false),
                     Date = table.Column<DateTime>(nullable: false),
                     Description = table.Column<string>(maxLength: 255, nullable: true),
@@ -310,7 +319,7 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     CreatedDate = table.Column<DateTime>(nullable: false),
                     UpdatedBy = table.Column<string>(maxLength: 255, nullable: true),
                     UpdatedDate = table.Column<DateTime>(nullable: true),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
+                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {

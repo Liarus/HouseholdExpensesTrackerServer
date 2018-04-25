@@ -6,16 +6,22 @@ using System.Threading.Tasks;
 
 namespace HouseholdExpensesTrackerServer.Domain.SharedKernel.Repository
 {
-    public interface IRepository<T, U>
+    public interface IRepository<TModel, UIdentifier>
     {
-        Task<ICollection<T>> FindAllAsync(Expression<Func<T, bool>> predicate);
+        Task<ICollection<TModel>> FindAllAsync(Expression<Func<UIdentifier, bool>> predicate);
 
-        Task<T> FindAsync(Expression<Func<T, bool>> predicate);
+        Task<TModel> FindAsync(Expression<Func<UIdentifier, bool>> predicate);
 
-        Task<ICollection<T>> GetAllAsync();
+        Task<ICollection<TModel>> GetAllAsync();
 
-        Task<T> GetByIdAsync(U id);
+        Task<TModel> GetByIdAsync(UIdentifier id);
 
         Task<int> SaveChangesAsync();
+
+        void Add(TModel entity);
+
+        void Delete(TModel entity);
+
+        void DeleteById(UIdentifier id);
     }
 }

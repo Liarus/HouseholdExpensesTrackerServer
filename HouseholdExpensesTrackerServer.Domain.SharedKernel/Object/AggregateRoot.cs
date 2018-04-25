@@ -6,8 +6,10 @@ using System.Text;
 
 namespace HouseholdExpensesTrackerServer.Domain.SharedKernel.Object
 {
-    public class AggregateRoot<TIdentifier> : AuditableEntity<TIdentifier>, IAggregateRoot
+    public class AggregateRoot : AuditableEntity, IAggregateRoot
     {
+        public Guid AggregateId { get; protected set; }
+
         public int Version { get; protected set; }
 
         public IReadOnlyCollection<IDomainEvent> Events => _events;
@@ -22,12 +24,35 @@ namespace HouseholdExpensesTrackerServer.Domain.SharedKernel.Object
             {
                 if (e.AggregateVersion != Version + 1)
                 {
-                    throw new DomainEventOutOfOrderException(e.AggregateId, nameof(AggregateRoot<TIdentifier>));
+                    throw new DomainEventOutOfOrderException(e.AggregateId, this.GetType().Name);
                 }
                 ApplyEvent(e);
-                Id =  TConverter.ChangeType<TIdentifier>(e.AggregateId.Id);
+                AggregateId =  e.AggregateId;
                 Version++;
             }
+        }
+
+        public IDomainEvent[] FlushUncommitedEvents()
+        {
+            var events = _events.ToArray();
+            var i = 0;
+            foreach (var @event in events)
+            {
+                    if (@event.AggregateId == Guid.Empty && AggregateId == Guid.Empty)
+                    {
+                        throw new AggregateOrEventMissingIdException(this.GetType().Name, @event.GetType().Name);
+                    }
+                    if (@event.AggregateId == Guid.Empty)
+                    {
+                        @event.AggregateId = AggregateId;
+                    }
+                    i++;
+                    @event.AggregateVersion = Version + i;
+                    @event.TimeStamp = DateTimeOffset.UtcNow;
+            }
+            Version = Version + events.Length;
+            _events.Clear();
+            return events;
         }
 
         protected void ApplyEvent(IDomainEvent @event) => _events.Add(@event);

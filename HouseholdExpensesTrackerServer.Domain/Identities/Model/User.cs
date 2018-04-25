@@ -9,7 +9,7 @@ using System.Text;
 
 namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
 {
-    public class User : AggregateRoot<int>
+    public class User : AggregateRoot
     {
         public string Name { get; protected set; }
 
@@ -21,15 +21,16 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
 
         private readonly List<UserRole> _userRoles;
 
-        public static User Create(string name) => new User(name);
+        public static User Create(Guid aggregateId, string name) => new User(aggregateId, name);
 
         public void AddCredential(Credential credential)
         {
             _credentials.Add(credential);
         }
 
-        protected User(string name)
+        protected User(Guid aggregateId, string name)
         {
+            this.AggregateId = aggregateId;
             this.Name = name;
             _credentials = new List<Credential>();
             _userRoles = new List<UserRole>();

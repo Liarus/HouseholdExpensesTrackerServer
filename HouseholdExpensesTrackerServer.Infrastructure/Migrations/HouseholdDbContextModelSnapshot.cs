@@ -25,6 +25,9 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<Guid>("AggregateId")
+                        .HasColumnName("AggregateId");
+
                     b.Property<decimal>("Amount")
                         .HasColumnType("money");
 
@@ -77,6 +80,9 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<Guid>("AggregateId")
+                        .HasColumnName("AggregateId");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255);
@@ -120,6 +126,9 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("AggregateId")
+                        .HasColumnName("AggregateId");
 
                     b.Property<string>("Description")
                         .HasMaxLength(255);
@@ -210,6 +219,9 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<Guid>("AggregateId")
+                        .HasColumnName("AggregateId");
+
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(255);
@@ -250,6 +262,9 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<Guid>("AggregateId")
+                        .HasColumnName("AggregateId");
+
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(255);
@@ -288,6 +303,9 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("AggregateId")
+                        .HasColumnName("AggregateId");
 
                     b.Property<string>("Code")
                         .IsRequired()
@@ -341,6 +359,9 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<Guid>("AggregateId")
+                        .HasColumnName("AggregateId");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255);
@@ -389,6 +410,9 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("AggregateId")
+                        .HasColumnName("AggregateId");
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("money");
@@ -441,6 +465,9 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("AggregateId")
+                        .HasColumnName("AggregateId");
 
                     b.Property<string>("Name")
                         .IsRequired()

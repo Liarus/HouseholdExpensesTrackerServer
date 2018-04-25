@@ -5,14 +5,14 @@ using System.Text;
 
 namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
 {
-    public class Permission : AggregateRoot<int>
+    public class Permission : AggregateRoot
     { 
         public string Code { get; protected set; }
 
         public string Name { get; protected set; }
 
-        public static Permission Create(string name, string code) 
-            => new Permission(name, code);
+        public static Permission Create(Guid aggregateId, string name, string code) 
+            => new Permission(aggregateId, name, code);
 
         public Permission Modify(string name, string code)
         {
@@ -21,8 +21,9 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
             return this;
         }
 
-        protected Permission(string name, string code)
+        protected Permission(Guid aggregateId, string name, string code)
         {
+            this.AggregateId = aggregateId;
             this.Name = name;
             this.Code = code;
         }

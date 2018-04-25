@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HouseholdExpensesTrackerServer.Domain.SharedKernel\HouseholdExpensesTrackerServer.Domain.SharedKernel.csproj" />
+    <ProjectReference Include="..\HouseholdExpensesTrackerServer.Domain\HouseholdExpensesTrackerServer.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
 {
-    public class Credential : AuditableEntity<int>
+    public class Credential : AuditableEntity
     {
         public int UserId { get; protected set; }
 

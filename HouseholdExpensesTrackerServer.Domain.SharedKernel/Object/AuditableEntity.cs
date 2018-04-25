@@ -4,9 +4,9 @@ using System.Text;
 
 namespace HouseholdExpensesTrackerServer.Domain.SharedKernel.Object
 {
-    public abstract class AuditableEntity<TIdentifier> : IAuditableEntity, IEntity<TIdentifier>
+    public abstract class AuditableEntity : IAuditableEntity, IEntity
     {
-        public TIdentifier Id { get; protected set; }
+        public int Id { get; protected set; }
 
         public byte[] RowVersion { get; protected set; }
 

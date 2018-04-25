@@ -37,6 +37,9 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Context.Configurations
             builder.Property(e => e.Version)
                 .IsRequired()
                 .HasColumnName("Version");
+            builder.Property(e => e.AggregateId)
+                .IsRequired()
+                .HasColumnName("AggregateId");
 
             builder.Property(e => e.Id)
                 .ValueGeneratedOnAdd();

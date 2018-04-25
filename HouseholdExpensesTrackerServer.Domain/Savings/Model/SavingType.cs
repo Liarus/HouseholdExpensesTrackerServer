@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HouseholdExpensesTrackerServer.Domain.Savings.Model
 {
-    public class SavingType : AggregateRoot<int>
+    public class SavingType : AggregateRoot
     {
         public int UserId { get; protected set; }
 

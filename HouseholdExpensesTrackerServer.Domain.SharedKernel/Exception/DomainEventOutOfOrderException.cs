@@ -7,7 +7,7 @@ namespace HouseholdExpensesTrackerServer.Domain.SharedKernel.Exception
 {
     public class DomainEventOutOfOrderException : System.Exception
     {
-        public DomainEventOutOfOrderException(IIdValue aggregateId, string aggregateName) :
+        public DomainEventOutOfOrderException(Guid aggregateId, string aggregateName) :
             base($"Domain event for aggregate {aggregateName} with id {aggregateId} is out of order")
         {
 

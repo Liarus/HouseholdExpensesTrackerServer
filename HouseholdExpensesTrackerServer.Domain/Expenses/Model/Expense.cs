@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HouseholdExpensesTrackerServer.Domain.Expenses.Model
 {
-    public class Expense : AggregateRoot<int>
+    public class Expense : AggregateRoot
     {
         public int HouseholdId { get; protected set; }
 
@@ -21,8 +21,8 @@ namespace HouseholdExpensesTrackerServer.Domain.Expenses.Model
 
         public virtual Period Period { get; protected set; }
 
-        public static Expense Create(int expenseTypeId, string name, string description, decimal amount,
-            DateTime date, Period period) => new Expense(expenseTypeId, name, description,
+        public static Expense Create(Guid aggregateId, int expenseTypeId, string name, string description, decimal amount,
+            DateTime date, Period period) => new Expense(aggregateId, expenseTypeId, name, description,
                 amount, date, period);
 
         public Expense Modify(int expenseTypeId, string name, string description, decimal amount,
@@ -37,9 +37,10 @@ namespace HouseholdExpensesTrackerServer.Domain.Expenses.Model
             return this;
         }
 
-        protected Expense(int expenseTypeId, string name, string description, decimal amount, 
+        protected Expense(Guid aggregateId, int expenseTypeId, string name, string description, decimal amount, 
             DateTime date, Period period)
         {
+            this.AggregateId = aggregateId;
             this.ExpenseTypeId = expenseTypeId;
             this.Name = name;
             this.Description = description;

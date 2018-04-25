@@ -8,8 +8,7 @@ namespace HouseholdExpensesTrackerServer.Domain.SharedKernel.Event
 {
     public interface IDomainEvent : IMessage
     {
-        Guid Id { get; set; }
-        IIdValue AggregateId { get; set; }
+        Guid AggregateId { get; set; }
         int AggregateVersion { get; set; }
         DateTimeOffset TimeStamp { get; set; }
     }

@@ -4,8 +4,8 @@ using System.Text;
 
 namespace HouseholdExpensesTrackerServer.Domain.SharedKernel.Object
 {
-    public interface IEntity<TIdentifier>
+    public interface IEntity
     {
-        TIdentifier Id { get; }
+        int Id { get; }
     }
 }
