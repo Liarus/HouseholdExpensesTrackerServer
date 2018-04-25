@@ -13,11 +13,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
-using HouseholdExpensesTrackerServer.Domain.Identity;
 using HouseholdExpensesTrackerServer.Web.Helpers;
 using HouseholdExpensesTrackerServer.CompositionRoot;
 using Autofac.Extensions.DependencyInjection;
 using Autofac;
+using HouseholdExpensesTrackerServer.Domain.Identities.Model;
 
 namespace HouseholdExpensesTrackerServer.Web
 {
@@ -40,7 +40,8 @@ namespace HouseholdExpensesTrackerServer.Web
             });
 
             services.AddDbContext<HouseholdDbContext>(
-                options => options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"))
+                options => 
+                    options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"))
             );
             services.AddScoped<IDbContext>(provider => provider.GetService<HouseholdDbContext>());
             services.AddScoped<IUserManager, UserManager>();
@@ -85,10 +86,13 @@ namespace HouseholdExpensesTrackerServer.Web
                 return;
             }
 
-            var type = new CredentialType { Code = "Email", Name = "Email address" };
-            var user = new User { Created = DateTime.Now, Name = "Administrator" };
-            var cred = new Credential { CredentialType = type, Identifier = "admin@example.com", Secret = Md5Hasher.ComputeHash("admin"), User = user };
-            context.Credentials.Add(cred);
+            var type = CredentialType.Create("Email address", "Email");
+            var user = User.Create("Administrator");
+            context.CredentialTypes.Add(type);
+            await context.SaveChangesAsync();
+            var cred = Credential.Create(type.Id, "admin@example.com", Md5Hasher.ComputeHash("admin"));
+            user.AddCredential(cred);
+            context.Users.Add(user);
 
             await context.SaveChangesAsync();
         }

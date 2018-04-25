@@ -1,4 +1,4 @@
-﻿using HouseholdExpensesTrackerServer.Domain.DomainSpecification.Event;
+﻿using HouseholdExpensesTrackerServer.Domain.SharedKernel.Event;
 using System;
 using System.Collections.Generic;
 using System.Text;

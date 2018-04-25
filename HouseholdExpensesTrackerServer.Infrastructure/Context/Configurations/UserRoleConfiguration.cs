@@ -1,4 +1,4 @@
-﻿using HouseholdExpensesTrackerServer.Domain.Identity;
+﻿using HouseholdExpensesTrackerServer.Domain.Identities.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

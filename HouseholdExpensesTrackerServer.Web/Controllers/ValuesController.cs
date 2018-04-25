@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HouseholdExpensesTrackerServer.DomainEventBroker;
+using HouseholdExpensesTrackerServer.Domain.SharedKernel.Event;
 using HouseholdExpensesTrackerServer.Web.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,9 +12,9 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
     public class ValuesController : Controller
     {
         private IUserManager _userManager;
-        private IDomainEventsDispatcher _dispatcher;
+        private IDomainEventDispatcher _dispatcher;
 
-        public ValuesController(IUserManager userManager, IDomainEventsDispatcher dispatcher)
+        public ValuesController(IUserManager userManager, IDomainEventDispatcher dispatcher)
         {
             _userManager = userManager;
             _dispatcher = dispatcher;

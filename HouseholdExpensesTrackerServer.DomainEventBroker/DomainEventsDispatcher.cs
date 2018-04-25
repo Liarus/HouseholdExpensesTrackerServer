@@ -1,11 +1,11 @@
-﻿using HouseholdExpensesTrackerServer.Domain.DomainSpecification.Event;
+﻿using HouseholdExpensesTrackerServer.Domain.SharedKernel.Event;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace HouseholdExpensesTrackerServer.DomainEventBroker
 {
-    public class DomainEventsDispatcher : IDomainEventsDispatcher
+    public class DomainEventsDispatcher : IDomainEventDispatcher
     {
         protected readonly IContainerFacade _container;
         private List<Delegate> _actions;
@@ -20,6 +20,15 @@ namespace HouseholdExpensesTrackerServer.DomainEventBroker
         public void ClearCallbacks()
         {
            _actions = null;
+        }
+
+        public void Register<T>(Action<T> callback) where T : IDomainEvent
+        {
+            if (_actions == null)
+            {
+                _actions = new List<Delegate>();
+            }
+           _actions.Add(callback);
         }
 
         public void Raise<T>(T args) where T : IDomainEvent

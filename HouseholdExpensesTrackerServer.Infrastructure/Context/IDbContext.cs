@@ -1,4 +1,7 @@
-﻿using HouseholdExpensesTrackerServer.Domain.Identity;
+﻿using HouseholdExpensesTrackerServer.Domain.Expenses.Model;
+using HouseholdExpensesTrackerServer.Domain.Households.Model;
+using HouseholdExpensesTrackerServer.Domain.Identities.Model;
+using HouseholdExpensesTrackerServer.Domain.Savings.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
@@ -24,6 +27,16 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Context
         DbSet<Permission> Permissions { get; set; }
 
         DbSet<RolePermission> RolePermissions { get; set; }
+
+        DbSet<ExpenseType> ExpenseTypes { get; set; }
+
+        DbSet<SavingType> SavingTypes { get; set; }
+
+        DbSet<Expense> Expenses { get; set; }
+
+        DbSet<Saving> Savings { get; set; }
+
+        DbSet<Household> Households { get; set; }
 
         DbSet<TEntity> Set<TEntity>() where TEntity : class;
 

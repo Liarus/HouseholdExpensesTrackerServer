@@ -20,7 +20,148 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "2.0.2-rtm-10011")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Identity.Credential", b =>
+            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Expenses.Model.Expense", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("money");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255);
+
+                    b.Property<int>("ExpenseTypeId");
+
+                    b.Property<int>("HouseholdId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<int>("Version")
+                        .HasColumnName("Version");
+
+                    b.Property<string>("_createdBy")
+                        .IsRequired()
+                        .HasColumnName("CreatedBy")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime>("_createdDate")
+                        .HasColumnName("CreatedDate");
+
+                    b.Property<string>("_updatedBy")
+                        .HasColumnName("UpdatedBy")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime?>("_updatedDate")
+                        .HasColumnName("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExpenseTypeId");
+
+                    b.HasIndex("HouseholdId");
+
+                    b.ToTable("Expenses");
+                });
+
+            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Expenses.Model.ExpenseType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<string>("Symbol")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.Property<int>("UserId");
+
+                    b.Property<int>("Version")
+                        .HasColumnName("Version");
+
+                    b.Property<string>("_createdBy")
+                        .IsRequired()
+                        .HasColumnName("CreatedBy")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime>("_createdDate")
+                        .HasColumnName("CreatedDate");
+
+                    b.Property<string>("_updatedBy")
+                        .HasColumnName("UpdatedBy")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime?>("_updatedDate")
+                        .HasColumnName("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ExpenseTypes");
+                });
+
+            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Households.Model.Household", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<string>("Symbol");
+
+                    b.Property<int>("UserId");
+
+                    b.Property<int>("Version")
+                        .HasColumnName("Version");
+
+                    b.Property<string>("_createdBy")
+                        .IsRequired()
+                        .HasColumnName("CreatedBy")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime>("_createdDate")
+                        .HasColumnName("CreatedDate");
+
+                    b.Property<string>("_updatedBy")
+                        .HasColumnName("UpdatedBy")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime?>("_updatedDate")
+                        .HasColumnName("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Households");
+                });
+
+            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Identities.Model.Credential", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -31,10 +172,29 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(255);
 
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
                     b.Property<string>("Secret")
                         .HasMaxLength(1024);
 
                     b.Property<int>("UserId");
+
+                    b.Property<string>("_createdBy")
+                        .IsRequired()
+                        .HasColumnName("CreatedBy")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime>("_createdDate")
+                        .HasColumnName("CreatedDate");
+
+                    b.Property<string>("_updatedBy")
+                        .HasColumnName("UpdatedBy")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime?>("_updatedDate")
+                        .HasColumnName("UpdatedDate");
 
                     b.HasKey("Id");
 
@@ -45,7 +205,7 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     b.ToTable("Credentials");
                 });
 
-            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Identity.CredentialType", b =>
+            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Identities.Model.CredentialType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -58,14 +218,34 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(255);
 
-                    b.Property<int?>("Position");
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<int>("Version")
+                        .HasColumnName("Version");
+
+                    b.Property<string>("_createdBy")
+                        .IsRequired()
+                        .HasColumnName("CreatedBy")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime>("_createdDate")
+                        .HasColumnName("CreatedDate");
+
+                    b.Property<string>("_updatedBy")
+                        .HasColumnName("UpdatedBy")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime?>("_updatedDate")
+                        .HasColumnName("UpdatedDate");
 
                     b.HasKey("Id");
 
                     b.ToTable("CredentialTypes");
                 });
 
-            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Identity.Permission", b =>
+            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Identities.Model.Permission", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -77,14 +257,34 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .HasMaxLength(255);
 
-                    b.Property<int?>("Position");
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<int>("Version")
+                        .HasColumnName("Version");
+
+                    b.Property<string>("_createdBy")
+                        .IsRequired()
+                        .HasColumnName("CreatedBy")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime>("_createdDate")
+                        .HasColumnName("CreatedDate");
+
+                    b.Property<string>("_updatedBy")
+                        .HasColumnName("UpdatedBy")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime?>("_updatedDate")
+                        .HasColumnName("UpdatedDate");
 
                     b.HasKey("Id");
 
                     b.ToTable("Permissions");
                 });
 
-            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Identity.Role", b =>
+            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Identities.Model.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -96,14 +296,34 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     b.Property<string>("Name")
                         .HasMaxLength(255);
 
-                    b.Property<int?>("Position");
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<int>("Version")
+                        .HasColumnName("Version");
+
+                    b.Property<string>("_createdBy")
+                        .IsRequired()
+                        .HasColumnName("CreatedBy")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime>("_createdDate")
+                        .HasColumnName("CreatedDate");
+
+                    b.Property<string>("_updatedBy")
+                        .HasColumnName("UpdatedBy")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime?>("_updatedDate")
+                        .HasColumnName("UpdatedDate");
 
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Identity.RolePermission", b =>
+            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Identities.Model.RolePermission", b =>
                 {
                     b.Property<int>("RoleId");
 
@@ -116,23 +336,43 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     b.ToTable("RolePermissions");
                 });
 
-            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Identity.User", b =>
+            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Identities.Model.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("Created");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255);
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<int>("Version")
+                        .HasColumnName("Version");
+
+                    b.Property<string>("_createdBy")
+                        .IsRequired()
+                        .HasColumnName("CreatedBy")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime>("_createdDate")
+                        .HasColumnName("CreatedDate");
+
+                    b.Property<string>("_updatedBy")
+                        .HasColumnName("UpdatedBy")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime?>("_updatedDate")
+                        .HasColumnName("UpdatedDate");
 
                     b.HasKey("Id");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Identity.UserRole", b =>
+            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Identities.Model.UserRole", b =>
                 {
                     b.Property<int>("UserId");
 
@@ -145,43 +385,233 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     b.ToTable("UserRoles");
                 });
 
-            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Identity.Credential", b =>
+            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Savings.Model.Saving", b =>
                 {
-                    b.HasOne("HouseholdExpensesTrackerServer.Domain.Identity.CredentialType", "CredentialType")
-                        .WithMany("Credentials")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("money");
+
+                    b.Property<DateTime>("Date");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(255);
+
+                    b.Property<int>("HouseholdId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<int>("SavingTypeId");
+
+                    b.Property<int>("Version")
+                        .HasColumnName("Version");
+
+                    b.Property<string>("_createdBy")
+                        .IsRequired()
+                        .HasColumnName("CreatedBy")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime>("_createdDate")
+                        .HasColumnName("CreatedDate");
+
+                    b.Property<string>("_updatedBy")
+                        .HasColumnName("UpdatedBy")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime?>("_updatedDate")
+                        .HasColumnName("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HouseholdId");
+
+                    b.HasIndex("SavingTypeId");
+
+                    b.ToTable("Savings");
+                });
+
+            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Savings.Model.SavingType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255);
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate();
+
+                    b.Property<string>("Symbol")
+                        .IsRequired()
+                        .HasMaxLength(20);
+
+                    b.Property<int>("UserId");
+
+                    b.Property<int>("Version")
+                        .HasColumnName("Version");
+
+                    b.Property<string>("_createdBy")
+                        .IsRequired()
+                        .HasColumnName("CreatedBy")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime>("_createdDate")
+                        .HasColumnName("CreatedDate");
+
+                    b.Property<string>("_updatedBy")
+                        .HasColumnName("UpdatedBy")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime?>("_updatedDate")
+                        .HasColumnName("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SavingTypes");
+                });
+
+            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Expenses.Model.Expense", b =>
+                {
+                    b.HasOne("HouseholdExpensesTrackerServer.Domain.Expenses.Model.ExpenseType")
+                        .WithMany()
+                        .HasForeignKey("ExpenseTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("HouseholdExpensesTrackerServer.Domain.Households.Model.Household")
+                        .WithMany()
+                        .HasForeignKey("HouseholdId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.OwnsOne("HouseholdExpensesTrackerServer.Domain.Expenses.Model.Period", "Period", b1 =>
+                        {
+                            b1.Property<int>("ExpenseId");
+
+                            b1.Property<DateTime>("PeriodEnd");
+
+                            b1.Property<DateTime>("PeriodStart");
+
+                            b1.ToTable("Expenses");
+
+                            b1.HasOne("HouseholdExpensesTrackerServer.Domain.Expenses.Model.Expense")
+                                .WithOne("Period")
+                                .HasForeignKey("HouseholdExpensesTrackerServer.Domain.Expenses.Model.Period", "ExpenseId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
+                });
+
+            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Expenses.Model.ExpenseType", b =>
+                {
+                    b.HasOne("HouseholdExpensesTrackerServer.Domain.Identities.Model.User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Households.Model.Household", b =>
+                {
+                    b.HasOne("HouseholdExpensesTrackerServer.Domain.Identities.Model.User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.OwnsOne("HouseholdExpensesTrackerServer.Domain.Households.Model.Address", "Address", b1 =>
+                        {
+                            b1.Property<int>("HouseholdId");
+
+                            b1.Property<string>("City")
+                                .IsRequired()
+                                .HasMaxLength(255);
+
+                            b1.Property<string>("Country")
+                                .IsRequired()
+                                .HasMaxLength(255);
+
+                            b1.Property<string>("Street")
+                                .IsRequired()
+                                .HasMaxLength(255);
+
+                            b1.Property<string>("ZipCode")
+                                .IsRequired()
+                                .HasMaxLength(10);
+
+                            b1.ToTable("Households");
+
+                            b1.HasOne("HouseholdExpensesTrackerServer.Domain.Households.Model.Household")
+                                .WithOne("Address")
+                                .HasForeignKey("HouseholdExpensesTrackerServer.Domain.Households.Model.Address", "HouseholdId")
+                                .OnDelete(DeleteBehavior.Cascade);
+                        });
+                });
+
+            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Identities.Model.Credential", b =>
+                {
+                    b.HasOne("HouseholdExpensesTrackerServer.Domain.Identities.Model.CredentialType")
+                        .WithMany()
                         .HasForeignKey("CredentialTypeId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("HouseholdExpensesTrackerServer.Domain.Identity.User", "User")
+                    b.HasOne("HouseholdExpensesTrackerServer.Domain.Identities.Model.User", "User")
                         .WithMany("Credentials")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Identity.RolePermission", b =>
+            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Identities.Model.RolePermission", b =>
                 {
-                    b.HasOne("HouseholdExpensesTrackerServer.Domain.Identity.Permission", "Permission")
+                    b.HasOne("HouseholdExpensesTrackerServer.Domain.Identities.Model.Permission", "Permission")
                         .WithMany()
                         .HasForeignKey("PermissionId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("HouseholdExpensesTrackerServer.Domain.Identity.Role", "Role")
-                        .WithMany()
+                    b.HasOne("HouseholdExpensesTrackerServer.Domain.Identities.Model.Role", "Role")
+                        .WithMany("RolePermissions")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Identity.UserRole", b =>
+            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Identities.Model.UserRole", b =>
                 {
-                    b.HasOne("HouseholdExpensesTrackerServer.Domain.Identity.Role", "Role")
+                    b.HasOne("HouseholdExpensesTrackerServer.Domain.Identities.Model.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("HouseholdExpensesTrackerServer.Domain.Identity.User", "User")
-                        .WithMany()
+                    b.HasOne("HouseholdExpensesTrackerServer.Domain.Identities.Model.User", "User")
+                        .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Savings.Model.Saving", b =>
+                {
+                    b.HasOne("HouseholdExpensesTrackerServer.Domain.Households.Model.Household")
+                        .WithMany()
+                        .HasForeignKey("HouseholdId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("HouseholdExpensesTrackerServer.Domain.Savings.Model.SavingType")
+                        .WithMany()
+                        .HasForeignKey("SavingTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("HouseholdExpensesTrackerServer.Domain.Savings.Model.SavingType", b =>
+                {
+                    b.HasOne("HouseholdExpensesTrackerServer.Domain.Identities.Model.User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 #pragma warning restore 612, 618
         }

@@ -1,4 +1,4 @@
-﻿using HouseholdExpensesTrackerServer.Domain.Identity;
+﻿using HouseholdExpensesTrackerServer.Domain.Identities.Model;
 using HouseholdExpensesTrackerServer.Infrastructure.Context;
 using HouseholdExpensesTrackerServer.Web.Helpers;
 using Microsoft.AspNetCore.Authentication;
