@@ -86,8 +86,8 @@ namespace HouseholdExpensesTrackerServer.Web
                 return;
             }
 
-            var type = CredentialType.Create(Guid.NewGuid(), "Email address", "Email");
-            var user = User.Create(Guid.NewGuid(), "Administrator");
+            var type = CredentialType.Create("Email address", "Email");
+            var user = User.Create("Administrator");
             context.CredentialTypes.Add(type);
             await context.SaveChangesAsync();
             var cred = Credential.Create(type.Id, "admin@example.com", Md5Hasher.ComputeHash("admin"));

@@ -7,7 +7,5 @@ namespace HouseholdExpensesTrackerServer.Domain.SharedKernel.Commands
 {
     public interface ICommand : IMessage
     {
-        Guid AggregateId { get; }
-        int AggregateExpectedVersion { get; }
     }
 }

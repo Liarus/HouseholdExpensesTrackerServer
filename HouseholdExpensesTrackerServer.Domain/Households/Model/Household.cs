@@ -7,7 +7,7 @@ using System.Text;
 
 namespace HouseholdExpensesTrackerServer.Domain.Households.Model
 {
-    public class Household : AggregateRoot
+    public class Household : AggregateRoot<int>
     {
         public int UserId { get; protected set; }
 
@@ -19,8 +19,8 @@ namespace HouseholdExpensesTrackerServer.Domain.Households.Model
 
         public virtual Address Address { get; protected set; }
 
-        public static Household Create(Guid aggregateId, int userId, string name, string symbol, string description,
-            Address address) => new Household(aggregateId, userId, name, symbol, description, address);
+        public static Household Create(int userId, string name, string symbol, string description,
+            Address address) => new Household(userId, name, symbol, description, address);
 
         public Household Modify(string name, string description, Address address)
         {
@@ -30,9 +30,8 @@ namespace HouseholdExpensesTrackerServer.Domain.Households.Model
             return this;
         }
 
-        protected Household(Guid aggregateId, int userId, string name, string symbol, string description, Address address)
+        protected Household(int userId, string name, string symbol, string description, Address address)
         {
-            this.AggregateId = aggregateId;
             this.UserId = userId;
             this.Name = name;
             this.Symbol = symbol;

@@ -2,6 +2,7 @@
 using HouseholdExpensesTrackerServer.Domain.Identities.Model;
 using HouseholdExpensesTrackerServer.Domain.Identities.Repository;
 using HouseholdExpensesTrackerServer.Domain.SharedKernel.Commands;
+using HouseholdExpensesTrackerServer.Domain.SharedKernel.Repository;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,7 +13,7 @@ namespace HouseholdExpensesTrackerServer.Application.Identities
 {
     public class UserCommandHandler : ICommandHandler<CreateUserCommand>
     {
-        private readonly IUserRepository _users;
+        IUserRepository _users;
 
         public UserCommandHandler(IUserRepository users)
         {
@@ -21,7 +22,7 @@ namespace HouseholdExpensesTrackerServer.Application.Identities
 
         public async Task Handle(CreateUserCommand message, CancellationToken token = default(CancellationToken))
         {
-            var user = User.Create(message.AggregateId, message.Name);
+            var user = User.Create(message.Name);
             _users.Add(user);
             await _users.SaveChangesAsync();
         }

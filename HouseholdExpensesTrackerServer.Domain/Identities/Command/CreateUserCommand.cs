@@ -9,7 +9,7 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Command
     {
         public readonly string Name;
 
-        public CreateUserCommand(string name)
+        public CreateUserCommand(Guid aggregateId, string name)
         {
             this.Name = name;
         }

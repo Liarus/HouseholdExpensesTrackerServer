@@ -11,7 +11,7 @@ using System;
 namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
 {
     [DbContext(typeof(HouseholdDbContext))]
-    [Migration("20180425100348_InitialCreation")]
+    [Migration("20180425105843_InitialCreation")]
     partial class InitialCreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,9 +25,6 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<Guid>("AggregateId")
-                        .HasColumnName("AggregateId");
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("money");
@@ -48,9 +45,6 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
-
-                    b.Property<int>("Version")
-                        .HasColumnName("Version");
 
                     b.Property<string>("_createdBy")
                         .IsRequired()
@@ -81,9 +75,6 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid>("AggregateId")
-                        .HasColumnName("AggregateId");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255);
@@ -97,9 +88,6 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                         .HasMaxLength(20);
 
                     b.Property<int>("UserId");
-
-                    b.Property<int>("Version")
-                        .HasColumnName("Version");
 
                     b.Property<string>("_createdBy")
                         .IsRequired()
@@ -128,9 +116,6 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid>("AggregateId")
-                        .HasColumnName("AggregateId");
-
                     b.Property<string>("Description")
                         .HasMaxLength(255);
 
@@ -145,9 +130,6 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     b.Property<string>("Symbol");
 
                     b.Property<int>("UserId");
-
-                    b.Property<int>("Version")
-                        .HasColumnName("Version");
 
                     b.Property<string>("_createdBy")
                         .IsRequired()
@@ -220,9 +202,6 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid>("AggregateId")
-                        .HasColumnName("AggregateId");
-
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(255);
@@ -234,9 +213,6 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
-
-                    b.Property<int>("Version")
-                        .HasColumnName("Version");
 
                     b.Property<string>("_createdBy")
                         .IsRequired()
@@ -263,9 +239,6 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid>("AggregateId")
-                        .HasColumnName("AggregateId");
-
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(255);
@@ -276,9 +249,6 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
-
-                    b.Property<int>("Version")
-                        .HasColumnName("Version");
 
                     b.Property<string>("_createdBy")
                         .IsRequired()
@@ -305,9 +275,6 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid>("AggregateId")
-                        .HasColumnName("AggregateId");
-
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(255);
@@ -318,9 +285,6 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
-
-                    b.Property<int>("Version")
-                        .HasColumnName("Version");
 
                     b.Property<string>("_createdBy")
                         .IsRequired()
@@ -360,9 +324,6 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid>("AggregateId")
-                        .HasColumnName("AggregateId");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255);
@@ -370,9 +331,6 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate();
-
-                    b.Property<int>("Version")
-                        .HasColumnName("Version");
 
                     b.Property<string>("_createdBy")
                         .IsRequired()
@@ -412,9 +370,6 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid>("AggregateId")
-                        .HasColumnName("AggregateId");
-
                     b.Property<decimal>("Amount")
                         .HasColumnType("money");
 
@@ -434,9 +389,6 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                         .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<int>("SavingTypeId");
-
-                    b.Property<int>("Version")
-                        .HasColumnName("Version");
 
                     b.Property<string>("_createdBy")
                         .IsRequired()
@@ -467,9 +419,6 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid>("AggregateId")
-                        .HasColumnName("AggregateId");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(255);
@@ -483,9 +432,6 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
                         .HasMaxLength(20);
 
                     b.Property<int>("UserId");
-
-                    b.Property<int>("Version")
-                        .HasColumnName("Version");
 
                     b.Property<string>("_createdBy")
                         .IsRequired()
