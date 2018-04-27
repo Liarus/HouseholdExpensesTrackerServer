@@ -1,4 +1,5 @@
 ﻿using HouseholdExpensesTrackerServer.Domain.Expenses;
+using HouseholdExpensesTrackerServer.Domain.Households.Event;
 using HouseholdExpensesTrackerServer.Domain.Savings;
 using HouseholdExpensesTrackerServer.Domain.SharedKernel.Object;
 using System;
@@ -22,15 +23,20 @@ namespace HouseholdExpensesTrackerServer.Domain.Households.Model
         public static Household Create(Guid identity, int userId, string name, string symbol, string description,
             Address address) => new Household(identity, userId, name, symbol, description, address);
 
-        public Household Modify(string name, string description, Address address)
+        public Household Modify(string name, string symbol, string description, Address address, 
+            string rowVersion)
         {
             this.Name = name;
             this.Description = description;
             this.Address = address;
+            this.RowVersion = Convert.FromBase64String(rowVersion);
+            this.ApplyEvent(new HouseholdModifiedEvent(this.Identity, this.Id, name, symbol, description,  
+                address.Street, address.City, address.Country, address.ZipCode));
             return this;
         }
 
-        protected Household(Guid identity, int userId, string name, string symbol, string description, Address address)
+        protected Household(Guid identity, int userId, string name, string symbol, string description,
+            Address address)
         {
             this.Identity = identity;
             this.UserId = userId;
@@ -38,6 +44,8 @@ namespace HouseholdExpensesTrackerServer.Domain.Households.Model
             this.Symbol = symbol;
             this.Description = description;
             this.Address = address;
+            this.ApplyEvent(new HouseholdCreatedEvent(identity, userId, name, symbol, description,
+                address.Street, address.City, address.Country, address.ZipCode));
         }
 
         protected Household()

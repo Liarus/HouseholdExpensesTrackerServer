@@ -8,14 +8,14 @@ namespace HouseholdExpensesTrackerServer.Domain.Definitions.Event
 {
     public abstract class BaseDomainEvent : IDomainEvent
     {
-        protected BaseDomainEvent(Guid identity, DateTimeOffset timeStamp)
+        protected BaseDomainEvent(Guid identity)
         {
             this.Identity = identity;
-            this.TimeStamp = timeStamp;
+            this.TimeStamp = DateTime.Now;
         }
 
-        public Guid Identity { get; private set; }
+        public readonly Guid Identity;
 
-        public DateTimeOffset TimeStamp { get; private set; }
+        public readonly DateTimeOffset TimeStamp;
     }
 }

@@ -1,4 +1,5 @@
-﻿using HouseholdExpensesTrackerServer.Domain.SharedKernel.Object;
+﻿using HouseholdExpensesTrackerServer.Domain.Expenses.Event;
+using HouseholdExpensesTrackerServer.Domain.SharedKernel.Object;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,10 +17,12 @@ namespace HouseholdExpensesTrackerServer.Domain.Expenses.Model
         public static ExpenseType Create(Guid identity, int userId, string name, string symbol) 
             => new ExpenseType(identity, userId, name, symbol);
 
-        public ExpenseType Modify(string name, string symbol)
+        public ExpenseType Modify(string name, string symbol, string rowVersion)
         {
             this.Name = name;
             this.Symbol = symbol;
+            this.RowVersion = Convert.FromBase64String(rowVersion);
+            this.ApplyEvent(new ExpenseTypeModifiedEvent(this.Identity, this.Id, name, symbol));
             return this;
         }
 
@@ -29,6 +32,7 @@ namespace HouseholdExpensesTrackerServer.Domain.Expenses.Model
             this.UserId = userId;
             this.Name = name;
             this.Symbol = symbol;
+            this.ApplyEvent(new ExpenseTypeCreatedEvent(identity, userId, name, symbol));
         }
 
         protected ExpenseType()

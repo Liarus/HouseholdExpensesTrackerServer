@@ -7,14 +7,14 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Event
 {
     public class CredentialAddedEvent : BaseDomainEvent
     {
-        public int UserId { get; private set; }
+        public readonly int UserId;
 
-        public int CredentialTypeId { get; private set; }
-        
-        public string Identifier { get; private set; }
+        public readonly int CredentialTypeId;
 
-        public CredentialAddedEvent(Guid identity, DateTimeOffset timeStamp, int userId, int credentialTypeId, string identifier)
-            : base(identity, timeStamp)
+        public readonly string Identifier;
+
+        public CredentialAddedEvent(Guid identity, int userId, int credentialTypeId, string identifier)
+            : base(identity)
         {
             this.UserId = userId;
             this.CredentialTypeId = credentialTypeId;

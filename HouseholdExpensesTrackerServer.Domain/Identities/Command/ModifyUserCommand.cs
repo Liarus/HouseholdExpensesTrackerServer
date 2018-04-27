@@ -5,13 +5,13 @@ using System.Text;
 
 namespace HouseholdExpensesTrackerServer.Domain.Identities.Command
 {
-    public class ModifyUserCommand : ICommand
+    public class ModifyUserCommand : ICommandHandler
     {
-        public int UserId { get; private set; }
+        public readonly int UserId;
 
-        public string Name { get; private set; }
+        public readonly string Name;
 
-        public string RowVersion { get; private set; }
+        public readonly string RowVersion;
 
         public ModifyUserCommand(int userId, string name, string rowVersion)
         {

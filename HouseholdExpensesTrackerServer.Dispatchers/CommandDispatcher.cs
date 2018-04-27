@@ -18,7 +18,7 @@ namespace HouseholdExpensesTrackerServer.Dispatchers
         }
 
         public async Task Send<TCommand>(TCommand command, 
-            CancellationToken cancellationToken) where TCommand : ICommand
+            CancellationToken cancellationToken) where TCommand : ICommandHandler
         {
             ICommandHandler<TCommand> handler;
 

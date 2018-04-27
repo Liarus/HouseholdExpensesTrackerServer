@@ -7,9 +7,9 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Event
 {
     public class UserCreatedEvent : BaseDomainEvent
     {
-        public string Name { get; private set; }
+        public readonly string Name;
 
-        public UserCreatedEvent(Guid identity, DateTimeOffset timeStamp, string name) : base(identity, timeStamp)
+        public UserCreatedEvent(Guid identity, string name) : base(identity)
         {
             this.Name = name;
         }

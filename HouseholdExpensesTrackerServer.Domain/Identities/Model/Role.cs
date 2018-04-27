@@ -3,6 +3,8 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
+using HouseholdExpensesTrackerServer.Domain.Identities.Event;
+using HouseholdExpensesTrackerServer.Domain.Identities.Exception;
 
 namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
 {
@@ -16,13 +18,39 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
 
         private readonly List<RolePermission> _rolePermissions;
 
-        public static Role Create(Guid identity, string name, string code) => new Role(identity, name, code);
+        public static Role Create(Guid identity, string name, string code) 
+            => new Role(identity, name, code);
 
-        public Role Modify(string name, string code)
+        public Role Modify(string name, string code, string rowVersion)
         {
             this.Name = name;
             this.Code = code;
+            this.RowVersion = Convert.FromBase64String(rowVersion);
+            this.ApplyEvent(new RoleModifiedEvent(this.Identity,
+                this.Id, code, name));
             return this;
+        }
+
+        public void AssignPermission(int permissionId)
+        {
+            var role = _rolePermissions.SingleOrDefault(e => e.PermissionId == permissionId);
+            if (role != null)
+            {
+                throw new RoleDomainException($"Permission {permissionId} is already assigned to role {this.Id}");
+            }
+            _rolePermissions.Add(new RolePermission() { PermissionId = permissionId });
+            this.ApplyEvent(new PermissionAssignedEvent(this.Identity, this.Id, permissionId));
+        }
+
+        public void UnassignPermission(int permissionId)
+        {
+            var permission = _rolePermissions.SingleOrDefault(e => e.PermissionId == permissionId);
+            if (permission == null)
+            {
+                throw new RoleDomainException($"Permission {permissionId} is not assigned to role {this.Id}");
+            }
+            _rolePermissions.Remove(permission);
+            this.ApplyEvent(new PermissionUnassignedEvent(this.Identity, this.Id, permissionId));
         }
 
         protected Role(Guid identity, string name, string code)
@@ -31,6 +59,7 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
             this.Name = name;
             this.Code = code;
             _rolePermissions = new List<RolePermission>();
+            this.ApplyEvent(new RoleCreatedEvent(identity, code, name));
         }
 
         protected Role()

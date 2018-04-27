@@ -7,18 +7,15 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Event
 {
     class UserModifiedEvent : BaseDomainEvent
     {
-        public int UserId { get; private set; }
+        public readonly int UserId;
 
-        public string OldName { get; private set; }
+        public readonly string Name;
 
-        public string NewName { get; private set; }
-
-        public UserModifiedEvent(Guid identity, DateTimeOffset timeStamp, int userId, string oldName, string newName)
-            : base(identity, timeStamp)
+        public UserModifiedEvent(Guid identity, int userId, string name)
+            : base(identity)
         {
             this.UserId = userId;
-            this.OldName = oldName;
-            this.NewName = newName;
+            this.Name = name;
         }
     }
 }

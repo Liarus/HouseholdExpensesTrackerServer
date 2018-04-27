@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using HouseholdExpensesTrackerServer.Domain.Identities.Event;
+using HouseholdExpensesTrackerServer.Domain.Identities.Exception;
 
 namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
 {
@@ -23,17 +24,40 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
 
         public User Modify(string name, string rowVersion)
         {
-            this.ApplyEvent(new UserModifiedEvent(this.Identity, DateTime.Now, this.Id, this.Name, name));
             this.Name = name;
             this.RowVersion = Convert.FromBase64String(rowVersion);
+            this.ApplyEvent(new UserModifiedEvent(this.Identity, this.Id, name));
             return this;
         }
 
         public void AddCredential(Credential credential)
         {
             _credentials.Add(credential);
-            this.ApplyEvent(new CredentialAddedEvent(this.Identity, DateTime.Now, 
+            this.ApplyEvent(new CredentialAddedEvent(this.Identity, 
                 this.Id, credential.CredentialTypeId, credential.Identifier));
+        }
+
+        public void AssignRole(int roleId)
+        {
+            var role = _userRoles.SingleOrDefault(e => e.RoleId == roleId);
+            if (role != null)
+            {
+                throw new UserDomainException($"Role {roleId} is already assigned to user {this.Id}");
+
+            }
+            _userRoles.Add(new UserRole { RoleId = roleId });
+            this.ApplyEvent(new RoleAssignedEvent(this.Identity, roleId, this.Id));
+        }
+
+        public void UnassignRole(int roleId)
+        {
+            var role = _userRoles.SingleOrDefault(e => e.RoleId == roleId && e.UserId == this.Id);
+            if (role == null)
+            {
+                throw new UserDomainException($"Role {roleId} is not assigned to user {this.Id}");
+            }
+            _userRoles.Remove(role);
+            this.ApplyEvent(new RoleUnassignedEvent(this.Identity, roleId, this.Id));
         }
 
         protected User(Guid identity, string name)
@@ -42,7 +66,7 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
             this.Name = name;
             _credentials = new List<Credential>();
             _userRoles = new List<UserRole>();
-            this.ApplyEvent(new UserCreatedEvent(this.Identity, DateTime.Now, name));
+            this.ApplyEvent(new UserCreatedEvent(this.Identity, name));
         }
 
         protected User()

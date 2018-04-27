@@ -1,4 +1,5 @@
-﻿using HouseholdExpensesTrackerServer.Domain.SharedKernel.Object;
+﻿using HouseholdExpensesTrackerServer.Domain.Identities.Event;
+using HouseholdExpensesTrackerServer.Domain.SharedKernel.Object;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,11 +15,22 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
         public static CredentialType Create(Guid identity, string name, string code) 
             => new CredentialType(identity, name, code);
 
+        public CredentialType Modify(string name, string code, string rowVersion)
+        {
+            this.Name = name;
+            this.Code = code;
+            this.RowVersion = Convert.FromBase64String(rowVersion);
+            this.ApplyEvent(new CredentialTypeModifiedEvent(this.Identity, this.Id, code,
+                name));
+            return this;
+        }
+
         protected CredentialType(Guid identity, string name, string code)
         {
             this.Identity = identity;
             this.Name = name;
             this.Code = code;
+            this.ApplyEvent(new CredentialTypeCreatedEvent(identity, code, name));
         }
 
         protected CredentialType()
