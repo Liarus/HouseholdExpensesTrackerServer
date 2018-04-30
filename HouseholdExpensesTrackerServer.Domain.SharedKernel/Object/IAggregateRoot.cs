@@ -9,10 +9,10 @@ namespace HouseholdExpensesTrackerServer.Domain.SharedKernel.Object
     {
         Guid Identity { get; }
 
-        IReadOnlyCollection<IDomainEvent> Events { get; }
+        IReadOnlyCollection<IEvent> Events { get; }
 
         void ClearEvents();
 
-        IDomainEvent[] FlushUncommitedEvents();
+        IEvent[] FlushUncommitedEvents();
     }
 }

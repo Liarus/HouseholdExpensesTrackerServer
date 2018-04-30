@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace HouseholdExpensesTrackerServer.Dispatchers
 {
-    public class DomainEventDispatcher : IDomainEventDispatcher
+    public class EventDispatcher : IEventDispatcher
     {
         private readonly IComponentContext _componentContext;
         private List<Delegate> _actions;
 
-        public DomainEventDispatcher(IComponentContext componentContext)
+        public EventDispatcher(IComponentContext componentContext)
         {
             _componentContext = componentContext;
         }
@@ -24,9 +24,9 @@ namespace HouseholdExpensesTrackerServer.Dispatchers
         }
 
         public async Task Publish<TEvent>(TEvent @event, 
-            CancellationToken cancellationToken = default(CancellationToken)) where TEvent : IDomainEvent
+            CancellationToken cancellationToken = default(CancellationToken)) where TEvent : IEvent
         {
-            ICollection<IDomainEventHandler<TEvent>> handlers;
+            ICollection<IEventHandler<TEvent>> handlers;
             if (_componentContext.TryResolve(out handlers))
             {
                 var tasks = new List<Task>();
@@ -40,7 +40,7 @@ namespace HouseholdExpensesTrackerServer.Dispatchers
             }
             else
             {
-                throw new HandlerNotFoundException(@event.GetType().Name, nameof(DomainEventDispatcher));
+                throw new HandlerNotFoundException(@event.GetType().Name, nameof(EventDispatcher));
             }
         }
     }

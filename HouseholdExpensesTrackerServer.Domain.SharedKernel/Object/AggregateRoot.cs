@@ -9,19 +9,19 @@ namespace HouseholdExpensesTrackerServer.Domain.SharedKernel.Object
     {
         public Guid Identity { get; protected set; }
 
-        public IReadOnlyCollection<IDomainEvent> Events => _events;
+        public IReadOnlyCollection<IEvent> Events => _events;
 
-        protected readonly List<IDomainEvent> _events = new List<IDomainEvent>();
+        protected readonly List<IEvent> _events = new List<IEvent>();
 
         public void ClearEvents() => _events.Clear();
 
-        public IDomainEvent[] FlushUncommitedEvents()
+        public IEvent[] FlushUncommitedEvents()
         {
             var events = _events.ToArray();
             _events.Clear();
             return events;
         }
 
-        protected void ApplyEvent(IDomainEvent @event) => _events.Add(@event);
+        protected void ApplyEvent(IEvent @event) => _events.Add(@event);
     }
 }

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace HouseholdExpensesTrackerServer.Domain.SharedKernel.Event
 {
-    public interface IDomainEventDispatcher
+    public interface IEventDispatcher
     {
         Task Publish<TEvent>(TEvent @event, CancellationToken cancellationToken = default(CancellationToken)) 
-            where TEvent : IDomainEvent;
+            where TEvent : IEvent;
     }
 }

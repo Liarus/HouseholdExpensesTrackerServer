@@ -18,20 +18,20 @@ namespace HouseholdExpensesTrackerServer.CompositionRoot
         protected override void Load(ContainerBuilder builder)
         {
             base.Load(builder);
-            RegisterDomainEvents(builder);
+            RegisterEvents(builder);
             RegisterCommands(builder);
             RegisterQueries(builder);
             RegisterRepositories(builder);
         }
 
-        private static void RegisterDomainEvents(ContainerBuilder builder)
+        private static void RegisterEvents(ContainerBuilder builder)
         {
             builder.Register(c =>
             {
                 var context = c.Resolve<IComponentContext>();
-                return new DomainEventDispatcher(context);
+                return new EventDispatcher(context);
             })
-            .As<IDomainEventDispatcher>()
+            .As<IEventDispatcher>()
             .InstancePerLifetimeScope();
         }
 

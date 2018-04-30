@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HouseholdExpensesTrackerServer.Domain.Identities.Event
 {
-    class UserModifiedEvent : BaseDomainEvent
+    class UserModifiedEvent : BaseEvent
     {
         public readonly int UserId;
 

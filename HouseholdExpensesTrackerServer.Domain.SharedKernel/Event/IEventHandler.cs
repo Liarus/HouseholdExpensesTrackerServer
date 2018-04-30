@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HouseholdExpensesTrackerServer.Domain.SharedKernel.Event
 {
-    public interface IDomainEventHandler<in T> : IMessageHandler<T> where T: IDomainEvent
+    public interface IEventHandler<in T> : IMessageHandler<T> where T: IEvent
     {
     }
 }

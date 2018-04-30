@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HouseholdExpensesTrackerServer.Domain.Identities.Event
 {
-    public class RoleModifiedEvent : BaseDomainEvent
+    public class RoleModifiedEvent : BaseEvent
     {
         public readonly int RoleId;
 
