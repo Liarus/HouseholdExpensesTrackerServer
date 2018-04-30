@@ -17,20 +17,16 @@ namespace HouseholdExpensesTrackerServer.Dispatchers
             _componentContext = componentContext;
         }
 
-        public async Task<TResult> Executec<TResult>(IQuery<TResult> query, 
+        public async Task<TResult> Execute<TResult>(IQuery query, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            var asyncGenericType = typeof(IQueryHandler<,>);
-            var closedAsyncGeneric = asyncGenericType.MakeGenericType(query.GetType(), typeof(TResult));
-            object asyncHandler;
-            if (_componentContext.TryResolve(closedAsyncGeneric, out asyncHandler))
-            {
-                var result = asyncHandler
-                    .GetType()
-                    .GetMethod("Handle", new[] { query.GetType(), typeof(CancellationToken) })
-                    .Invoke(asyncHandler, new object[] { query, cancellationToken });
+            var handlerType = 
+                typeof(IQueryHandler<,>).MakeGenericType(query.GetType(), typeof(TResult));
 
-                return await (Task<TResult>)result;
+            dynamic handler;
+            if (_componentContext.TryResolve(handlerType, out handler))
+            {
+                return await handler.Handle((dynamic)query, cancellationToken);
             }
 
             throw new HandlerNotFoundException(query.GetType().Name, nameof(QueryDispatcher));

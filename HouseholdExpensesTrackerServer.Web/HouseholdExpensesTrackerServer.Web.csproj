@@ -13,6 +13,7 @@
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,7 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HouseholdExpensesTrackerServer.Application\HouseholdExpensesTrackerServer.Application.csproj" />
     <ProjectReference Include="..\HouseholdExpensesTrackerServer.CompositionRoot\HouseholdExpensesTrackerServer.CompositionRoot.csproj" />
+    <ProjectReference Include="..\HouseholdExpensesTrackerServer.DataTransferObjects\HouseholdExpensesTrackerServer.DataTransferObjects.csproj" />
     <ProjectReference Include="..\HouseholdExpensesTrackerServer.Dispatchers\HouseholdExpensesTrackerServer.Dispatchers.csproj" />
     <ProjectReference Include="..\HouseholdExpensesTrackerServer.Domain.SharedKernel\HouseholdExpensesTrackerServer.Domain.SharedKernel.csproj" />
     <ProjectReference Include="..\HouseholdExpensesTrackerServer.Domain\HouseholdExpensesTrackerServer.Domain.csproj" />

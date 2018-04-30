@@ -9,6 +9,6 @@ namespace HouseholdExpensesTrackerServer.Domain.SharedKernel.Commands
     public interface ICommandDispatcher
     {
         Task Send<TCommand>(TCommand command, CancellationToken cancellationToken = default(CancellationToken)) 
-            where TCommand : ICommandHandler;
+            where TCommand : ICommand;
     }
 }

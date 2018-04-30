@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HouseholdExpensesTrackerServer.Domain.SharedKernel.Query
 {
-    public interface IQuery<out TResult>
+    public interface IQuery
     {
     }
 }

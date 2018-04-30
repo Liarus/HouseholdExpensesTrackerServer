@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HouseholdExpensesTrackerServer.Domain.SharedKernel.Commands
 {
-    public interface ICommandHandler : IMessage
+    public interface ICommand : IMessage
     {
     }
 }

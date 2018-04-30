@@ -9,20 +9,46 @@ namespace HouseholdExpensesTrackerServer.Domain.SharedKernel.Repository
 {
     public interface IRepository<TModel, UIdentifier>
     {
-        Task<ICollection<TModel>> FindAllAsync(Expression<Func<UIdentifier, bool>> predicate);
 
-        Task<TModel> FindAsync(Expression<Func<UIdentifier, bool>> predicate);
+        #region synchronous
 
-        Task<ICollection<TModel>> GetAllAsync();
+        ICollection<TModel> FindAll(Expression<Func<TModel, bool>> predicate);
 
-        Task<TModel> GetByIdAsync(UIdentifier id);
+        TModel Find(Expression<Func<TModel, bool>> predicate);
 
-        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
+        ICollection<TModel> GetAll();
+
+        TModel GetById(UIdentifier id);
 
         void Add(TModel entity);
 
         void Delete(TModel entity);
 
         void DeleteById(UIdentifier id);
+
+        int SaveChanges();
+
+        #endregion
+
+        #region asynchronous
+
+        Task AddAsync(TModel entity, CancellationToken cancellationToken = default(CancellationToken));
+
+        Task DeleteByIdAsync(UIdentifier id, CancellationToken cancellationToken = default(CancellationToken));
+
+        Task<ICollection<TModel>> FindAllAsync(Expression<Func<TModel, bool>> predicate,
+            CancellationToken cancellationToken = default(CancellationToken));
+
+        Task<TModel> FindAsync(Expression<Func<TModel, bool>> predicate,
+            CancellationToken cancellationToken = default(CancellationToken));
+
+        Task<ICollection<TModel>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+        Task<TModel> GetByIdAsync(UIdentifier id,
+            CancellationToken cancellationToken = default(CancellationToken));
+
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+        #endregion
     }
 }

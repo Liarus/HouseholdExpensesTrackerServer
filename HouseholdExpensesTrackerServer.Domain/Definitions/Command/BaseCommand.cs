@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HouseholdExpensesTrackerServer.Domain.Definitions.Command
 {
-    public abstract class BaseCommand : ICommandHandler
+    public abstract class BaseCommand : ICommand
     {
     }
 }

@@ -8,7 +8,7 @@ namespace HouseholdExpensesTrackerServer.Domain.SharedKernel.Query
 {
     public interface IQueryDispatcher
     {
-        Task<TResult> Executec<TResult>(IQuery<TResult> query,
+        Task<TResult> Execute<TResult>(IQuery query,
             CancellationToken cancellationToken = default(CancellationToken));
     }
 }

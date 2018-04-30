@@ -43,5 +43,7 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Context
         DatabaseFacade Database { get; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
+
+        int SaveChanges();
     }
 }
