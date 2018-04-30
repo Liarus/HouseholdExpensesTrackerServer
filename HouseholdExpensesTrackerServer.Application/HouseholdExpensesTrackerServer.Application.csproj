@@ -11,8 +11,4 @@
     <ProjectReference Include="..\HouseholdExpensesTrackerServer.Infrastructure\HouseholdExpensesTrackerServer.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Households\QueryHandler\" />
-  </ItemGroup>
-
 </Project>

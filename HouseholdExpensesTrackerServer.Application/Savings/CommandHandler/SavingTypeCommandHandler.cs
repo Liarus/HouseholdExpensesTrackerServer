@@ -11,8 +11,8 @@ using System.Threading.Tasks;
 
 namespace HouseholdExpensesTrackerServer.Application.Expenses.CommandHandler
 {
-    public class SavingTypeCommandHandler : ICommandHandler<CreateSavingTypeCommand>,
-                                            ICommandHandler<ModifySavingTypeCommand>
+    public class SavingTypeCommandHandler : ICommandHandlerAsync<CreateSavingTypeCommand>,
+                                            ICommandHandlerAsync<ModifySavingTypeCommand>
     {
         private readonly ISavingTypeRepository _types;
 
@@ -21,14 +21,14 @@ namespace HouseholdExpensesTrackerServer.Application.Expenses.CommandHandler
             _types = types;
         }
 
-        public async Task Handle(CreateSavingTypeCommand message, CancellationToken token = default(CancellationToken))
+        public async Task HandleAsync(CreateSavingTypeCommand message, CancellationToken token = default(CancellationToken))
         {
             var type = SavingType.Create(Guid.NewGuid(), message.UserId, message.Name, message.Symbol);
             _types.Add(type);
             await _types.SaveChangesAsync(token);
         }
 
-        public async Task Handle(ModifySavingTypeCommand message, CancellationToken token = default(CancellationToken))
+        public async Task HandleAsync(ModifySavingTypeCommand message, CancellationToken token = default(CancellationToken))
         {
             var type = await _types.GetByIdAsync(message.SavingTypeId);
             if (type == null)

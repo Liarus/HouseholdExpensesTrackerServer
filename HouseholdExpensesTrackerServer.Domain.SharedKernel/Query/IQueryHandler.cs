@@ -8,6 +8,6 @@ namespace HouseholdExpensesTrackerServer.Domain.SharedKernel.Query
 {
     public interface IQueryHandler<TQuery, TResult>  where TQuery : IQuery
     {
-        Task<TResult> Handle(TQuery query, CancellationToken cancellationToken = default(CancellationToken));
+        TResult Handle(TQuery query);
     }
 }

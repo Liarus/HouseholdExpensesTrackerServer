@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
 {
-    public class RoleCommandHandler : ICommandHandler<CreateRoleCommand>,
-                                      ICommandHandler<ModifyRoleCommand>,
-                                      ICommandHandler<AssignPermissionCommand>,
-                                      ICommandHandler<UnassignPermissionCommand>
+    public class RoleCommandHandler : ICommandHandlerAsync<CreateRoleCommand>,
+                                      ICommandHandlerAsync<ModifyRoleCommand>,
+                                      ICommandHandlerAsync<AssignPermissionCommand>,
+                                      ICommandHandlerAsync<UnassignPermissionCommand>
     {
         private readonly IRoleRepository _roles;
 
@@ -23,7 +23,7 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
             _roles = roles;
         }
 
-        public async Task Handle(CreateRoleCommand message, 
+        public async Task HandleAsync(CreateRoleCommand message, 
             CancellationToken token = default(CancellationToken))
         {
             var role = Role.Create(Guid.NewGuid(), message.Name, message.Code);
@@ -31,7 +31,7 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
             await _roles.SaveChangesAsync(token);
         }
 
-        public async Task Handle(ModifyRoleCommand message, 
+        public async Task HandleAsync(ModifyRoleCommand message, 
             CancellationToken token = default(CancellationToken))
         {
             var role = await this.GetRole(message.RoleId);
@@ -39,7 +39,7 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
             await _roles.SaveChangesAsync(token);
         }
 
-        public async Task Handle(AssignPermissionCommand message, 
+        public async Task HandleAsync(AssignPermissionCommand message, 
             CancellationToken token = default(CancellationToken))
         {
             var role = await this.GetRole(message.RoleId);
@@ -47,7 +47,7 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
             await _roles.SaveChangesAsync(token);
         }
 
-        public async Task Handle(UnassignPermissionCommand message, 
+        public async Task HandleAsync(UnassignPermissionCommand message, 
             CancellationToken token = default(CancellationToken))
         {
             var role = await this.GetRole(message.RoleId);

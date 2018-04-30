@@ -11,8 +11,8 @@ using System.Threading.Tasks;
 
 namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
 {
-    public class HouseholdCommandHandler : ICommandHandler<CreatePermissionCommand>,
-                                           ICommandHandler<ModifyPermissionCommand>
+    public class HouseholdCommandHandler : ICommandHandlerAsync<CreatePermissionCommand>,
+                                           ICommandHandlerAsync<ModifyPermissionCommand>
     {
         private readonly IPermissionRepository _permissions;
         public HouseholdCommandHandler(IPermissionRepository permissions)
@@ -20,7 +20,7 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
             _permissions = permissions;
         }
 
-        public async Task Handle(CreatePermissionCommand message, 
+        public async Task HandleAsync(CreatePermissionCommand message, 
             CancellationToken token = default(CancellationToken))
         {
             var permission = Permission.Create(Guid.NewGuid(), message.Name, message.Code);
@@ -28,7 +28,7 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
             await _permissions.SaveChangesAsync(token);
         }
 
-        public async Task Handle(ModifyPermissionCommand message, 
+        public async Task HandleAsync(ModifyPermissionCommand message, 
             CancellationToken token = default(CancellationToken))
         {
             var permission = await _permissions.GetByIdAsync(message.PermissionId);

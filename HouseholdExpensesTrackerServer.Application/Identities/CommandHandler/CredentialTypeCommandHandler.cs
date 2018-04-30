@@ -11,8 +11,8 @@ using System.Threading.Tasks;
 
 namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
 {
-    public class CredentialTypeCommandHandler : ICommandHandler<CreateCredentialTypeCommand>,
-                                                ICommandHandler<ModifyCredentialTypeCommand>
+    public class CredentialTypeCommandHandler : ICommandHandlerAsync<CreateCredentialTypeCommand>,
+                                                ICommandHandlerAsync<ModifyCredentialTypeCommand>
     {
         private readonly ICredentialTypeRepository _types;
 
@@ -21,14 +21,14 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
             _types = types;
         }
 
-        public async Task Handle(CreateCredentialTypeCommand message, CancellationToken token = default(CancellationToken))
+        public async Task HandleAsync(CreateCredentialTypeCommand message, CancellationToken token = default(CancellationToken))
         {
             var type = CredentialType.Create(Guid.NewGuid(), message.Name, message.Code);
             _types.Add(type);
             await _types.SaveChangesAsync(token);
         }
 
-        public async Task Handle(ModifyCredentialTypeCommand message, CancellationToken token = default(CancellationToken))
+        public async Task HandleAsync(ModifyCredentialTypeCommand message, CancellationToken token = default(CancellationToken))
         {
             var type = await _types.GetByIdAsync(message.CredentialTypeId);
             if (type == null)

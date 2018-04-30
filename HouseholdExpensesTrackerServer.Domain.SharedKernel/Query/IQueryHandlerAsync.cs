@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace HouseholdExpensesTrackerServer.Domain.SharedKernel.Query
 {
-    public interface IQueryDispatcher
+    public interface IQueryHandlerAsync<TQuery, TResult>  where TQuery : IQuery
     {
-        TResult Execute<TResult>(IQuery query);
+        Task<TResult> HandleAsync(TQuery query, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

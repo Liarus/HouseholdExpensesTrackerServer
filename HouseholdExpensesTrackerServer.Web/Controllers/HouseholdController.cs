@@ -18,12 +18,12 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
     public class HouseholdController : Controller
     {
 
-        private readonly ICommandDispatcher _commandDispatcher;
+        private readonly ICommandDispatcherAsync _commandDispatcher;
 
-        private readonly IQueryDispatcher _queryDispatcher;
+        private readonly IQueryDispatcherAsync _queryDispatcher;
 
-        public HouseholdController(ICommandDispatcher commandDispatcher,
-            IQueryDispatcher queryDispatcher)
+        public HouseholdController(ICommandDispatcherAsync commandDispatcher,
+            IQueryDispatcherAsync queryDispatcher)
         {
             _commandDispatcher = commandDispatcher;
             _queryDispatcher = queryDispatcher;
@@ -45,7 +45,7 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
         [Route("~/api/user/{userId:int}/households")]
         public async Task<IActionResult> GetForUser(int userId)
         {
-            var housedolds = await _queryDispatcher.Execute<IEnumerable<HouseholdDto>>(new HouseholdListQuery(userId));
+            var housedolds = await _queryDispatcher.ExecuteAsync<IEnumerable<HouseholdDto>>(new HouseholdListQuery(userId));
             return Ok(housedolds);
         }
         
@@ -59,7 +59,7 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody]CreateHouseholdDto request)
         {
-            await _commandDispatcher.Send<CreateHouseholdCommand>(new CreateHouseholdCommand(request.UserId, request.Name, 
+            await _commandDispatcher.SendAsync<CreateHouseholdCommand>(new CreateHouseholdCommand(request.UserId, request.Name, 
                 request.Symbol, request.Description, request.Street, request.City, request.Country, request.ZipCode));
             return Ok();
         }

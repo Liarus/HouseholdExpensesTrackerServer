@@ -12,9 +12,9 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
     public class ValuesController : Controller
     {
         private IUserManager _userManager;
-        private IEventDispatcher _dispatcher;
+        private IEventDispatcherAsync _dispatcher;
 
-        public ValuesController(IUserManager userManager, IEventDispatcher dispatcher)
+        public ValuesController(IUserManager userManager, IEventDispatcherAsync dispatcher)
         {
             _userManager = userManager;
             _dispatcher = dispatcher;

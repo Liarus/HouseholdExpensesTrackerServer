@@ -1,5 +1,4 @@
 ﻿using HouseholdExpensesTrackerServer.DataTransferObjects.Response;
-using HouseholdExpensesTrackerServer.Domain.Households.Repository;
 using HouseholdExpensesTrackerServer.Domain.SharedKernel.Query;
 using HouseholdExpensesTrackerServer.Infrastructure.Context;
 using System;
@@ -9,10 +8,11 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using HouseholdExpensesTrackerServer.Application.Households.Query;
 
-namespace HouseholdExpensesTrackerServer.Application.Households.Query
+namespace HouseholdExpensesTrackerServer.Application.Households.QueryHandler
 {
-    public class HouseholdQueryHandler : IQueryHandler<HouseholdListQuery, IEnumerable<HouseholdDto>>
+    public class HouseholdQueryHandler : IQueryHandlerAsync<HouseholdListQuery, IEnumerable<HouseholdDto>>
     {
         IDbContext _db;
 
@@ -21,7 +21,7 @@ namespace HouseholdExpensesTrackerServer.Application.Households.Query
             _db = db;
         }
 
-        public async Task<IEnumerable<HouseholdDto>> Handle(HouseholdListQuery query, 
+        public async Task<IEnumerable<HouseholdDto>> HandleAsync(HouseholdListQuery query, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
             var housesolds = await
@@ -40,7 +40,7 @@ namespace HouseholdExpensesTrackerServer.Application.Households.Query
                                 ZipCode = e.Address.ZipCode,
                                 RowVersion = string.Empty
                             }
-                        ).AsNoTracking().ToListAsync();
+                        ).AsNoTracking().ToListAsync(cancellationToken);
             return housesolds;
         }
     }

@@ -31,7 +31,7 @@ namespace HouseholdExpensesTrackerServer.CompositionRoot
                 var context = c.Resolve<IComponentContext>();
                 return new EventDispatcher(context);
             })
-            .As<IEventDispatcher>()
+            .As<IEventDispatcherAsync>()
             .InstancePerLifetimeScope();
         }
 
@@ -42,11 +42,11 @@ namespace HouseholdExpensesTrackerServer.CompositionRoot
                 var context = c.Resolve<IComponentContext>();
                 return new CommandDispatcher(context);
             })
-            .As<ICommandDispatcher>()
+            .As<ICommandDispatcherAsync>()
             .InstancePerLifetimeScope();
 
             var assembly = Assembly.Load(new AssemblyName("HouseholdExpensesTrackerServer.Application"));
-            builder.RegisterAssemblyTypes(assembly).AsClosedTypesOf(typeof(ICommandHandler<>));
+            builder.RegisterAssemblyTypes(assembly).AsClosedTypesOf(typeof(ICommandHandlerAsync<>));
         }
 
         private static void RegisterQueries(ContainerBuilder builder)
@@ -56,11 +56,11 @@ namespace HouseholdExpensesTrackerServer.CompositionRoot
                 var context = c.Resolve<IComponentContext>();
                 return new QueryDispatcher(context);
             })
-            .As<IQueryDispatcher>()
+            .As<IQueryDispatcherAsync>()
             .InstancePerLifetimeScope();
 
             var assembly = Assembly.Load(new AssemblyName("HouseholdExpensesTrackerServer.Application"));
-            builder.RegisterAssemblyTypes(assembly).AsClosedTypesOf(typeof(IQueryHandler<,>));
+            builder.RegisterAssemblyTypes(assembly).AsClosedTypesOf(typeof(IQueryHandlerAsync<,>));
         }
 
         private static void RegisterRepositories(ContainerBuilder builder)

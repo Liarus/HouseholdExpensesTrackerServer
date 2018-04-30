@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace HouseholdExpensesTrackerServer.Domain.SharedKernel.Messages
 {
-    public interface IMessageHandler<in T> where T : IMessage
+    public interface IMessageHandlerAsync<in T> where T : IMessage
     {
-        void Handle(T message);
+        Task HandleAsync(T message, CancellationToken token = default(CancellationToken));
     }
 }

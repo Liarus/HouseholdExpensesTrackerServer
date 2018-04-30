@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HouseholdExpensesTrackerServer.Dispatchers
 {
-    public class QueryDispatcher : IQueryDispatcher
+    public class QueryDispatcher : IQueryDispatcherAsync
     {
         private readonly IComponentContext _componentContext;
 
@@ -17,16 +17,16 @@ namespace HouseholdExpensesTrackerServer.Dispatchers
             _componentContext = componentContext;
         }
 
-        public async Task<TResult> Execute<TResult>(IQuery query, 
+        public async Task<TResult> ExecuteAsync<TResult>(IQuery query, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
             var handlerType = 
-                typeof(IQueryHandler<,>).MakeGenericType(query.GetType(), typeof(TResult));
+                typeof(IQueryHandlerAsync<,>).MakeGenericType(query.GetType(), typeof(TResult));
 
             dynamic handler;
             if (_componentContext.TryResolve(handlerType, out handler))
             {
-                return await handler.Handle((dynamic)query, cancellationToken);
+                return await handler.HandleAsync((dynamic)query, cancellationToken);
             }
 
             throw new HandlerNotFoundException(query.GetType().Name, nameof(QueryDispatcher));

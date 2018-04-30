@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HouseholdExpensesTrackerServer.Dispatchers
 {
-    public class EventDispatcher : IEventDispatcher
+    public class EventDispatcher : IEventDispatcherAsync
     {
         private readonly IComponentContext _componentContext;
         private List<Delegate> _actions;
@@ -23,17 +23,17 @@ namespace HouseholdExpensesTrackerServer.Dispatchers
             _actions = null;
         }
 
-        public async Task Publish<TEvent>(TEvent @event, 
+        public async Task PublishAsync<TEvent>(TEvent @event, 
             CancellationToken cancellationToken = default(CancellationToken)) where TEvent : IEvent
         {
-            ICollection<IEventHandler<TEvent>> handlers;
+            ICollection<IEventHandlerAsync<TEvent>> handlers;
             if (_componentContext.TryResolve(out handlers))
             {
                 var tasks = new List<Task>();
 
                 foreach (var asyncHandler in handlers)
                 {
-                    tasks.Add(asyncHandler.Handle(@event));
+                    tasks.Add(asyncHandler.HandleAsync(@event, cancellationToken));
                 }
 
                 await Task.WhenAll(tasks);

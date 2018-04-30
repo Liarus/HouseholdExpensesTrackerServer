@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace HouseholdExpensesTrackerServer.Dispatchers
 {
-    public class CommandDispatcher : ICommandDispatcher
+    public class CommandDispatcher : ICommandDispatcherAsync
     {
         private readonly IComponentContext _componentContext;
 
@@ -17,14 +17,14 @@ namespace HouseholdExpensesTrackerServer.Dispatchers
             _componentContext = componentContext;
         }
 
-        public async Task Send<TCommand>(TCommand command, 
+        public async Task SendAsync<TCommand>(TCommand command, 
             CancellationToken cancellationToken) where TCommand : ICommand
         {
-            ICommandHandler<TCommand> handler;
+            ICommandHandlerAsync<TCommand> handler;
 
             if (_componentContext.TryResolve(out handler))
             {
-                await handler.Handle(command, cancellationToken);
+                await handler.HandleAsync(command, cancellationToken);
             }
             else
             {

@@ -12,8 +12,8 @@ using System.Threading.Tasks;
 
 namespace HouseholdExpensesTrackerServer.Application.Households.CommandHandler
 {
-    public class HouseholdCommandHandler : ICommandHandler<CreateHouseholdCommand>,
-                                           ICommandHandler<ModifyHouseholdCommand>
+    public class HouseholdCommandHandler : ICommandHandlerAsync<CreateHouseholdCommand>,
+                                           ICommandHandlerAsync<ModifyHouseholdCommand>
     {
         private readonly IHouseholdRepository _households;
         public HouseholdCommandHandler(IHouseholdRepository households)
@@ -21,7 +21,7 @@ namespace HouseholdExpensesTrackerServer.Application.Households.CommandHandler
             _households = households;
         }
 
-        public async Task Handle(CreateHouseholdCommand message, CancellationToken token = default(CancellationToken))
+        public async Task HandleAsync(CreateHouseholdCommand message, CancellationToken token = default(CancellationToken))
         {
             var household = Household.Create(Guid.NewGuid(), message.UserId, message.Name, message.Symbol,
                 message.Description, Address.Create(message.Country, message.ZipCode, message.City, message.Street));
@@ -29,7 +29,7 @@ namespace HouseholdExpensesTrackerServer.Application.Households.CommandHandler
             await _households.SaveChangesAsync(token);
         }
 
-        public async Task Handle(ModifyHouseholdCommand message, CancellationToken token = default(CancellationToken))
+        public async Task HandleAsync(ModifyHouseholdCommand message, CancellationToken token = default(CancellationToken))
         {
             var household = await _households.GetByIdAsync(message.HouseholdId);
             if (household == null)

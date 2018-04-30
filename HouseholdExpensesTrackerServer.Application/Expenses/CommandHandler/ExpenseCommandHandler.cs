@@ -11,8 +11,8 @@ using System.Threading.Tasks;
 
 namespace HouseholdExpensesTrackerServer.Application.Expenses.CommandHandler
 {
-    public class ExpenseCommandHandler : ICommandHandler<CreateExpenseCommand>,
-                                         ICommandHandler<ModifyExpenseCommand>
+    public class ExpenseCommandHandler : ICommandHandlerAsync<CreateExpenseCommand>,
+                                         ICommandHandlerAsync<ModifyExpenseCommand>
     {
         private readonly IExpenseRepository _expenses;
 
@@ -21,7 +21,7 @@ namespace HouseholdExpensesTrackerServer.Application.Expenses.CommandHandler
             _expenses = expenses;
         }
 
-        public async Task Handle(CreateExpenseCommand message, CancellationToken token = default(CancellationToken))
+        public async Task HandleAsync(CreateExpenseCommand message, CancellationToken token = default(CancellationToken))
         {
             var expense = Expense.Create(Guid.NewGuid(), message.HouseholdId, message.ExpenseTypeId, message.Name,
                 message.Description, message.Amount, message.Date, Period.Create(message.PeriodStart, message.PeriodEnd));
@@ -29,7 +29,7 @@ namespace HouseholdExpensesTrackerServer.Application.Expenses.CommandHandler
             await _expenses.SaveChangesAsync(token);
         }
 
-        public async Task Handle(ModifyExpenseCommand message, CancellationToken token = default(CancellationToken))
+        public async Task HandleAsync(ModifyExpenseCommand message, CancellationToken token = default(CancellationToken))
         {
             var expense = await _expenses.GetByIdAsync(message.ExpenseId);
             if (expense == null)

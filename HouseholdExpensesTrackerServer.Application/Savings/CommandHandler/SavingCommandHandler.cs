@@ -11,8 +11,8 @@ using System.Threading.Tasks;
 
 namespace HouseholdExpensesTrackerServer.Application.Expenses.CommandHandler
 {
-    public class SavingCommandHandler : ICommandHandler<CreateSavingCommand>,
-                                        ICommandHandler<ModifySavingCommand>
+    public class SavingCommandHandler : ICommandHandlerAsync<CreateSavingCommand>,
+                                        ICommandHandlerAsync<ModifySavingCommand>
     {
         private readonly ISavingRepository _savings;
 
@@ -21,7 +21,7 @@ namespace HouseholdExpensesTrackerServer.Application.Expenses.CommandHandler
             _savings = savings;
         }
 
-        public async Task Handle(CreateSavingCommand message, CancellationToken token = default(CancellationToken))
+        public async Task HandleAsync(CreateSavingCommand message, CancellationToken token = default(CancellationToken))
         {
             var saving = Saving.Create(Guid.NewGuid(), message.HouseholdId, message.SavingTypeId, message.Name,
                 message.Description, message.Amount, message.Date);
@@ -29,7 +29,7 @@ namespace HouseholdExpensesTrackerServer.Application.Expenses.CommandHandler
             await _savings.SaveChangesAsync(token);
         }
 
-        public async Task Handle(ModifySavingCommand message, CancellationToken token = default(CancellationToken))
+        public async Task HandleAsync(ModifySavingCommand message, CancellationToken token = default(CancellationToken))
         {
             var saving = await _savings.GetByIdAsync(message.SavingId);
             if (saving == null)

@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
 {
-    public class UserCommandHandler : ICommandHandler<CreateUserCommand>,
-                                      ICommandHandler<ModifyUserCommand>,
-                                      ICommandHandler<AddCredentialCommand>,
-                                      ICommandHandler<AssignRoleCommand>,
-                                      ICommandHandler<UnassignRoleCommand>
+    public class UserCommandHandler : ICommandHandlerAsync<CreateUserCommand>,
+                                      ICommandHandlerAsync<ModifyUserCommand>,
+                                      ICommandHandlerAsync<AddCredentialCommand>,
+                                      ICommandHandlerAsync<AssignRoleCommand>,
+                                      ICommandHandlerAsync<UnassignRoleCommand>
     {
         IUserRepository _users;
 
@@ -24,7 +24,7 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
             _users = users;
         }
 
-        public async Task Handle(CreateUserCommand message, 
+        public async Task HandleAsync(CreateUserCommand message, 
             CancellationToken token = default(CancellationToken))
         {
             var user = User.Create(Guid.NewGuid(), message.Name);
@@ -32,7 +32,7 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
             await _users.SaveChangesAsync(token);
         }
 
-        public async Task Handle(ModifyUserCommand message, 
+        public async Task HandleAsync(ModifyUserCommand message, 
             CancellationToken token = default(CancellationToken))
         {
             var user = await this.GetUser(message.UserId);
@@ -40,7 +40,7 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
             await _users.SaveChangesAsync(token);
         }
 
-        public async Task Handle(AddCredentialCommand message, 
+        public async Task HandleAsync(AddCredentialCommand message, 
             CancellationToken token = default(CancellationToken))
         {
             var user = await this.GetUser(message.UserId);
@@ -49,7 +49,7 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
             await _users.SaveChangesAsync(token);
         }
 
-        public async Task Handle(AssignRoleCommand message, 
+        public async Task HandleAsync(AssignRoleCommand message, 
             CancellationToken token = default(CancellationToken))
         {
             var user = await this.GetUser(message.UserId);
@@ -57,7 +57,7 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
             await _users.SaveChangesAsync(token);
         }
 
-        public async Task Handle(UnassignRoleCommand message, 
+        public async Task HandleAsync(UnassignRoleCommand message, 
             CancellationToken token = default(CancellationToken))
         {
             var user = await this.GetUser(message.UserId);

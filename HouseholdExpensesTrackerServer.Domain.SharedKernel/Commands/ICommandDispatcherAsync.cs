@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace HouseholdExpensesTrackerServer.Domain.SharedKernel.Commands
 {
-    public interface ICommandDispatcher
+    public interface ICommandDispatcherAsync
     {
-        void Send<TCommand>(TCommand command) 
+        Task SendAsync<TCommand>(TCommand command, CancellationToken cancellationToken = default(CancellationToken)) 
             where TCommand : ICommand;
     }
 }
