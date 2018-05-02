@@ -35,7 +35,7 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
         public async Task HandleAsync(ModifyUserCommand message, 
             CancellationToken token = default(CancellationToken))
         {
-            var user = await this.GetUser(message.UserId);
+            var user = await this.GetUser(message.UserId, token);
             user.Modify(message.Name, message.Version);
             await _users.SaveChangesAsync(token);
         }
@@ -43,7 +43,7 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
         public async Task HandleAsync(AddCredentialCommand message, 
             CancellationToken token = default(CancellationToken))
         {
-            var user = await this.GetUser(message.UserId);
+            var user = await this.GetUser(message.UserId, token);
             user.AddCredential(Credential.Create(message.CredentialTypeId, 
                 message.Identifier, message.Secret));
             await _users.SaveChangesAsync(token);
@@ -52,7 +52,7 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
         public async Task HandleAsync(AssignRoleCommand message, 
             CancellationToken token = default(CancellationToken))
         {
-            var user = await this.GetUser(message.UserId);
+            var user = await this.GetUser(message.UserId, token);
             user.AssignRole(message.RoleId);
             await _users.SaveChangesAsync(token);
         }
@@ -60,14 +60,14 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
         public async Task HandleAsync(UnassignRoleCommand message, 
             CancellationToken token = default(CancellationToken))
         {
-            var user = await this.GetUser(message.UserId);
+            var user = await this.GetUser(message.UserId, token);
             user.UnassignRole(message.RoleId);
             await _users.SaveChangesAsync(token);
         }
 
-        protected async Task<User> GetUser(int userId)
+        protected async Task<User> GetUser(int userId, CancellationToken token = default(CancellationToken))
         {
-            var user = await _users.GetByIdAsync(userId);
+            var user = await _users.GetByIdAsync(userId, token);
             if (user == null)
             {
                 throw new UserCommandException($"User {userId} doesn't exists");

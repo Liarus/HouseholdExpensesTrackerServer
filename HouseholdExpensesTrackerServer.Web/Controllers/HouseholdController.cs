@@ -75,8 +75,10 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
         
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            await _commandDispatcher.SendAsync<DeleteHouseholdCommand>(new DeleteHouseholdCommand(id));
+            return Ok();
         }
     }
 }

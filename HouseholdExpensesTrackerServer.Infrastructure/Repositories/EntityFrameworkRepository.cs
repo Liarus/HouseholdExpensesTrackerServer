@@ -94,7 +94,7 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Repositories
         public virtual async Task<TModel> GetByIdAsync(UIdentifier id, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await _dbSet.FindAsync(id, cancellationToken);
+            return await _dbSet.FindAsync(id);
         }
 
         public virtual int SaveChanges()

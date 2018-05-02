@@ -38,6 +38,11 @@ namespace HouseholdExpensesTrackerServer.Domain.Households.Model
             return this;
         }
 
+        public void Delete()
+        {
+            this.ApplyEvent(new HouseholdDeletedEvent(this.Identity, this.Id));
+        }
+
         protected Household(Guid identity, int userId, string name, string symbol, string description,
             Address address)
         {
