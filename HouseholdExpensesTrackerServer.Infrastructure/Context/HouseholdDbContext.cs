@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HouseholdExpensesTrackerServer.Domain.SharedKernel.Object;
 using System.Threading;
+using HouseholdExpensesTrackerServer.Domain.SharedKernel.Event;
 
 namespace HouseholdExpensesTrackerServer.Infrastructure.Context
 {
@@ -20,6 +21,8 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Context
         private readonly List<IAuditableEntity> _added = new List<IAuditableEntity>();
 
         private readonly ConcurrentDictionary<string, List<int>> _insertedIds = new ConcurrentDictionary<string, List<int>>();
+
+        private readonly IEventDispatcherAsync _eventDispatcher;
 
         protected const string CONCURRENCY_PROPERTY_NAME = "Version";
 
@@ -47,8 +50,9 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Context
 
         public DbSet<Household> Households { get; set; }
 
-        public HouseholdDbContext(DbContextOptions<HouseholdDbContext> options) : base(options)
+        public HouseholdDbContext(DbContextOptions<HouseholdDbContext> options, IEventDispatcherAsync eventDispatcher) : base(options)
         {
+            _eventDispatcher = eventDispatcher;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -71,9 +75,11 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Context
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            this.ManageTimestamps();
+            var events = this.GatherAllUncommitedEvents();
+            this.ManageEntities();
             var result =  await base.SaveChangesAsync(cancellationToken);
             this.FillInsertedIds();
+            await this.DispatchEvents(events);
             return result;
         }
 
@@ -89,7 +95,7 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Context
             return "Me";
         }
 
-        protected virtual void ManageTimestamps()
+        protected virtual void ManageEntities()
         {
             var entities = ChangeTracker.Entries().Where(x => x.Entity is IAuditableEntity);
             var currentUsername = this.GetCurrentUser();
@@ -125,6 +131,41 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Context
                 });
             }
             _added.Clear();
+        }
+
+        protected virtual IReadOnlyCollection<IEvent[]> GatherAllUncommitedEvents()
+        {
+            var domainEventAggregates = ChangeTracker.Entries<IAggregateRoot>()
+            .Select(e => e.Entity)
+            .Where(e => e.Events.Any())
+            .ToArray();
+
+            var events = new List<IEvent[]>();
+
+            foreach (var aggregate in domainEventAggregates)
+            {
+                events.Add(aggregate.FlushUncommitedEvents());
+            }
+
+            return events;
+        }
+
+        protected virtual async Task DispatchEvents(IEnumerable<IEvent[]> events)
+        {
+            if (events.Count() == 0)
+            {
+                return;
+            }
+
+            var tasks = new List<Task>();
+            foreach (var group in events)
+            {
+                foreach(var @event in group)
+                {
+                    tasks.Add(_eventDispatcher.PublishAsync(@event));
+                }
+            }
+            await Task.WhenAll(tasks);
         }
 
         protected static object GetPropValue(object src, string propName)
