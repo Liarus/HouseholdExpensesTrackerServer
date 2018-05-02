@@ -8,7 +8,7 @@ namespace HouseholdExpensesTrackerServer.Domain.SharedKernel.Object
     {
         public TIdentity Id { get; protected set; }
 
-        public byte[] RowVersion { get; protected set; }
+        public int Version { get; protected set; }
 
         protected DateTime _createdDate;
 
@@ -24,12 +24,14 @@ namespace HouseholdExpensesTrackerServer.Domain.SharedKernel.Object
             _createdBy = createdBy;
             _createdDate = createdDate;
             _createdBy = createdBy;
+            this.Version = 1;
         }
 
         public void UpdateAuditable(DateTime updatedDate, string updatedBy)
         {
             _updatedDate = updatedDate;
             _updatedBy = updatedBy;
+            this.Version++;
         }
     }
 }

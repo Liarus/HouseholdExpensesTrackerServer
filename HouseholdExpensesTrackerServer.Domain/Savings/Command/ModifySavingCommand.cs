@@ -19,10 +19,10 @@ namespace HouseholdExpensesTrackerServer.Domain.Savings.Command
 
         public readonly DateTime Date;
 
-        public readonly string RowVersion;
+        public readonly int Version;
 
         public ModifySavingCommand(int savingId, int savingTypeId, string name, string description,
-            decimal amount, DateTime date, string rowVersion)
+            decimal amount, DateTime date, int version)
         {
             this.SavingId = savingId;
             this.SavingTypeId = savingTypeId;
@@ -30,7 +30,7 @@ namespace HouseholdExpensesTrackerServer.Domain.Savings.Command
             this.Description = description;
             this.Amount = amount;
             this.Date = date;
-            this.RowVersion = rowVersion;
+            this.Version = version;
         }
     }
 }

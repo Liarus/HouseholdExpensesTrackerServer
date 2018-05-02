@@ -23,11 +23,11 @@ namespace HouseholdExpensesTrackerServer.Domain.Households.Command
 
         public readonly string ZipCode;
 
-        public readonly string RowVersion;
+        public readonly int Version;
 
         public ModifyHouseholdCommand(int householdId, string name, string symbol,
             string description, string street, string city, string country, string zipcode,
-            string rowVersion)
+            int version)
         {
             this.HouseholdId = householdId;
             this.Name = name;
@@ -37,7 +37,7 @@ namespace HouseholdExpensesTrackerServer.Domain.Households.Command
             this.City = city;
             this.Country = country;
             this.ZipCode = zipcode;
-            this.RowVersion = rowVersion;
+            this.Version = version;
         }
     }
 }

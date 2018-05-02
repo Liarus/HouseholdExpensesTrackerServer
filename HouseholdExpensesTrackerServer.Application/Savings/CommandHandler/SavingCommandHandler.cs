@@ -37,7 +37,7 @@ namespace HouseholdExpensesTrackerServer.Application.Expenses.CommandHandler
                 throw new SavingCommandException($"Saving {message.SavingId} doesn't exists");
             }
             saving.Modify(message.SavingTypeId, message.Name, message.Description, message.Amount,
-                message.Date, message.RowVersion);
+                message.Date, message.Version);
             await _savings.SaveChangesAsync(token);
         }
     }

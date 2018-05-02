@@ -11,9 +11,10 @@ using System;
 namespace HouseholdExpensesTrackerServer.Infrastructure.Migrations
 {
     [DbContext(typeof(HouseholdDbContext))]
-    partial class HouseholdDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180430122902_RowVersionToVersion")]
+    partial class RowVersionToVersion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

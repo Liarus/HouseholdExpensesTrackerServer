@@ -17,11 +17,11 @@ namespace HouseholdExpensesTrackerServer.Domain.Savings.Model
         public static SavingType Create(Guid identity, int userId, string name, string symbol)
             => new SavingType(identity, userId, name, symbol);
 
-        public SavingType Modify(string name, string symbol, string rowVersion)
+        public SavingType Modify(string name, string symbol, int version)
         {
             this.Name = name;
             this.Symbol = symbol;
-            this.RowVersion = Convert.FromBase64String(rowVersion);
+            this.Version = version;
             this.ApplyEvent(new SavingTypeModifiedEvent(this.Identity, this.Id, name, symbol));
             return this;
         }

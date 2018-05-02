@@ -6,7 +6,7 @@ namespace HouseholdExpensesTrackerServer.Domain.SharedKernel.Object
 {
     public interface IAuditableEntity
     {
-        byte[] RowVersion { get; }
+        int Version{ get; }
 
         void CreateAuditable(DateTime createdDate, string createdBy);
 

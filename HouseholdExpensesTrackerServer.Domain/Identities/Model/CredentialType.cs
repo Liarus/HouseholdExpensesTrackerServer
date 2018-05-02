@@ -15,11 +15,11 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
         public static CredentialType Create(Guid identity, string name, string code) 
             => new CredentialType(identity, name, code);
 
-        public CredentialType Modify(string name, string code, string rowVersion)
+        public CredentialType Modify(string name, string code, int version)
         {
             this.Name = name;
             this.Code = code;
-            this.RowVersion = Convert.FromBase64String(rowVersion);
+            this.Version = version;
             this.ApplyEvent(new CredentialTypeModifiedEvent(this.Identity, this.Id, code,
                 name));
             return this;

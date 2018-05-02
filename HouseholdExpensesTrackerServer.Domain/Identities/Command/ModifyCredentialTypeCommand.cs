@@ -13,15 +13,15 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Command
 
         public readonly string Code;
 
-        public readonly string RowVersion;
+        public readonly int Version;
 
         public ModifyCredentialTypeCommand(int credentialTypeId, string name, 
-            string code, string rowVersion)
+            string code, int version)
         {
             this.CredentialTypeId = credentialTypeId;
             this.Code = code;
             this.Name = name;
-            this.RowVersion = rowVersion;
+            this.Version = version;
         }
     }
 }

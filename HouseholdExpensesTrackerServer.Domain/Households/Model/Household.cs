@@ -24,12 +24,15 @@ namespace HouseholdExpensesTrackerServer.Domain.Households.Model
             Address address) => new Household(identity, userId, name, symbol, description, address);
 
         public Household Modify(string name, string symbol, string description, Address address, 
-            string rowVersion)
+            int version)
         {
             this.Name = name;
+            this.Symbol = symbol;
             this.Description = description;
-            this.Address = address;
-            this.RowVersion = Convert.FromBase64String(rowVersion);
+            //this.Address = address;
+            //EF core bug
+            this.Address.UpdateFrom(address);
+            this.Version = version;
             this.ApplyEvent(new HouseholdModifiedEvent(this.Identity, this.Id, name, symbol, description,  
                 address.Street, address.City, address.Country, address.ZipCode));
             return this;

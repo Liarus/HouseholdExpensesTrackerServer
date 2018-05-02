@@ -22,10 +22,10 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
 
         public static User Create(Guid identity, string name) => new User(identity, name);
 
-        public User Modify(string name, string rowVersion)
+        public User Modify(string name, int version)
         {
             this.Name = name;
-            this.RowVersion = Convert.FromBase64String(rowVersion);
+            this.Version = version;
             this.ApplyEvent(new UserModifiedEvent(this.Identity, this.Id, name));
             return this;
         }

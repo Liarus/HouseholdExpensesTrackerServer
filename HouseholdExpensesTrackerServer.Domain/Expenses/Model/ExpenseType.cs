@@ -17,11 +17,11 @@ namespace HouseholdExpensesTrackerServer.Domain.Expenses.Model
         public static ExpenseType Create(Guid identity, int userId, string name, string symbol) 
             => new ExpenseType(identity, userId, name, symbol);
 
-        public ExpenseType Modify(string name, string symbol, string rowVersion)
+        public ExpenseType Modify(string name, string symbol, int version)
         {
             this.Name = name;
             this.Symbol = symbol;
-            this.RowVersion = Convert.FromBase64String(rowVersion);
+            this.Version = version;
             this.ApplyEvent(new ExpenseTypeModifiedEvent(this.Identity, this.Id, name, symbol));
             return this;
         }

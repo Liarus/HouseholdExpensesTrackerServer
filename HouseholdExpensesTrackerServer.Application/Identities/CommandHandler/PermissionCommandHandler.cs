@@ -36,7 +36,7 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
             {
                 throw new PermissionCommandException($"Permission {message.PermissionId} doesn't exists");
             }
-            permission.Modify(message.Name, message.Code, message.RowVersion);
+            permission.Modify(message.Name, message.Code, message.Version);
             await _permissions.SaveChangesAsync(token);
         }
     }

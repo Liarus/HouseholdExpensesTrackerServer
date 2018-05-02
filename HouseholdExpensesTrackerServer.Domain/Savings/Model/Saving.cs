@@ -25,14 +25,14 @@ namespace HouseholdExpensesTrackerServer.Domain.Savings.Model
                 amount, date);
 
         public Saving Modify(int savingTypeId, string name, string description,
-            decimal amount, DateTime date, string rowVersion)
+            decimal amount, DateTime date, int version)
         {
             this.SavingTypeId = savingTypeId;
             this.Name = name;
             this.Description = description;
             this.Amount = amount;
             this.Date = date;
-            this.RowVersion = Convert.FromBase64String(rowVersion);
+            this.Version = version;
             this.ApplyEvent(new SavingModifiedEvent(this.Identity, this.Id, savingTypeId, name, description,
                 amount, date));
             return this;

@@ -36,7 +36,7 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
                 throw new CredentialTypeCommandException(
                     $"Credential Type {message.CredentialTypeId} doesn't exists");
             }
-            type.Modify(message.Name, message.Code, message.RowVersion);
+            type.Modify(message.Name, message.Code, message.Version);
             await _types.SaveChangesAsync(token);
         }
     }

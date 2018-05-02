@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Text;
 using System.Threading.Tasks;
 using HouseholdExpensesTrackerServer.Domain.SharedKernel.Object;
@@ -16,7 +17,11 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Context
 {
     public class HouseholdDbContext: DbContext, IDbContext
     {
-        protected const string CONCURRENCY_PROPERTY_NAME = "RowVersion";
+        private readonly List<IAuditableEntity> _added = new List<IAuditableEntity>();
+
+        private readonly ConcurrentDictionary<string, List<int>> _insertedIds = new ConcurrentDictionary<string, List<int>>();
+
+        protected const string CONCURRENCY_PROPERTY_NAME = "Version";
 
         public DbSet<User> Users { get; set; }
 
@@ -67,7 +72,16 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Context
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             this.ManageTimestamps();
-            return await base.SaveChangesAsync(cancellationToken);
+            var result =  await base.SaveChangesAsync(cancellationToken);
+            this.FillInsertedIds();
+            return result;
+        }
+
+        public IReadOnlyCollection<int> GetAllInsertedIds(string entityType)
+        {
+            var ids = new List<int>();
+            _insertedIds.TryGetValue(entityType, out ids);
+            return ids;
         }
 
         protected virtual string GetCurrentUser()
@@ -91,12 +105,31 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Context
                 if (entity.State == EntityState.Added)
                 {
                     ((IAuditableEntity)entity.Entity).CreateAuditable(DateTime.UtcNow, currentUsername);
+                    _added.Add((IAuditableEntity)entity.Entity);
                 }
                 else if (entity.State == EntityState.Modified)
                 {
                     ((IAuditableEntity)entity.Entity).UpdateAuditable(DateTime.UtcNow, currentUsername);
                 }
             }
+        }
+
+        protected virtual void FillInsertedIds()
+        {
+            foreach(var entity in _added)
+            {
+                _insertedIds.AddOrUpdate(entity.GetType().Name, new List<int> { (int)GetPropValue(entity, "Id") }, (key, value) =>
+                {
+                    value.Add((int)GetPropValue(entity, "Id"));
+                    return value;
+                });
+            }
+            _added.Clear();
+        }
+
+        protected static object GetPropValue(object src, string propName)
+        {
+            return src.GetType().GetProperty(propName).GetValue(src, null);
         }
     }
 }

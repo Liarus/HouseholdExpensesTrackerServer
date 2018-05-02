@@ -27,7 +27,7 @@ namespace HouseholdExpensesTrackerServer.Domain.Expenses.Model
                 amount, date, period);
 
         public Expense Modify(int expenseTypeId, string name, string description, decimal amount,
-            DateTime date, Period period, string rowVersion)
+            DateTime date, Period period, int version)
         {
             this.ExpenseTypeId = expenseTypeId;
             this.Name = name;
@@ -35,7 +35,7 @@ namespace HouseholdExpensesTrackerServer.Domain.Expenses.Model
             this.Amount = amount;
             this.Date = date;
             this.Period = period;
-            this.RowVersion = Convert.FromBase64String(rowVersion);
+            this.Version = version;
             this.ApplyEvent(new ExpenseModifiedEvent(this.Identity, this.Id, expenseTypeId, name, description, amount, date,
                 period.PeriodStart, period.PeriodEnd));
             return this;

@@ -23,10 +23,10 @@ namespace HouseholdExpensesTrackerServer.Domain.Expenses.Command
 
         public readonly DateTime PeriodEnd;
 
-        public readonly string RowVersion;
+        public readonly int Version;
 
         public ModifyExpenseCommand(int expenseId, int expenseTypeId, string name, string description,
-            decimal amount, DateTime date, DateTime periodStart, DateTime periodEnd, string rowVersion)
+            decimal amount, DateTime date, DateTime periodStart, DateTime periodEnd, int version)
         {
             this.ExpenseId = expenseId;
             this.ExpenseTypeId = expenseTypeId;
@@ -36,7 +36,7 @@ namespace HouseholdExpensesTrackerServer.Domain.Expenses.Command
             this.Date = date;
             this.PeriodStart = periodStart;
             this.PeriodEnd = periodEnd;
-            this.RowVersion = rowVersion;
+            this.Version = version;
         }
     }
 }

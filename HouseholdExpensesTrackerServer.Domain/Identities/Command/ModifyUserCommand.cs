@@ -11,13 +11,13 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Command
 
         public readonly string Name;
 
-        public readonly string RowVersion;
+        public readonly int Version;
 
-        public ModifyUserCommand(int userId, string name, string rowVersion)
+        public ModifyUserCommand(int userId, string name, int version)
         {
             this.UserId = userId;
             this.Name = name;
-            this.RowVersion = rowVersion;
+            this.Version = version;
         }
     }
 }

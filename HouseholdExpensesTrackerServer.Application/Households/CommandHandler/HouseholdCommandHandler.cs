@@ -38,7 +38,7 @@ namespace HouseholdExpensesTrackerServer.Application.Households.CommandHandler
             }
             household.Modify(message.Name, message.Symbol, message.Description,
                 Address.Create(message.Country, message.ZipCode, message.City, message.Street),
-                message.RowVersion);
+                message.Version);
             await _households.SaveChangesAsync(token);
         }
     }

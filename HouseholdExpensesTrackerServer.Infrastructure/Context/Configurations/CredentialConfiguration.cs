@@ -31,8 +31,9 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Context.Configurations
                 .HasColumnName("UpdatedBy");
             builder.Property("_updatedDate")
                 .HasColumnName("UpdatedDate");
-            builder.Property(e => e.RowVersion)
-                .IsRowVersion();
+            builder.Property(e => e.Version)
+                .IsConcurrencyToken()
+                .HasColumnName("Version");
 
             builder.Property(e => e.Id)
                 .ValueGeneratedOnAdd();

@@ -37,7 +37,7 @@ namespace HouseholdExpensesTrackerServer.Application.Expenses.CommandHandler
                 throw new ExpenseCommandException($"Expense {message.ExpenseId} doesn't exists");
             }
             expense.Modify(message.ExpenseId, message.Name,message.Description, message.Amount, 
-                message.Date, Period.Create(message.PeriodStart, message.PeriodEnd), message.RowVersion);
+                message.Date, Period.Create(message.PeriodStart, message.PeriodEnd), message.Version);
             await _expenses.SaveChangesAsync(token);
         }
     }

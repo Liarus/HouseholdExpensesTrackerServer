@@ -13,15 +13,15 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Command
 
         public readonly string Code;
 
-        public readonly string RowVersion;
+        public readonly int Version;
 
         public ModifyRoleCommand(int roleId, string name, 
-            string code, string rowVersion)
+            string code, int version)
         {
             this.RoleId = roleId;
             this.Code = code;
             this.Name = name;
-            this.RowVersion = rowVersion;
+            this.Version = version;
         }
     }
 }

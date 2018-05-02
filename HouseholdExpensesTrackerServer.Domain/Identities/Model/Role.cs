@@ -21,11 +21,11 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
         public static Role Create(Guid identity, string name, string code) 
             => new Role(identity, name, code);
 
-        public Role Modify(string name, string code, string rowVersion)
+        public Role Modify(string name, string code, int version)
         {
             this.Name = name;
             this.Code = code;
-            this.RowVersion = Convert.FromBase64String(rowVersion);
+            this.Version = version;
             this.ApplyEvent(new RoleModifiedEvent(this.Identity,
                 this.Id, code, name));
             return this;

@@ -44,6 +44,8 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Context
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken));
 
+        IReadOnlyCollection<int> GetAllInsertedIds(string entityType);
+
         int SaveChanges();
     }
 }

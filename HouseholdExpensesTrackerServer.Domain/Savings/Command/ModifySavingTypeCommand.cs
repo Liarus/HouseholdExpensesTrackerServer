@@ -13,14 +13,14 @@ namespace HouseholdExpensesTrackerServer.Domain.Savings.Command
 
         public readonly string Symbol;
 
-        public readonly string RowVersion;
+        public readonly int Version;
 
-        public ModifySavingTypeCommand(int savingTypeId, string name, string symbol, string rowVersion)
+        public ModifySavingTypeCommand(int savingTypeId, string name, string symbol, int version)
         {
             this.SavingTypeId = savingTypeId;
             this.Name = name;
             this.Symbol = symbol;
-            this.RowVersion = rowVersion;
+            this.Version = version;
         }
     }
 }

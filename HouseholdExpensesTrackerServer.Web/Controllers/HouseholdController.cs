@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HouseholdExpensesTrackerServer.Application.Core.Query;
+using HouseholdExpensesTrackerServer.Application.Core.QueryHandler;
 using HouseholdExpensesTrackerServer.Application.Households.Query;
 using HouseholdExpensesTrackerServer.DataTransferObjects.Command;
+using HouseholdExpensesTrackerServer.DataTransferObjects.Request;
 using HouseholdExpensesTrackerServer.DataTransferObjects.Response;
 using HouseholdExpensesTrackerServer.Domain.Households.Command;
+using HouseholdExpensesTrackerServer.Domain.Households.Model;
 using HouseholdExpensesTrackerServer.Domain.SharedKernel.Commands;
 using HouseholdExpensesTrackerServer.Domain.SharedKernel.Query;
 using Microsoft.AspNetCore.Http;
@@ -51,8 +55,12 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
         
         // POST: api/Household
         [HttpPost]
-        public void Post([FromBody]string value)
+        public async Task<IActionResult> Post([FromBody]ModifyHouseholdDto request)
         {
+            await _commandDispatcher.SendAsync<ModifyHouseholdCommand>(new ModifyHouseholdCommand(request.Id, request.Name,
+                request.Symbol, request.Description, request.Street, request.City, request.Country, request.ZipCode,
+                request.Version));
+            return Ok();
         }
         
         // PUT: api/Household/5
@@ -61,7 +69,8 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
         {
             await _commandDispatcher.SendAsync<CreateHouseholdCommand>(new CreateHouseholdCommand(request.UserId, request.Name, 
                 request.Symbol, request.Description, request.Street, request.City, request.Country, request.ZipCode));
-            return Ok();
+            var insertedId = await _queryDispatcher.ExecuteAsync<int>(new GetLastIdQuery(nameof(Household)));
+            return Ok(insertedId);
         }
         
         // DELETE: api/ApiWithActions/5

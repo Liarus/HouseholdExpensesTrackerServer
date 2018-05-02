@@ -36,7 +36,7 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
             CancellationToken token = default(CancellationToken))
         {
             var user = await this.GetUser(message.UserId);
-            user.Modify(message.Name, message.RowVersion);
+            user.Modify(message.Name, message.Version);
             await _users.SaveChangesAsync(token);
         }
 

@@ -37,5 +37,13 @@ namespace HouseholdExpensesTrackerServer.Domain.Households.Model
         {
 
         }
+
+        internal void UpdateFrom(Address other)
+        {
+            this.Country = other.Country;
+            this.ZipCode = other.ZipCode;
+            this.City = other.City;
+            this.Street = other.Street;
+        }
     }
 }
