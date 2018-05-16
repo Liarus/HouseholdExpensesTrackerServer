@@ -12,7 +12,8 @@ using System.Threading.Tasks;
 namespace HouseholdExpensesTrackerServer.Application.Expenses.CommandHandler
 {
     public class ExpenseTypeCommandHandler : ICommandHandlerAsync<CreateExpenseTypeCommand>,
-                                             ICommandHandlerAsync<ModifyExpenseTypeCommand>
+                                             ICommandHandlerAsync<ModifyExpenseTypeCommand>,
+                                             ICommandHandlerAsync<DeleteExpenseTypeCommand>
     {
         private readonly IExpenseTypeRepository _types;
 
@@ -30,13 +31,26 @@ namespace HouseholdExpensesTrackerServer.Application.Expenses.CommandHandler
 
         public async Task HandleAsync(ModifyExpenseTypeCommand message, CancellationToken token = default(CancellationToken))
         {
-            var type = await _types.GetByIdAsync(message.ExpenseTypeId);
-            if (type == null)
-            {
-                throw new ExpenseTypeCommandException($"Expense Type {message.ExpenseTypeId} doesn't exists");
-            }
+            var type = await this.GetSavingType(message.ExpenseTypeId);
             type.Modify(message.Name, message.Symbol, message.Version);
             await _types.SaveChangesAsync(token);
+        }
+
+        public async Task HandleAsync(DeleteExpenseTypeCommand message, CancellationToken token = default(CancellationToken))
+        {
+            var type = await this.GetSavingType(message.ExpenseTypeId);
+            _types.Delete(type);
+            await _types.SaveChangesAsync();
+        }
+
+        protected async Task<ExpenseType> GetSavingType(int expenseTypeId, CancellationToken token = default(CancellationToken))
+        {
+            var type = await _types.GetByIdAsync(expenseTypeId, token);
+            if (type == null)
+            {
+                throw new ExpenseTypeCommandException($"Expense Type {expenseTypeId} doesn't exists");
+            }
+            return type;
         }
     }
 }

@@ -38,7 +38,7 @@ namespace HouseholdExpensesTrackerServer.Application.Households.QueryHandler
                                 Street = e.Address.Street,
                                 Symbol = e.Symbol,
                                 ZipCode = e.Address.ZipCode,
-                                RowVersion = string.Empty
+                                Version = e.Version
                             }
                         ).AsNoTracking().ToListAsync(cancellationToken);
             return housesolds;

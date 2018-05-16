@@ -1,4 +1,5 @@
 ﻿using HouseholdExpensesTrackerServer.Application.Savings.Exception;
+using HouseholdExpensesTrackerServer.Domain.Households.Command;
 using HouseholdExpensesTrackerServer.Domain.Savings.Command;
 using HouseholdExpensesTrackerServer.Domain.Savings.Model;
 using HouseholdExpensesTrackerServer.Domain.Savings.Repository;
@@ -12,7 +13,8 @@ using System.Threading.Tasks;
 namespace HouseholdExpensesTrackerServer.Application.Expenses.CommandHandler
 {
     public class SavingTypeCommandHandler : ICommandHandlerAsync<CreateSavingTypeCommand>,
-                                            ICommandHandlerAsync<ModifySavingTypeCommand>
+                                            ICommandHandlerAsync<ModifySavingTypeCommand>,
+                                            ICommandHandlerAsync<DeleteSavingTypeCommand>
     {
         private readonly ISavingTypeRepository _types;
 
@@ -30,13 +32,26 @@ namespace HouseholdExpensesTrackerServer.Application.Expenses.CommandHandler
 
         public async Task HandleAsync(ModifySavingTypeCommand message, CancellationToken token = default(CancellationToken))
         {
-            var type = await _types.GetByIdAsync(message.SavingTypeId);
-            if (type == null)
-            {
-                throw new SavingTypeCommandException($"Saving Type {message.SavingTypeId} doesn't exists");
-            }
+            var type = await this.GetSavingType(message.SavingTypeId);
             type.Modify(message.Name, message.Symbol, message.Version);
             await _types.SaveChangesAsync(token);
+        }
+
+        public async Task HandleAsync(DeleteSavingTypeCommand message, CancellationToken token = default(CancellationToken))
+        {
+            var type = await this.GetSavingType(message.SavingTypeId);
+            _types.Delete(type);
+            await _types.SaveChangesAsync();
+        }
+
+        protected async Task<SavingType> GetSavingType(int savingTypeId, CancellationToken token = default(CancellationToken))
+        {
+            var type = await _types.GetByIdAsync(savingTypeId, token);
+            if (type == null)
+            {
+                throw new SavingTypeCommandException($"Saving Type {savingTypeId} doesn't exists");
+            }
+            return type;
         }
     }
 }
