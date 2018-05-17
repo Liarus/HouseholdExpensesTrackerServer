@@ -63,7 +63,7 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
             return Ok();
         }
         
-        // PUT: api/Household/5
+        // PUT: api/Household
         [HttpPut]
         public async Task<IActionResult> Put([FromBody]CreateHouseholdDto request)
         {

@@ -60,8 +60,8 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
             return Ok();
         }
         
-        // PUT: api/SavingType/5
-        [HttpPut("{id}")]
+        // PUT: api/SavingType
+        [HttpPut]
         public async Task<IActionResult> Put([FromBody]CreateSavingTypeDto command)
         {
             await _commandDispatcher.SendAsync<CreateSavingTypeCommand>(new CreateSavingTypeCommand(command.UserId,
