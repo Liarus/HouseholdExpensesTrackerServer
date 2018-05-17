@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HouseholdExpensesTrackerServer.Web.Controllers
 {
     [Produces("application/json")]
-    [Route("api/SavingType")]
+    [Route("api/[controller]")]
     public class SavingTypeController : Controller
     {
         private readonly ICommandDispatcherAsync _commandDispatcher;
@@ -38,7 +38,7 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
         }
 
         // GET: api/SavingType/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}", Name = "GetSavingType")]
         public string Get(int id)
         {
             return "value";

@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HouseholdExpensesTrackerServer.Web.Controllers
 {
     [Produces("application/json")]
-    [Route("api/ExpenseType")]
+    [Route("api/[controller]")]
     public class ExpenseTypeController : Controller
     {
 
@@ -39,7 +39,7 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
         }
 
         // GET: api/ExpenseType/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}", Name = "GetExpenseType")]
         public string Get(int id)
         {
             return "value";

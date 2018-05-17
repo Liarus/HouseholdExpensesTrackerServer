@@ -40,7 +40,7 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
         }
 
         // GET: api/Household/5
-        [HttpGet("{id}", Name = "Get")]
+        [HttpGet("{id}", Name = "GetHousehold")]
         public string Get(int id)
         {
             return "value";
