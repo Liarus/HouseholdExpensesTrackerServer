@@ -1,7 +1,9 @@
 ﻿using Autofac;
 using HouseholdExpensesTrackerServer.Application.Households.CommandHandler;
 using HouseholdExpensesTrackerServer.Dispatchers;
+using HouseholdExpensesTrackerServer.Domain.Expenses.Repository;
 using HouseholdExpensesTrackerServer.Domain.Households.Repository;
+using HouseholdExpensesTrackerServer.Domain.Savings.Repository;
 using HouseholdExpensesTrackerServer.Domain.SharedKernel.Commands;
 using HouseholdExpensesTrackerServer.Domain.SharedKernel.Event;
 using HouseholdExpensesTrackerServer.Domain.SharedKernel.Query;
@@ -67,6 +69,10 @@ namespace HouseholdExpensesTrackerServer.CompositionRoot
         {
             builder.RegisterType<HouseholdRepository>()
                 .As<IHouseholdRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<SavingTypeRepository>()
+                .As<ISavingTypeRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<ExpenseTypeRepository>()
+                .As<IExpenseTypeRepository>().InstancePerLifetimeScope();
             //builder.RegisterGeneric(typeof(EntityFrameworkRepository<,>))
             //    .As(typeof(IRepository<,>));
         }
