@@ -90,6 +90,8 @@ namespace HouseholdExpensesTrackerServer.Web
 
         private static async Task InsertTestData(IDbContext context)
         {
+            context.Database.EnsureCreated();
+
             if (context.CredentialTypes.Any())
             {
                 return;
