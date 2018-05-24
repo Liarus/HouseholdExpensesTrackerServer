@@ -1,4 +1,4 @@
-﻿using HouseholdExpensesTrackerServer.Application.Savings.Query;
+﻿using HouseholdExpensesTrackerServer.Application.Identities.Query;
 using HouseholdExpensesTrackerServer.DataTransferObjects.Response;
 using HouseholdExpensesTrackerServer.Domain.SharedKernel.Query;
 using HouseholdExpensesTrackerServer.Infrastructure.Context;
@@ -10,32 +10,30 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace HouseholdExpensesTrackerServer.Application.Savings.QueryHandler
+namespace HouseholdExpensesTrackerServer.Application.Identities.QueryHandler
 {
-    public class SavingTypeQueryHandler : IQueryHandlerAsync<SavingTypeListQuery, IEnumerable<SavingTypeDto>>
+    public class CredentialTypeQueryHandler : IQueryHandlerAsync<CredentialTypeListQuery, IEnumerable<CredentialTypeDto>>
     {
         private readonly IDbContext _db;
 
-        public SavingTypeQueryHandler(IDbContext db)
+        public CredentialTypeQueryHandler(IDbContext db)
         {
             _db = db;
         }
 
-        public async Task<IEnumerable<SavingTypeDto>> HandleAsync(SavingTypeListQuery query, 
+        public async Task<IEnumerable<CredentialTypeDto>> HandleAsync(CredentialTypeListQuery query, 
             CancellationToken cancellationToken = default(CancellationToken))
         {
             var types = await
-                _db.SavingTypes
-                    .Where(e => e.UserId == query.UserId)
+                _db.CredentialTypes
                     .Select(e =>
-                        new SavingTypeDto
+                        new CredentialTypeDto
                         {
                             Id = e.Id,
-                            Name = e.Name,
-                            Symbol = e.Symbol,
-                            Version = e.Version
+                            Code = e.Code,
+                            Name = e.Name
                         }
-                    ).AsNoTracking().ToListAsync(cancellationToken);
+                    ).AsNoTracking().ToListAsync();
             return types;
         }
     }

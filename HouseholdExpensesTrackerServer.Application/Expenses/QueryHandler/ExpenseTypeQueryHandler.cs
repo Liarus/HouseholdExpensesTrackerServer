@@ -12,11 +12,11 @@ using HouseholdExpensesTrackerServer.Application.Expenses.Query;
 
 namespace HouseholdExpensesTrackerServer.Application.Expenses.QueryHandler
 {
-    public class SavingTypeQueryHandler : IQueryHandlerAsync<ExpenseTypeListQuery, IEnumerable<ExpenseTypeDto>>
+    public class ExpenseTypeQueryHandler : IQueryHandlerAsync<ExpenseTypeListQuery, IEnumerable<ExpenseTypeDto>>
     {
-        IDbContext _db;
+        private readonly IDbContext _db;
 
-        public SavingTypeQueryHandler(IDbContext db)
+        public ExpenseTypeQueryHandler(IDbContext db)
         {
             _db = db;
         }

@@ -8,9 +8,9 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
 {
     public class CredentialType : AggregateRoot<int>
     {
-        public string Code { get; set; }
+        public string Code { get; protected set; }
 
-        public string Name { get; set; }
+        public string Name { get; protected set; }
 
         public static CredentialType Create(Guid identity, string name, string code) 
             => new CredentialType(identity, name, code);
@@ -23,6 +23,11 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
             this.ApplyEvent(new CredentialTypeModifiedEvent(this.Identity, this.Id, code,
                 name));
             return this;
+        }
+
+        public void Delete()
+        {
+            this.ApplyEvent(new CredentialTypeDeletedEvent(this.Identity, this.Id));
         }
 
         protected CredentialType(Guid identity, string name, string code)

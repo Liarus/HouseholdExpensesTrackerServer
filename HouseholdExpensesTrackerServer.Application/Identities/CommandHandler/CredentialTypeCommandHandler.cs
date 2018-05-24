@@ -12,7 +12,8 @@ using System.Threading.Tasks;
 namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
 {
     public class CredentialTypeCommandHandler : ICommandHandlerAsync<CreateCredentialTypeCommand>,
-                                                ICommandHandlerAsync<ModifyCredentialTypeCommand>
+                                                ICommandHandlerAsync<ModifyCredentialTypeCommand>,
+                                                ICommandHandlerAsync<DeleteCredentialTypeCommand>
     {
         private readonly ICredentialTypeRepository _types;
 
@@ -30,14 +31,27 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
 
         public async Task HandleAsync(ModifyCredentialTypeCommand message, CancellationToken token = default(CancellationToken))
         {
-            var type = await _types.GetByIdAsync(message.CredentialTypeId);
-            if (type == null)
-            {
-                throw new CredentialTypeCommandException(
-                    $"Credential Type {message.CredentialTypeId} doesn't exists");
-            }
+            var type = await this.GetCredentialType(message.CredentialTypeId, token);
             type.Modify(message.Name, message.Code, message.Version);
             await _types.SaveChangesAsync(token);
+        }
+
+        public async Task HandleAsync(DeleteCredentialTypeCommand message, CancellationToken token = default(CancellationToken))
+        {
+            var type = await this.GetCredentialType(message.CredentialTypeId, token);
+            type.Delete();
+            _types.Delete(type);
+            await _types.SaveChangesAsync();
+        }
+
+        protected async Task<CredentialType> GetCredentialType(int typeId, CancellationToken token = default(CancellationToken))
+        {
+            var type = await _types.GetByIdAsync(typeId, token);
+            if (type == null)
+            {
+                throw new CredentialTypeCommandException($"Credential Type {typeId} doesn't exists");
+            }
+            return type;
         }
     }
 }

@@ -25,6 +25,11 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
             return this;
         }
 
+        public void Delete()
+        {
+            this.ApplyEvent(new PermissionDeletedEvent(this.Identity, this.Id));
+        }
+
         protected Permission(Guid identity, string name, string code)
         {
             this.Identity = identity;

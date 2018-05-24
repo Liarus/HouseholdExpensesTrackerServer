@@ -14,7 +14,7 @@ namespace HouseholdExpensesTrackerServer.Application.Households.QueryHandler
 {
     public class HouseholdQueryHandler : IQueryHandlerAsync<HouseholdListQuery, IEnumerable<HouseholdDto>>
     {
-        IDbContext _db;
+        private readonly IDbContext _db;
 
         public HouseholdQueryHandler(IDbContext db)
         {
