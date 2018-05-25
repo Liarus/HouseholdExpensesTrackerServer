@@ -30,20 +30,6 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
             _queryDispatcher = queryDispatcher;
         }
 
-        // GET: api/SavingType
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET: api/SavingType/5
-        [HttpGet("{id}", Name = "GetSavingType")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         [Route("~/api/user/{userId:int}/savingTypes")]
         public async Task<IActionResult> GetForUser(int userId)
         {

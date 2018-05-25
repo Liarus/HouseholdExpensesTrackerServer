@@ -33,19 +33,6 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
             _queryDispatcher = queryDispatcher;
         }
 
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET: api/Household/5
-        [HttpGet("{id}", Name = "GetHousehold")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         [Route("~/api/user/{userId:int}/households")]
         public async Task<IActionResult> GetForUser(int userId)
         {

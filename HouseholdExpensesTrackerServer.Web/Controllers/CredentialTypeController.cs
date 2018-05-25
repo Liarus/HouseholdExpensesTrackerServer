@@ -35,13 +35,6 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
             var types = await _queryDispatcher.ExecuteAsync<IEnumerable<CredentialTypeDto>>(new CredentialTypeListQuery());
             return Ok(types);
         }
-
-        // GET: api/CredentialType/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
         
         // POST: api/CredentialType
         [HttpPost]

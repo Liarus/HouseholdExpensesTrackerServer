@@ -35,13 +35,6 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
             var permissions = await _queryDispatcher.ExecuteAsync<IEnumerable<PermissionDto>>(new PermissionListQuery());
             return Ok(permissions);
         }
-
-        // GET: api/Permission/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
         
         // POST: api/Permission
         [HttpPost]
