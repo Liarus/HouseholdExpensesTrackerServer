@@ -31,6 +31,11 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
             return this;
         }
 
+        public void Delete()
+        {
+            this.ApplyEvent(new RoleDeletedEvent(this.Identity, this.Id));
+        }
+
         public void AssignPermission(int permissionId)
         {
             var role = _rolePermissions.SingleOrDefault(e => e.PermissionId == permissionId);

@@ -3,6 +3,7 @@ using HouseholdExpensesTrackerServer.Application.Households.CommandHandler;
 using HouseholdExpensesTrackerServer.Dispatchers;
 using HouseholdExpensesTrackerServer.Domain.Expenses.Repository;
 using HouseholdExpensesTrackerServer.Domain.Households.Repository;
+using HouseholdExpensesTrackerServer.Domain.Identities.Repository;
 using HouseholdExpensesTrackerServer.Domain.Savings.Repository;
 using HouseholdExpensesTrackerServer.Domain.SharedKernel.Commands;
 using HouseholdExpensesTrackerServer.Domain.SharedKernel.Event;
@@ -73,6 +74,12 @@ namespace HouseholdExpensesTrackerServer.CompositionRoot
                 .As<ISavingTypeRepository>().InstancePerLifetimeScope();
             builder.RegisterType<ExpenseTypeRepository>()
                 .As<IExpenseTypeRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<PermissionRepository>()
+                .As<IPermissionRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<RoleRepository>()
+                .As<IRoleRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<CredentialTypeRepository>()
+                .As<ICredentialTypeRepository>().InstancePerLifetimeScope();
             //builder.RegisterGeneric(typeof(EntityFrameworkRepository<,>))
             //    .As(typeof(IRepository<,>));
         }

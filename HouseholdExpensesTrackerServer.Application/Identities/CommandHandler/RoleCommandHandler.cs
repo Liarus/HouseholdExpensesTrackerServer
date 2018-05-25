@@ -13,6 +13,7 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
 {
     public class RoleCommandHandler : ICommandHandlerAsync<CreateRoleCommand>,
                                       ICommandHandlerAsync<ModifyRoleCommand>,
+                                      ICommandHandlerAsync<DeleteRoleCommand>,
                                       ICommandHandlerAsync<AssignPermissionCommand>,
                                       ICommandHandlerAsync<UnassignPermissionCommand>
     {
@@ -53,6 +54,14 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
             var role = await this.GetRole(message.RoleId);
             role.UnassignPermission(message.PermissionId);
             await _roles.SaveChangesAsync(token);
+        }
+
+        public async Task HandleAsync(DeleteRoleCommand message, CancellationToken token = default(CancellationToken))
+        {
+            var role = await this.GetRole(message.RoleId);
+            role.Delete();
+            _roles.Delete(role);
+            await _roles.SaveChangesAsync();
         }
 
         protected async Task<Role> GetRole(int roleId)
