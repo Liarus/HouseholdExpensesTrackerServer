@@ -45,8 +45,7 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
             return Ok();
         }
         
-        // PUT: api/CredentialType/5
-        [HttpPut("{id}")]
+        // PUT: api/CredentialType
         public async Task<IActionResult> Put([FromBody]CreateCredentialTypeDto command)
         {
             await _commandDispatcher.SendAsync<CreateCredentialTypeCommand>(new CreateCredentialTypeCommand(command.Name,

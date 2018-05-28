@@ -45,8 +45,7 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
             return Ok();
         }
         
-        // PUT: api/Permission/5
-        [HttpPut("{id}")]
+        // PUT: api/Permission
         public async Task<IActionResult> Put([FromBody]CreatePermissionDto command)
         {
             await _commandDispatcher.SendAsync<CreatePermissionCommand>(new CreatePermissionCommand(command.Name,

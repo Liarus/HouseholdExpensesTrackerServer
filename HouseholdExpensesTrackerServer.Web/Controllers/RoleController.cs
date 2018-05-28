@@ -65,8 +65,7 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
             return Ok();
         }
 
-        // PUT: api/Role/5
-        [HttpPut("{id}")]
+        // PUT: api/Role
         public async Task<IActionResult> Put([FromBody]CreateRoleDto command)
         {
             await _commandDispatcher.SendAsync<CreateRoleCommand>(new CreateRoleCommand(command.Name,
