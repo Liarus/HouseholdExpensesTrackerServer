@@ -58,6 +58,14 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
             this.ApplyEvent(new PermissionUnassignedEvent(this.Identity, this.Id, permissionId));
         }
 
+        public void UnassignAllPermissions()
+        {
+            foreach(var permission in _rolePermissions)
+            {
+                this.UnassignPermission(permission.PermissionId);
+            }
+        }
+
         protected Role(Guid identity, string name, string code)
         {
             this.Identity = identity;

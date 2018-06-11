@@ -4,6 +4,7 @@ using HouseholdExpensesTrackerServer.Domain.Identities.Model;
 using HouseholdExpensesTrackerServer.Domain.Identities.Repository;
 using HouseholdExpensesTrackerServer.Domain.SharedKernel.Commands;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
@@ -28,6 +29,13 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
             CancellationToken token = default(CancellationToken))
         {
             var role = Role.Create(Guid.NewGuid(), message.Name, message.Code);
+            if (message.PermissionIds != null && message.PermissionIds.Count > 0)
+            {
+                foreach (var permissionId in message.PermissionIds)
+                {
+                    role.AssignPermission(permissionId);
+                }
+            }
             _roles.Add(role);
             await _roles.SaveChangesAsync(token);
         }
@@ -37,6 +45,34 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
         {
             var role = await this.GetRole(message.RoleId);
             role.Modify(message.Name, message.Code, message.Version);
+            if (message.PermissionIds == null || message.PermissionIds.Count == 0)
+            {
+                if (role.RolePermissions.Count != 0)
+                {
+                    role.UnassignAllPermissions();
+                }
+            }
+            else
+            {
+                var existingPermissionIds = (from permission in role.RolePermissions
+                                             select permission.PermissionId).ToList();
+
+                foreach (var permissionId in message.PermissionIds)
+                {
+                    if (!role.RolePermissions.Any(e => e.RoleId == permissionId))
+                    {
+                        role.AssignPermission(permissionId);
+                    }
+                }
+
+                foreach (var permissionId in existingPermissionIds)
+                {
+                    if (!message.PermissionIds.Any(e => e == permissionId))
+                    {
+                        role.UnassignPermission(permissionId);
+                    }
+                }
+            }
             await _roles.SaveChangesAsync(token);
         }
 

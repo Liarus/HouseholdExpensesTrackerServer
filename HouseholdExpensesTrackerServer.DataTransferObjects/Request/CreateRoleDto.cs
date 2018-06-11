@@ -8,6 +8,8 @@ namespace HouseholdExpensesTrackerServer.DataTransferObjects.Request
     {
         public string Name { get; set; }
 
+        public ICollection<int> PermissionIds { get; set; }
+
         public string Code { get; set; }
     }
 }

@@ -23,11 +23,10 @@ namespace HouseholdExpensesTrackerServer.Dispatchers
             _actions = null;
         }
 
-        public async Task PublishAsync<TEvent>(TEvent @event, 
+        public async Task PublishAsync<TEvent>(TEvent @event,
             CancellationToken cancellationToken = default(CancellationToken)) where TEvent : IEvent
         {
-            ICollection<IEventHandlerAsync<TEvent>> handlers;
-            if (_componentContext.TryResolve(out handlers))
+            if (_componentContext.TryResolve(out ICollection<IEventHandlerAsync<TEvent>> handlers))
             {
                 var tasks = new List<Task>();
 

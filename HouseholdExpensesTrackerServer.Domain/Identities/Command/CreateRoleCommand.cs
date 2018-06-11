@@ -11,10 +11,13 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Command
 
         public readonly string Code;
 
-        public CreateRoleCommand(string name, string code)
+        public readonly ICollection<int> PermissionIds;
+
+        public CreateRoleCommand(string name, string code, ICollection<int> permissionIds)
         {
             this.Name = name;
             this.Code = code;
+            this.PermissionIds = permissionIds;
         }
     }
 }

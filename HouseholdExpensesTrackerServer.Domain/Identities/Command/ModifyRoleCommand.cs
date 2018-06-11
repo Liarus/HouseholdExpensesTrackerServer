@@ -13,14 +13,17 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Command
 
         public readonly string Code;
 
+        public readonly ICollection<int> PermissionIds;
+
         public readonly int Version;
 
         public ModifyRoleCommand(int roleId, string name, 
-            string code, int version)
+            string code, ICollection<int> permissionIds, int version)
         {
             this.RoleId = roleId;
             this.Code = code;
             this.Name = name;
+            this.PermissionIds = permissionIds;
             this.Version = version;
         }
     }

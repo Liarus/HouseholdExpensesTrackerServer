@@ -41,7 +41,7 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
         public async Task<IActionResult> Post([FromBody]ModifyRoleDto command)
         {
             await _commandDispatcher.SendAsync<ModifyRoleCommand>(new ModifyRoleCommand(command.Id,
-           command.Name, command.Code, command.Version));
+           command.Name, command.Code, command.PermissionIds, command.Version));
             return Ok();
         }
 
@@ -57,7 +57,7 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
 
         // POST: api/Role/5/assignPermission/2
         [HttpPost]
-        [Route("~/api/role/{roleId:int}/unAssignPermission/{permissionId:int}")]
+        [Route("~/api/role/{roleId:int}/unassignPermission/{permissionId:int}")]
         public async Task<IActionResult> UnAssignPermission(int roleId, int permissionId)
         {
             await _commandDispatcher.SendAsync<UnassignPermissionCommand>(
@@ -69,7 +69,7 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
         public async Task<IActionResult> Put([FromBody]CreateRoleDto command)
         {
             await _commandDispatcher.SendAsync<CreateRoleCommand>(new CreateRoleCommand(command.Name,
-               command.Code));
+               command.Code, command.PermissionIds));
             return Ok();
         }
         

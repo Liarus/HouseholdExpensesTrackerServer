@@ -12,6 +12,8 @@ namespace HouseholdExpensesTrackerServer.DataTransferObjects.Request
 
         public string Code { get; set; }
 
+        public ICollection<int> PermissionIds { get; set; }
+
         public int Version { get; set; }
     }
 }
