@@ -16,7 +16,7 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
 
         public IReadOnlyCollection<RolePermission> RolePermissions => _rolePermissions;
 
-        private readonly List<RolePermission> _rolePermissions;
+        private HashSet<RolePermission> _rolePermissions = new HashSet<RolePermission>();
 
         public static Role Create(Guid identity, string name, string code) 
             => new Role(identity, name, code);
@@ -71,7 +71,6 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
             this.Identity = identity;
             this.Name = name;
             this.Code = code;
-            _rolePermissions = new List<RolePermission>();
             this.ApplyEvent(new RoleCreatedEvent(identity, code, name));
         }
 

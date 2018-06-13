@@ -29,7 +29,8 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.QueryHandler
                     Id = e.Id,
                     Code = e.Code,
                     Name = e.Name,
-                    PermissionIds = e.RolePermissions.Select(o => o.PermissionId).ToList()
+                    PermissionIds = e.RolePermissions.Select(o => o.PermissionId).ToList(),
+                    Version = e.Version
                 }).AsNoTracking().ToListAsync();
             return roles;
         }
