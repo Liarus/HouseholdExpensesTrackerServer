@@ -43,7 +43,7 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
             {
                 throw new RoleDomainException($"Permission {permissionId} is already assigned to role {this.Id}");
             }
-            _rolePermissions.Add(new RolePermission() { PermissionId = permissionId });
+            _rolePermissions.Add(new RolePermission { PermissionId = permissionId });
             this.ApplyEvent(new PermissionAssignedEvent(this.Identity, this.Id, permissionId));
         }
 

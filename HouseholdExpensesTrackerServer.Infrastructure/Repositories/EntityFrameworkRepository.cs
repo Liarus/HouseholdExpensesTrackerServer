@@ -16,7 +16,7 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Repositories
         where TModel : class, IEntity<UIdentifier>
     {
         private readonly IDbContext _context;
-        private DbSet<TModel> _dbSet;
+        protected readonly DbSet<TModel> _dbSet;
 
         public EntityFrameworkRepository(IDbContext context)
         {
@@ -106,6 +106,28 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Repositories
             CancellationToken cancellationToken = default(CancellationToken))
         {
             return await _context.SaveChangesAsync(cancellationToken);
+        }
+
+        protected IQueryable<TModel> QueryDb(Expression<Func<TModel, bool>> filter, Func<IQueryable<TModel>, IOrderedQueryable<TModel>> orderBy, Func<IQueryable<TModel>, IQueryable<TModel>> includes)
+        {
+            IQueryable<TModel> query = _dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            if (includes != null)
+            {
+                query = includes(query);
+            }
+
+            if (orderBy != null)
+            {
+                query = orderBy(query);
+            }
+
+            return query;
         }
     }
 }

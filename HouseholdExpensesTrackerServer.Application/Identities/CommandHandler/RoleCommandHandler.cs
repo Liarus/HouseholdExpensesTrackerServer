@@ -59,7 +59,7 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
 
                 foreach (var permissionId in message.PermissionIds)
                 {
-                    if (!role.RolePermissions.Any(e => e.RoleId == permissionId))
+                    if (!role.RolePermissions.Any(e => e.PermissionId == permissionId))
                     {
                         role.AssignPermission(permissionId);
                     }
