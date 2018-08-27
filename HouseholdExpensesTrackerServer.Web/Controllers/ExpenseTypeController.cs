@@ -15,34 +15,25 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HouseholdExpensesTrackerServer.Web.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/[controller]")]
-    public class ExpenseTypeController : Controller
+    public class ExpenseTypeController : BaseController
     {
-
-        private readonly ICommandDispatcherAsync _commandDispatcher;
-
-        private readonly IQueryDispatcherAsync _queryDispatcher;
-
         public ExpenseTypeController(ICommandDispatcherAsync commandDispatcher,
-                                    IQueryDispatcherAsync queryDispatcher)
+            IQueryDispatcherAsync queryDispatcher) : base(commandDispatcher, queryDispatcher)
         {
-            _commandDispatcher = commandDispatcher;
-            _queryDispatcher = queryDispatcher;
         }
 
         [Route("~/api/user/{userId:int}/expenseTypes")]
         public async Task<IActionResult> GetForUser(int userId)
         {
-            var types = await _queryDispatcher.ExecuteAsync<IEnumerable<ExpenseTypeDto>>(new ExpenseTypeListQuery(userId));
-            return Ok(types);
+            var result = await this.GetQueryAsync<IEnumerable<ExpenseTypeDto>>(new ExpenseTypeListQuery(userId));
+            return Ok(result);
         }
 
         // POST: api/ExpenseType
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]ModifyExpenseTypeDto command)
         {
-            await _commandDispatcher.SendAsync<ModifyExpenseTypeCommand>(new ModifyExpenseTypeCommand(command.Id,
+            await this.SendCommandAsync<ModifyExpenseTypeCommand>(new ModifyExpenseTypeCommand(command.Id,
               command.Name, command.Symbol, command.Version));
             return Ok();
         }
@@ -51,9 +42,9 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody]CreateSavingTypeDto command)
         {
-            await _commandDispatcher.SendAsync<CreateExpenseTypeCommand>(new CreateExpenseTypeCommand(command.UserId,
+            await this.SendCommandAsync<CreateExpenseTypeCommand>(new CreateExpenseTypeCommand(command.UserId,
                command.Name, command.Symbol));
-            var insertedId = await _queryDispatcher.ExecuteAsync<int>(new GetLastIdQuery(nameof(ExpenseType)));
+            var insertedId = await this.GetQueryAsync<int>(new GetLastIdQuery(nameof(ExpenseType)));
             return Ok(insertedId);
         }
 
@@ -61,7 +52,7 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _commandDispatcher.SendAsync<DeleteExpenseTypeCommand>(new DeleteExpenseTypeCommand(id));
+            await this.SendCommandAsync<DeleteExpenseTypeCommand>(new DeleteExpenseTypeCommand(id));
             return Ok();
         }
     }

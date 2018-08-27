@@ -15,33 +15,25 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HouseholdExpensesTrackerServer.Web.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/[controller]")]
-    public class SavingTypeController : Controller
+    public class SavingTypeController : BaseController
     {
-        private readonly ICommandDispatcherAsync _commandDispatcher;
-
-        private readonly IQueryDispatcherAsync _queryDispatcher;
-
         public SavingTypeController(ICommandDispatcherAsync commandDispatcher,
-                                    IQueryDispatcherAsync queryDispatcher)
+            IQueryDispatcherAsync queryDispatcher) : base(commandDispatcher, queryDispatcher)
         {
-            _commandDispatcher = commandDispatcher;
-            _queryDispatcher = queryDispatcher;
         }
 
         [Route("~/api/user/{userId:int}/savingTypes")]
         public async Task<IActionResult> GetForUser(int userId)
         {
-            var types = await _queryDispatcher.ExecuteAsync<IEnumerable<SavingTypeDto>>(new SavingTypeListQuery(userId));
-            return Ok(types);
+            var result = await this.GetQueryAsync<IEnumerable<SavingTypeDto>>(new SavingTypeListQuery(userId));
+            return Ok(result);
         }
 
         // POST: api/SavingType
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]ModifySavingTypeDto command)
         {
-            await _commandDispatcher.SendAsync<ModifySavingTypeCommand>(new ModifySavingTypeCommand(command.Id,
+            await this.SendCommandAsync<ModifySavingTypeCommand>(new ModifySavingTypeCommand(command.Id,
                 command.Name, command.Symbol, command.Version));
             return Ok();
         }
@@ -50,9 +42,9 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody]CreateSavingTypeDto command)
         {
-            await _commandDispatcher.SendAsync<CreateSavingTypeCommand>(new CreateSavingTypeCommand(command.UserId,
+            await this.SendCommandAsync<CreateSavingTypeCommand>(new CreateSavingTypeCommand(command.UserId,
                 command.Name, command.Symbol));
-            var insertedId = await _queryDispatcher.ExecuteAsync<int>(new GetLastIdQuery(nameof(SavingType)));
+            var insertedId = await this.GetQueryAsync<int>(new GetLastIdQuery(nameof(SavingType)));
             return Ok(insertedId);
         }
 
@@ -60,7 +52,7 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _commandDispatcher.SendAsync<DeleteSavingTypeCommand>(new DeleteSavingTypeCommand(id));
+            await this.SendCommandAsync<DeleteSavingTypeCommand>(new DeleteSavingTypeCommand(id));
             return Ok();
         }
     }

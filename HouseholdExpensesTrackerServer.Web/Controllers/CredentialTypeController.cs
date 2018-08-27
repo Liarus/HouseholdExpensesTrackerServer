@@ -13,34 +13,26 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HouseholdExpensesTrackerServer.Web.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/CredentialType")]
-    public class CredentialTypeController : Controller
+    public class CredentialTypeController : BaseController
     {
-        private readonly ICommandDispatcherAsync _commandDispatcher;
-
-        private readonly IQueryDispatcherAsync _queryDispatcher;
-
         public CredentialTypeController(ICommandDispatcherAsync commandDispatcher,
-                                        IQueryDispatcherAsync queryDispatcher)
+            IQueryDispatcherAsync queryDispatcher) : base(commandDispatcher, queryDispatcher)
         {
-            _commandDispatcher = commandDispatcher;
-            _queryDispatcher = queryDispatcher;
         }
 
         // GET: api/CredentialType
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var types = await _queryDispatcher.ExecuteAsync<IEnumerable<CredentialTypeDto>>(new CredentialTypeListQuery());
-            return Ok(types);
+            var result = await this.GetQueryAsync<IEnumerable<CredentialTypeDto>>(new CredentialTypeListQuery());
+            return Ok(result);
         }
 
         // POST: api/CredentialType
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]ModifyCredentialTypeDto command)
         {
-            await _commandDispatcher.SendAsync<ModifyCredentialTypeCommand>(new ModifyCredentialTypeCommand(command.Id,
+            await this.SendCommandAsync<ModifyCredentialTypeCommand>(new ModifyCredentialTypeCommand(command.Id,
              command.Name, command.Code, command.Version));
             return Ok();
         }
@@ -48,7 +40,7 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
         // PUT: api/CredentialType
         public async Task<IActionResult> Put([FromBody]CreateCredentialTypeDto command)
         {
-            await _commandDispatcher.SendAsync<CreateCredentialTypeCommand>(new CreateCredentialTypeCommand(command.Name,
+            await this.SendCommandAsync<CreateCredentialTypeCommand>(new CreateCredentialTypeCommand(command.Name,
                 command.Code));
             return Ok();
         }
@@ -57,7 +49,7 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _commandDispatcher.SendAsync<DeleteCredentialTypeCommand>(new DeleteCredentialTypeCommand(id));
+            await this.SendCommandAsync<DeleteCredentialTypeCommand>(new DeleteCredentialTypeCommand(id));
             return Ok();
         }
     }

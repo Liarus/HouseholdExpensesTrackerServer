@@ -17,34 +17,25 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HouseholdExpensesTrackerServer.Web.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/[controller]")]
-    public class HouseholdController : Controller
+    public class HouseholdController : BaseController
     {
-
-        private readonly ICommandDispatcherAsync _commandDispatcher;
-
-        private readonly IQueryDispatcherAsync _queryDispatcher;
-
         public HouseholdController(ICommandDispatcherAsync commandDispatcher,
-            IQueryDispatcherAsync queryDispatcher)
+            IQueryDispatcherAsync queryDispatcher) : base(commandDispatcher, queryDispatcher)
         {
-            _commandDispatcher = commandDispatcher;
-            _queryDispatcher = queryDispatcher;
         }
 
         [Route("~/api/user/{userId:int}/households")]
         public async Task<IActionResult> GetForUser(int userId)
         {
-            var housedolds = await _queryDispatcher.ExecuteAsync<IEnumerable<HouseholdDto>>(new HouseholdListQuery(userId));
-            return Ok(housedolds);
+            var result = await this.GetQueryAsync<IEnumerable<HouseholdDto>>(new HouseholdListQuery(userId));
+            return Ok(result);
         }
 
         // POST: api/Household
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]ModifyHouseholdDto request)
         {
-            await _commandDispatcher.SendAsync<ModifyHouseholdCommand>(new ModifyHouseholdCommand(request.Id, request.Name,
+            await this.SendCommandAsync<ModifyHouseholdCommand>(new ModifyHouseholdCommand(request.Id, request.Name,
                 request.Symbol, request.Description, request.Street, request.City, request.Country, request.ZipCode,
                 request.Version));
             return Ok();
@@ -54,9 +45,9 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
         [HttpPut]
         public async Task<IActionResult> Put([FromBody]CreateHouseholdDto request)
         {
-            await _commandDispatcher.SendAsync<CreateHouseholdCommand>(new CreateHouseholdCommand(request.UserId, request.Name,
+            await this.SendCommandAsync<CreateHouseholdCommand>(new CreateHouseholdCommand(request.UserId, request.Name,
                 request.Symbol, request.Description, request.Street, request.City, request.Country, request.ZipCode));
-            var insertedId = await _queryDispatcher.ExecuteAsync<int>(new GetLastIdQuery(nameof(Household)));
+            var insertedId = await this.GetQueryAsync<int>(new GetLastIdQuery(nameof(Household)));
             return Ok(insertedId);
         }
 
@@ -64,7 +55,7 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            await _commandDispatcher.SendAsync<DeleteHouseholdCommand>(new DeleteHouseholdCommand(id));
+            await this.SendCommandAsync<DeleteHouseholdCommand>(new DeleteHouseholdCommand(id));
             return Ok();
         }
     }
