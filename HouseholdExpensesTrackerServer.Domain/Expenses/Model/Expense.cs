@@ -1,5 +1,5 @@
-﻿using HouseholdExpensesTrackerServer.Domain.Expenses.Event;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Object;
+﻿using HouseholdExpensesTrackerServer.Domain.Definitions.Object;
+using HouseholdExpensesTrackerServer.Domain.Expenses.Event;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,7 +22,7 @@ namespace HouseholdExpensesTrackerServer.Domain.Expenses.Model
 
         public virtual Period Period { get; protected set; }
 
-        public static Expense Create(Guid identity, int householdId, int expenseTypeId, string name, string description, 
+        public static Expense Create(Guid identity, int householdId, int expenseTypeId, string name, string description,
             decimal amount, DateTime date, Period period) => new Expense(identity, householdId, expenseTypeId, name, description,
                 amount, date, period);
 
@@ -41,7 +41,7 @@ namespace HouseholdExpensesTrackerServer.Domain.Expenses.Model
             return this;
         }
 
-        protected Expense(Guid identity, int householdId, int expenseTypeId, string name, string description, decimal amount, 
+        protected Expense(Guid identity, int householdId, int expenseTypeId, string name, string description, decimal amount,
             DateTime date, Period period)
         {
             this.Identity = identity;

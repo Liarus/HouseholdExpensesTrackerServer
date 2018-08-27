@@ -10,9 +10,9 @@ using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Text;
 using System.Threading.Tasks;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Object;
 using System.Threading;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Event;
+using HouseholdExpensesTrackerServer.Common.Object;
+using HouseholdExpensesTrackerServer.Common.Event;
 
 namespace HouseholdExpensesTrackerServer.Infrastructure.Context
 {
@@ -79,7 +79,7 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Context
             this.ManageEntities();
             var result =  await base.SaveChangesAsync(cancellationToken);
             this.FillInsertedIds();
-            await this.DispatchEvents(events);
+            await this.DispatchEventsAsync(events);
             return result;
         }
 
@@ -150,7 +150,7 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Context
             return events;
         }
 
-        protected virtual async Task DispatchEvents(IEnumerable<IEvent[]> events)
+        protected virtual async Task DispatchEventsAsync(IEnumerable<IEvent[]> events)
         {
             if (events.Count() == 0)
             {

@@ -1,5 +1,5 @@
-﻿using HouseholdExpensesTrackerServer.Domain.Expenses.Event;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Object;
+﻿using HouseholdExpensesTrackerServer.Domain.Definitions.Object;
+using HouseholdExpensesTrackerServer.Domain.Expenses.Event;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,7 +14,7 @@ namespace HouseholdExpensesTrackerServer.Domain.Expenses.Model
 
         public string Symbol { get; protected set; }
 
-        public static ExpenseType Create(Guid identity, int userId, string name, string symbol) 
+        public static ExpenseType Create(Guid identity, int userId, string name, string symbol)
             => new ExpenseType(identity, userId, name, symbol);
 
         public ExpenseType Modify(string name, string symbol, int version)

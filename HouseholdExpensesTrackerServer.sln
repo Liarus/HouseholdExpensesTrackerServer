@@ -15,9 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HouseholdExpensesTrackerSer
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HouseholdExpensesTrackerServer.CompositionRoot", "HouseholdExpensesTrackerServer.CompositionRoot\HouseholdExpensesTrackerServer.CompositionRoot.csproj", "{B5A0CCC0-E409-4AA1-B91D-1791BC01D5B5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HouseholdExpensesTrackerServer.Domain.SharedKernel", "HouseholdExpensesTrackerServer.Domain.SharedKernel\HouseholdExpensesTrackerServer.Domain.SharedKernel.csproj", "{A09BBD0C-CF3E-41BD-954D-FFF3C1EE9395}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseholdExpensesTrackerServer.Dispatchers", "HouseholdExpensesTrackerServer.Dispatchers\HouseholdExpensesTrackerServer.Dispatchers.csproj", "{D842147A-C605-42BE-AED3-032458775B24}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseholdExpensesTrackerServer.Common", "HouseholdExpensesTrackerServer.Common\HouseholdExpensesTrackerServer.Common.csproj", "{FDC9ECD5-0A9D-4D4C-883F-2D076B52B62E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,14 +47,10 @@ Global
 		{B5A0CCC0-E409-4AA1-B91D-1791BC01D5B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5A0CCC0-E409-4AA1-B91D-1791BC01D5B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B5A0CCC0-E409-4AA1-B91D-1791BC01D5B5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A09BBD0C-CF3E-41BD-954D-FFF3C1EE9395}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A09BBD0C-CF3E-41BD-954D-FFF3C1EE9395}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A09BBD0C-CF3E-41BD-954D-FFF3C1EE9395}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A09BBD0C-CF3E-41BD-954D-FFF3C1EE9395}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D842147A-C605-42BE-AED3-032458775B24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D842147A-C605-42BE-AED3-032458775B24}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D842147A-C605-42BE-AED3-032458775B24}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D842147A-C605-42BE-AED3-032458775B24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDC9ECD5-0A9D-4D4C-883F-2D076B52B62E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDC9ECD5-0A9D-4D4C-883F-2D076B52B62E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDC9ECD5-0A9D-4D4C-883F-2D076B52B62E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDC9ECD5-0A9D-4D4C-883F-2D076B52B62E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

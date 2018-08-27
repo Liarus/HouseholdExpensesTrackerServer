@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HouseholdExpensesTrackerServer.Application.Identities.Command;
 using HouseholdExpensesTrackerServer.Application.Identities.Query;
+using HouseholdExpensesTrackerServer.Common.Command;
+using HouseholdExpensesTrackerServer.Common.Query;
 using HouseholdExpensesTrackerServer.DataTransferObjects.Request;
 using HouseholdExpensesTrackerServer.DataTransferObjects.Response;
-using HouseholdExpensesTrackerServer.Domain.Identities.Command;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Commands;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Query;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,7 +35,7 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
             var permissions = await _queryDispatcher.ExecuteAsync<IEnumerable<PermissionDto>>(new PermissionListQuery());
             return Ok(permissions);
         }
-        
+
         // POST: api/Permission
         [HttpPost]
         public async Task<IActionResult> Post([FromBody]ModifyPermissionDto command)
@@ -44,7 +44,7 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
             command.Name, command.Code, command.Version));
             return Ok();
         }
-        
+
         // PUT: api/Permission
         public async Task<IActionResult> Put([FromBody]CreatePermissionDto command)
         {
@@ -52,7 +52,7 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
                 command.Code));
             return Ok();
         }
-        
+
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)

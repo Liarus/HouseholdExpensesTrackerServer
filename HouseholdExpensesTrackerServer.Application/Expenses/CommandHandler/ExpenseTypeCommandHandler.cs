@@ -1,8 +1,8 @@
-﻿using HouseholdExpensesTrackerServer.Application.Expenses.Exception;
-using HouseholdExpensesTrackerServer.Domain.Expenses.Command;
+﻿using HouseholdExpensesTrackerServer.Application.Expenses.Command;
+using HouseholdExpensesTrackerServer.Common.Command;
+using HouseholdExpensesTrackerServer.Common.Type;
 using HouseholdExpensesTrackerServer.Domain.Expenses.Model;
 using HouseholdExpensesTrackerServer.Domain.Expenses.Repository;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Commands;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -31,24 +31,24 @@ namespace HouseholdExpensesTrackerServer.Application.Expenses.CommandHandler
 
         public async Task HandleAsync(ModifyExpenseTypeCommand message, CancellationToken token = default(CancellationToken))
         {
-            var type = await this.GetSavingType(message.ExpenseTypeId);
+            var type = await this.GetSavingTypeAsync(message.ExpenseTypeId);
             type.Modify(message.Name, message.Symbol, message.Version);
             await _types.SaveChangesAsync(token);
         }
 
         public async Task HandleAsync(DeleteExpenseTypeCommand message, CancellationToken token = default(CancellationToken))
         {
-            var type = await this.GetSavingType(message.ExpenseTypeId);
+            var type = await this.GetSavingTypeAsync(message.ExpenseTypeId);
             _types.Delete(type);
             await _types.SaveChangesAsync();
         }
 
-        protected async Task<ExpenseType> GetSavingType(int expenseTypeId, CancellationToken token = default(CancellationToken))
+        protected async Task<ExpenseType> GetSavingTypeAsync(int expenseTypeId, CancellationToken token = default(CancellationToken))
         {
             var type = await _types.GetByIdAsync(expenseTypeId, token);
             if (type == null)
             {
-                throw new ExpenseTypeCommandException($"Expense Type {expenseTypeId} doesn't exists");
+                throw new HouseholdException($"Expense Type {expenseTypeId} doesn't exists");
             }
             return type;
         }

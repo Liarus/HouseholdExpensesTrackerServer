@@ -1,7 +1,7 @@
-﻿using HouseholdExpensesTrackerServer.Domain.Expenses;
+﻿using HouseholdExpensesTrackerServer.Domain.Definitions.Object;
+using HouseholdExpensesTrackerServer.Domain.Expenses;
 using HouseholdExpensesTrackerServer.Domain.Households.Event;
 using HouseholdExpensesTrackerServer.Domain.Savings;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Object;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -1,5 +1,5 @@
-﻿using HouseholdExpensesTrackerServer.Domain.Savings.Event;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Object;
+﻿using HouseholdExpensesTrackerServer.Domain.Definitions.Object;
+using HouseholdExpensesTrackerServer.Domain.Savings.Event;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -38,7 +38,7 @@ namespace HouseholdExpensesTrackerServer.Domain.Savings.Model
             return this;
         }
 
-        protected Saving(Guid identity, int householdId, int savingTypeId, string name, string description, 
+        protected Saving(Guid identity, int householdId, int savingTypeId, string name, string description,
             decimal amount, DateTime date)
         {
             this.Identity = identity;
@@ -55,6 +55,6 @@ namespace HouseholdExpensesTrackerServer.Domain.Savings.Model
         protected Saving()
         {
 
-        } 
+        }
     }
 }

@@ -1,10 +1,10 @@
-﻿using HouseholdExpensesTrackerServer.Domain.SharedKernel.Object;
-using System;
+﻿using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using HouseholdExpensesTrackerServer.Domain.Identities.Event;
-using HouseholdExpensesTrackerServer.Domain.Identities.Exception;
+using HouseholdExpensesTrackerServer.Domain.Definitions.Object;
+using HouseholdExpensesTrackerServer.Common.Type;
 
 namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
 {
@@ -16,9 +16,9 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
 
         public IReadOnlyCollection<RolePermission> RolePermissions => _rolePermissions;
 
-        private HashSet<RolePermission> _rolePermissions = new HashSet<RolePermission>();
+        private readonly HashSet<RolePermission> _rolePermissions = new HashSet<RolePermission>();
 
-        public static Role Create(Guid identity, string name, string code) 
+        public static Role Create(Guid identity, string name, string code)
             => new Role(identity, name, code);
 
         public Role Modify(string name, string code, int version)
@@ -41,7 +41,7 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
             var role = _rolePermissions.SingleOrDefault(e => e.PermissionId == permissionId);
             if (role != null)
             {
-                throw new RoleDomainException($"Permission {permissionId} is already assigned to role {this.Id}");
+                throw new HouseholdException($"Permission {permissionId} is already assigned to role {this.Id}");
             }
             _rolePermissions.Add(new RolePermission { PermissionId = permissionId });
             this.ApplyEvent(new PermissionAssignedEvent(this.Identity, this.Id, permissionId));
@@ -52,7 +52,7 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
             var permission = _rolePermissions.SingleOrDefault(e => e.PermissionId == permissionId);
             if (permission == null)
             {
-                throw new RoleDomainException($"Permission {permissionId} is not assigned to role {this.Id}");
+                throw new HouseholdException($"Permission {permissionId} is not assigned to role {this.Id}");
             }
             _rolePermissions.Remove(permission);
             this.ApplyEvent(new PermissionUnassignedEvent(this.Identity, this.Id, permissionId));

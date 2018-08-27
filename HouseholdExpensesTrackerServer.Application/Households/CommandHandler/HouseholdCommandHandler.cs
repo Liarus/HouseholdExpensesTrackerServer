@@ -1,9 +1,8 @@
-﻿using HouseholdExpensesTrackerServer.Application.Households.Exception;
-using HouseholdExpensesTrackerServer.Application.Identities.Exception;
-using HouseholdExpensesTrackerServer.Domain.Households.Command;
+﻿using HouseholdExpensesTrackerServer.Application.Households.Command;
+using HouseholdExpensesTrackerServer.Common.Command;
+using HouseholdExpensesTrackerServer.Common.Type;
 using HouseholdExpensesTrackerServer.Domain.Households.Model;
 using HouseholdExpensesTrackerServer.Domain.Households.Repository;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Commands;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -32,7 +31,7 @@ namespace HouseholdExpensesTrackerServer.Application.Households.CommandHandler
 
         public async Task HandleAsync(ModifyHouseholdCommand message, CancellationToken token = default(CancellationToken))
         {
-            var household = await this.GetHousehold(message.HouseholdId, token);
+            var household = await this.GetHouseholdAsync(message.HouseholdId, token);
             household.Modify(message.Name, message.Symbol, message.Description,
                 Address.Create(message.Country, message.ZipCode, message.City, message.Street),
                 message.Version);
@@ -41,18 +40,18 @@ namespace HouseholdExpensesTrackerServer.Application.Households.CommandHandler
 
         public async Task HandleAsync(DeleteHouseholdCommand message, CancellationToken token = default(CancellationToken))
         {
-            var household = await this.GetHousehold(message.HouseholdId);
+            var household = await this.GetHouseholdAsync(message.HouseholdId);
             household.Delete();
             _households.Delete(household);
             await _households.SaveChangesAsync(token);
         }
 
-        protected async Task<Household> GetHousehold(int householdId, CancellationToken token = default(CancellationToken))
+        protected async Task<Household> GetHouseholdAsync(int householdId, CancellationToken token = default(CancellationToken))
         {
             var household = await _households.GetByIdAsync(householdId, token);
             if (household == null)
             {
-                throw new HouseholdCommandException($"Household {householdId} doesn't exists");
+                throw new HouseholdException($"Household {householdId} doesn't exists");
             }
             return household;
         }

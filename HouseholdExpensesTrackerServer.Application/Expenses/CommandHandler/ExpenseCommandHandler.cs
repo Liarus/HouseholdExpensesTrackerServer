@@ -1,8 +1,8 @@
-﻿using HouseholdExpensesTrackerServer.Application.Expenses.Exception;
-using HouseholdExpensesTrackerServer.Domain.Expenses.Command;
+﻿using HouseholdExpensesTrackerServer.Application.Expenses.Command;
+using HouseholdExpensesTrackerServer.Common.Command;
+using HouseholdExpensesTrackerServer.Common.Type;
 using HouseholdExpensesTrackerServer.Domain.Expenses.Model;
 using HouseholdExpensesTrackerServer.Domain.Expenses.Repository;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Commands;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -34,9 +34,9 @@ namespace HouseholdExpensesTrackerServer.Application.Expenses.CommandHandler
             var expense = await _expenses.GetByIdAsync(message.ExpenseId);
             if (expense == null)
             {
-                throw new ExpenseCommandException($"Expense {message.ExpenseId} doesn't exists");
+                throw new HouseholdException($"Expense {message.ExpenseId} doesn't exists");
             }
-            expense.Modify(message.ExpenseId, message.Name,message.Description, message.Amount, 
+            expense.Modify(message.ExpenseId, message.Name,message.Description, message.Amount,
                 message.Date, Period.Create(message.PeriodStart, message.PeriodEnd), message.Version);
             await _expenses.SaveChangesAsync(token);
         }

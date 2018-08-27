@@ -1,4 +1,4 @@
-﻿using HouseholdExpensesTrackerServer.Domain.SharedKernel.Query;
+﻿using HouseholdExpensesTrackerServer.Common.Query;
 using System;
 using System.Collections.Generic;
 using System.Text;

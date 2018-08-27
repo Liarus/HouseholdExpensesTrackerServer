@@ -1,5 +1,4 @@
 ﻿using HouseholdExpensesTrackerServer.DataTransferObjects.Response;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Query;
 using HouseholdExpensesTrackerServer.Infrastructure.Context;
 using System;
 using System.Collections.Generic;
@@ -9,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using HouseholdExpensesTrackerServer.Application.Expenses.Query;
+using HouseholdExpensesTrackerServer.Common.Query;
 
 namespace HouseholdExpensesTrackerServer.Application.Expenses.QueryHandler
 {
@@ -21,7 +21,7 @@ namespace HouseholdExpensesTrackerServer.Application.Expenses.QueryHandler
             _db = db;
         }
 
-        public async Task<IEnumerable<ExpenseTypeDto>> HandleAsync(ExpenseTypeListQuery query, 
+        public async Task<IEnumerable<ExpenseTypeDto>> HandleAsync(ExpenseTypeListQuery query,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             var types = await

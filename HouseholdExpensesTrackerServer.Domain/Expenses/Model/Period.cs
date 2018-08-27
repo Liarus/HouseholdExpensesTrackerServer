@@ -1,4 +1,4 @@
-﻿using HouseholdExpensesTrackerServer.Domain.SharedKernel.Object;
+﻿using HouseholdExpensesTrackerServer.Domain.Definitions.Object;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,8 +22,7 @@ namespace HouseholdExpensesTrackerServer.Domain.Expenses.Model
             {
                 return this.PeriodStart.ToString(DATETIME_STRING_FORMAT);
             }
-            return string.Format("{0} / {1}", this.PeriodStart.ToString(DATETIME_STRING_FORMAT),
-                this.PeriodEnd.ToString(DATETIME_STRING_FORMAT));
+            return $"{this.PeriodStart.ToString(DATETIME_STRING_FORMAT)} / {this.PeriodEnd.ToString(DATETIME_STRING_FORMAT)}";
         }
 
         protected override IEnumerable<object> GetAtomicValues()

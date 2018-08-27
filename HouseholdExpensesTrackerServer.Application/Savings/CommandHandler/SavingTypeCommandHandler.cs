@@ -1,9 +1,8 @@
-﻿using HouseholdExpensesTrackerServer.Application.Savings.Exception;
-using HouseholdExpensesTrackerServer.Domain.Households.Command;
-using HouseholdExpensesTrackerServer.Domain.Savings.Command;
+﻿using HouseholdExpensesTrackerServer.Application.Savings.Command;
+using HouseholdExpensesTrackerServer.Common.Command;
+using HouseholdExpensesTrackerServer.Common.Type;
 using HouseholdExpensesTrackerServer.Domain.Savings.Model;
 using HouseholdExpensesTrackerServer.Domain.Savings.Repository;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Commands;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -32,24 +31,24 @@ namespace HouseholdExpensesTrackerServer.Application.Expenses.CommandHandler
 
         public async Task HandleAsync(ModifySavingTypeCommand message, CancellationToken token = default(CancellationToken))
         {
-            var type = await this.GetSavingType(message.SavingTypeId);
+            var type = await this.GetSavingTypeAsync(message.SavingTypeId);
             type.Modify(message.Name, message.Symbol, message.Version);
             await _types.SaveChangesAsync(token);
         }
 
         public async Task HandleAsync(DeleteSavingTypeCommand message, CancellationToken token = default(CancellationToken))
         {
-            var type = await this.GetSavingType(message.SavingTypeId);
+            var type = await this.GetSavingTypeAsync(message.SavingTypeId);
             _types.Delete(type);
             await _types.SaveChangesAsync();
         }
 
-        protected async Task<SavingType> GetSavingType(int savingTypeId, CancellationToken token = default(CancellationToken))
+        protected async Task<SavingType> GetSavingTypeAsync(int savingTypeId, CancellationToken token = default(CancellationToken))
         {
             var type = await _types.GetByIdAsync(savingTypeId, token);
             if (type == null)
             {
-                throw new SavingTypeCommandException($"Saving Type {savingTypeId} doesn't exists");
+                throw new HouseholdException($"Saving Type {savingTypeId} doesn't exists");
             }
             return type;
         }

@@ -1,6 +1,4 @@
-﻿using HouseholdExpensesTrackerServer.Application.Core.Exception;
-using HouseholdExpensesTrackerServer.Application.Core.Query;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Query;
+﻿using HouseholdExpensesTrackerServer.Application.Core.Query;
 using HouseholdExpensesTrackerServer.Infrastructure.Context;
 using System;
 using System.Linq;
@@ -8,6 +6,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using HouseholdExpensesTrackerServer.Common.Query;
+using HouseholdExpensesTrackerServer.Common.Type;
 
 namespace HouseholdExpensesTrackerServer.Application.Core.QueryHandler
 {
@@ -25,7 +25,7 @@ namespace HouseholdExpensesTrackerServer.Application.Core.QueryHandler
             var ids = _db.GetAllInsertedIds(query.EntityName);
             if (ids.Count == 0)
             {
-                throw new GetLastIdQueryException($"No entity {query.EntityName} was inserted on current session");
+                throw new HouseholdException($"No entity {query.EntityName} was inserted on current session");
             }
             return await Task.FromResult(ids.First());
         }

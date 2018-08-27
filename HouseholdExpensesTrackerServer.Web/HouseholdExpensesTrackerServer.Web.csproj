@@ -22,10 +22,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HouseholdExpensesTrackerServer.Application\HouseholdExpensesTrackerServer.Application.csproj" />
+    <ProjectReference Include="..\HouseholdExpensesTrackerServer.Common\HouseholdExpensesTrackerServer.Common.csproj" />
     <ProjectReference Include="..\HouseholdExpensesTrackerServer.CompositionRoot\HouseholdExpensesTrackerServer.CompositionRoot.csproj" />
     <ProjectReference Include="..\HouseholdExpensesTrackerServer.DataTransferObjects\HouseholdExpensesTrackerServer.DataTransferObjects.csproj" />
-    <ProjectReference Include="..\HouseholdExpensesTrackerServer.Dispatchers\HouseholdExpensesTrackerServer.Dispatchers.csproj" />
-    <ProjectReference Include="..\HouseholdExpensesTrackerServer.Domain.SharedKernel\HouseholdExpensesTrackerServer.Domain.SharedKernel.csproj" />
     <ProjectReference Include="..\HouseholdExpensesTrackerServer.Domain\HouseholdExpensesTrackerServer.Domain.csproj" />
     <ProjectReference Include="..\HouseholdExpensesTrackerServer.Infrastructure\HouseholdExpensesTrackerServer.Infrastructure.csproj" />
   </ItemGroup>

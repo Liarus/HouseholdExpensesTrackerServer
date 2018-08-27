@@ -1,6 +1,4 @@
-﻿using HouseholdExpensesTrackerServer.Domain.SharedKernel.Object;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Repository;
-using HouseholdExpensesTrackerServer.Infrastructure.Context;
+﻿using HouseholdExpensesTrackerServer.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -9,6 +7,8 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using HouseholdExpensesTrackerServer.Common.Repository;
+using HouseholdExpensesTrackerServer.Common.Object;
 
 namespace HouseholdExpensesTrackerServer.Infrastructure.Repositories
 {
@@ -29,10 +29,10 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Repositories
             _dbSet.Add(entity);
         }
 
-        public virtual async Task AddAsync(TModel entity, 
+        public virtual async Task AddAsync(TModel entity,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            await _dbSet.AddAsync(entity, cancellationToken); 
+            await _dbSet.AddAsync(entity, cancellationToken);
         }
 
         public virtual void Delete(TModel entity)
@@ -46,7 +46,7 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Repositories
             this.Delete(entity);
         }
 
-        public virtual async Task DeleteByIdAsync(UIdentifier id, 
+        public virtual async Task DeleteByIdAsync(UIdentifier id,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             var entity = await this.GetByIdAsync(id, cancellationToken);
@@ -63,13 +63,13 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Repositories
             return _dbSet.Where(predicate).ToList();
         }
 
-        public virtual async Task<ICollection<TModel>> FindAllAsync(Expression<Func<TModel, bool>> predicate, 
+        public virtual async Task<ICollection<TModel>> FindAllAsync(Expression<Func<TModel, bool>> predicate,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             return await _dbSet.Where(predicate).ToListAsync(cancellationToken);
         }
 
-        public virtual async Task<TModel> FindAsync(Expression<Func<TModel, bool>> predicate, 
+        public virtual async Task<TModel> FindAsync(Expression<Func<TModel, bool>> predicate,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             return await _dbSet.SingleOrDefaultAsync(predicate, cancellationToken);
@@ -91,7 +91,7 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Repositories
             return _dbSet.Find();
         }
 
-        public virtual async Task<TModel> GetByIdAsync(UIdentifier id, 
+        public virtual async Task<TModel> GetByIdAsync(UIdentifier id,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             return await _dbSet.FindAsync(id);

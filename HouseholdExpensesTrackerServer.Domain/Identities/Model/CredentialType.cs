@@ -1,5 +1,5 @@
-﻿using HouseholdExpensesTrackerServer.Domain.Identities.Event;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Object;
+﻿using HouseholdExpensesTrackerServer.Domain.Definitions.Object;
+using HouseholdExpensesTrackerServer.Domain.Identities.Event;
 using System;
 using System.Collections.Generic;
 using System.Text;

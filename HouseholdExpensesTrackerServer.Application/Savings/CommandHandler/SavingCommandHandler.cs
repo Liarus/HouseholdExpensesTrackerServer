@@ -1,8 +1,8 @@
-﻿using HouseholdExpensesTrackerServer.Application.Savings.Exception;
-using HouseholdExpensesTrackerServer.Domain.Savings.Command;
+﻿using HouseholdExpensesTrackerServer.Application.Savings.Command;
+using HouseholdExpensesTrackerServer.Common.Command;
+using HouseholdExpensesTrackerServer.Common.Type;
 using HouseholdExpensesTrackerServer.Domain.Savings.Model;
 using HouseholdExpensesTrackerServer.Domain.Savings.Repository;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Commands;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -34,7 +34,7 @@ namespace HouseholdExpensesTrackerServer.Application.Expenses.CommandHandler
             var saving = await _savings.GetByIdAsync(message.SavingId);
             if (saving == null)
             {
-                throw new SavingCommandException($"Saving {message.SavingId} doesn't exists");
+                throw new HouseholdException($"Saving {message.SavingId} doesn't exists");
             }
             saving.Modify(message.SavingTypeId, message.Name, message.Description, message.Amount,
                 message.Date, message.Version);

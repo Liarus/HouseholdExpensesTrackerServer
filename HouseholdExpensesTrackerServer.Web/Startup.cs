@@ -42,7 +42,7 @@ namespace HouseholdExpensesTrackerServer.Web
             });
 
             services.AddDbContext<HouseholdDbContext>(
-                options => 
+                options =>
                     options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"))
             );
             services.AddScoped<IDbContext>(provider => provider.GetService<HouseholdDbContext>());
@@ -65,7 +65,7 @@ namespace HouseholdExpensesTrackerServer.Web
             }
 
             app.UseCors(options => options
-                .WithOrigins("http://localhost:4200")
+                .WithOrigins(new string[] { "http://localhost:4200" })
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .AllowCredentials()
@@ -84,11 +84,11 @@ namespace HouseholdExpensesTrackerServer.Web
                 var scopeServiceProvider = serviceScope.ServiceProvider;
                 var db = scopeServiceProvider.GetService<IDbContext>();
                 db.Database.Migrate();
-                await InsertTestData(db);
+                await InsertTestDataAsync(db);
             }
         }
 
-        private static async Task InsertTestData(IDbContext context)
+        private static async Task InsertTestDataAsync(IDbContext context)
         {
             context.Database.EnsureCreated();
 

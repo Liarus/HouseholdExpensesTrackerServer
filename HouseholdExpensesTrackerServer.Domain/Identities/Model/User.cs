@@ -1,10 +1,10 @@
-﻿using HouseholdExpensesTrackerServer.Domain.SharedKernel.Object;
-using System;
+﻿using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using HouseholdExpensesTrackerServer.Domain.Identities.Event;
-using HouseholdExpensesTrackerServer.Domain.Identities.Exception;
+using HouseholdExpensesTrackerServer.Domain.Definitions.Object;
+using HouseholdExpensesTrackerServer.Common.Type;
 
 namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
 {
@@ -33,7 +33,7 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
         public void AddCredential(Credential credential)
         {
             _credentials.Add(credential);
-            this.ApplyEvent(new CredentialAddedEvent(this.Identity, 
+            this.ApplyEvent(new CredentialAddedEvent(this.Identity,
                 this.Id, credential.CredentialTypeId, credential.Identifier));
         }
 
@@ -42,7 +42,7 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
             var role = _userRoles.SingleOrDefault(e => e.RoleId == roleId);
             if (role != null)
             {
-                throw new UserDomainException($"Role {roleId} is already assigned to user {this.Id}");
+                throw new HouseholdException($"Role {roleId} is already assigned to user {this.Id}");
 
             }
             _userRoles.Add(new UserRole { RoleId = roleId });
@@ -54,7 +54,7 @@ namespace HouseholdExpensesTrackerServer.Domain.Identities.Model
             var role = _userRoles.SingleOrDefault(e => e.RoleId == roleId && e.UserId == this.Id);
             if (role == null)
             {
-                throw new UserDomainException($"Role {roleId} is not assigned to user {this.Id}");
+                throw new HouseholdException($"Role {roleId} is not assigned to user {this.Id}");
             }
             _userRoles.Remove(role);
             this.ApplyEvent(new RoleUnassignedEvent(this.Identity, roleId, this.Id));

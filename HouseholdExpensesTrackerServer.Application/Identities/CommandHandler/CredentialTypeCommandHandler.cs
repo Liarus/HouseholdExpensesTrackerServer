@@ -1,13 +1,13 @@
-﻿using HouseholdExpensesTrackerServer.Application.Identities.Exception;
-using HouseholdExpensesTrackerServer.Domain.Identities.Command;
-using HouseholdExpensesTrackerServer.Domain.Identities.Model;
-using HouseholdExpensesTrackerServer.Domain.Identities.Repository;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Commands;
+﻿using HouseholdExpensesTrackerServer.Common.Command;
+using HouseholdExpensesTrackerServer.Common.Type;
+using HouseholdExpensesTrackerServer.Application.Identities.Command;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using HouseholdExpensesTrackerServer.Domain.Identities.Repository;
+using HouseholdExpensesTrackerServer.Domain.Identities.Model;
 
 namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
 {
@@ -31,25 +31,25 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
 
         public async Task HandleAsync(ModifyCredentialTypeCommand message, CancellationToken token = default(CancellationToken))
         {
-            var type = await this.GetCredentialType(message.CredentialTypeId, token);
+            var type = await this.GetCredentialTypeAsync(message.CredentialTypeId, token);
             type.Modify(message.Name, message.Code, message.Version);
             await _types.SaveChangesAsync(token);
         }
 
         public async Task HandleAsync(DeleteCredentialTypeCommand message, CancellationToken token = default(CancellationToken))
         {
-            var type = await this.GetCredentialType(message.CredentialTypeId, token);
+            var type = await this.GetCredentialTypeAsync(message.CredentialTypeId, token);
             type.Delete();
             _types.Delete(type);
             await _types.SaveChangesAsync();
         }
 
-        protected async Task<CredentialType> GetCredentialType(int typeId, CancellationToken token = default(CancellationToken))
+        protected async Task<CredentialType> GetCredentialTypeAsync(int typeId, CancellationToken token = default(CancellationToken))
         {
             var type = await _types.GetByIdAsync(typeId, token);
             if (type == null)
             {
-                throw new CredentialTypeCommandException($"Credential Type {typeId} doesn't exists");
+                throw new HouseholdException($"Credential Type {typeId} doesn't exists");
             }
             return type;
         }

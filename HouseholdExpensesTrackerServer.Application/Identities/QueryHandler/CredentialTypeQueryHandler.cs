@@ -1,6 +1,5 @@
 ﻿using HouseholdExpensesTrackerServer.Application.Identities.Query;
 using HouseholdExpensesTrackerServer.DataTransferObjects.Response;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Query;
 using HouseholdExpensesTrackerServer.Infrastructure.Context;
 using System;
 using System.Collections.Generic;
@@ -9,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using HouseholdExpensesTrackerServer.Common.Query;
 
 namespace HouseholdExpensesTrackerServer.Application.Identities.QueryHandler
 {
@@ -21,7 +21,7 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.QueryHandler
             _db = db;
         }
 
-        public async Task<IEnumerable<CredentialTypeDto>> HandleAsync(CredentialTypeListQuery query, 
+        public async Task<IEnumerable<CredentialTypeDto>> HandleAsync(CredentialTypeListQuery query,
             CancellationToken cancellationToken = default(CancellationToken))
         {
             var types = await

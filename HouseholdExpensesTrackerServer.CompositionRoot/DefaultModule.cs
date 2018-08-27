@@ -1,13 +1,12 @@
 ﻿using Autofac;
-using HouseholdExpensesTrackerServer.Application.Households.CommandHandler;
-using HouseholdExpensesTrackerServer.Dispatchers;
+using HouseholdExpensesTrackerServer.Common.Command;
+using HouseholdExpensesTrackerServer.Common.Event;
+using HouseholdExpensesTrackerServer.Common.Query;
 using HouseholdExpensesTrackerServer.Domain.Expenses.Repository;
 using HouseholdExpensesTrackerServer.Domain.Households.Repository;
 using HouseholdExpensesTrackerServer.Domain.Identities.Repository;
 using HouseholdExpensesTrackerServer.Domain.Savings.Repository;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Commands;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Event;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Query;
+using HouseholdExpensesTrackerServer.Infrastructure.Dispatchers;
 using HouseholdExpensesTrackerServer.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;

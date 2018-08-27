@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HouseholdExpensesTrackerServer.Application.Core.Query;
+using HouseholdExpensesTrackerServer.Application.Savings.Command;
 using HouseholdExpensesTrackerServer.Application.Savings.Query;
+using HouseholdExpensesTrackerServer.Common.Command;
+using HouseholdExpensesTrackerServer.Common.Query;
 using HouseholdExpensesTrackerServer.DataTransferObjects.Request;
 using HouseholdExpensesTrackerServer.DataTransferObjects.Response;
-using HouseholdExpensesTrackerServer.Domain.Savings.Command;
 using HouseholdExpensesTrackerServer.Domain.Savings.Model;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Commands;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Query;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -45,7 +45,7 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
                 command.Name, command.Symbol, command.Version));
             return Ok();
         }
-        
+
         // PUT: api/SavingType
         [HttpPut]
         public async Task<IActionResult> Put([FromBody]CreateSavingTypeDto command)
@@ -55,7 +55,7 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
             var insertedId = await _queryDispatcher.ExecuteAsync<int>(new GetLastIdQuery(nameof(SavingType)));
             return Ok(insertedId);
         }
-        
+
         // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)

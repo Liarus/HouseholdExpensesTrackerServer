@@ -1,14 +1,14 @@
-﻿using HouseholdExpensesTrackerServer.Application.Identities.Exception;
-using HouseholdExpensesTrackerServer.Domain.Identities.Command;
-using HouseholdExpensesTrackerServer.Domain.Identities.Model;
-using HouseholdExpensesTrackerServer.Domain.Identities.Repository;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Commands;
+﻿using HouseholdExpensesTrackerServer.Application.Identities.Command;
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using HouseholdExpensesTrackerServer.Common.Command;
+using HouseholdExpensesTrackerServer.Common.Type;
+using HouseholdExpensesTrackerServer.Domain.Identities.Repository;
+using HouseholdExpensesTrackerServer.Domain.Identities.Model;
 
 namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
 {
@@ -25,7 +25,7 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
             _roles = roles;
         }
 
-        public async Task HandleAsync(CreateRoleCommand message, 
+        public async Task HandleAsync(CreateRoleCommand message,
             CancellationToken token = default(CancellationToken))
         {
             var role = Role.Create(Guid.NewGuid(), message.Name, message.Code);
@@ -40,10 +40,10 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
             await _roles.SaveChangesAsync(token);
         }
 
-        public async Task HandleAsync(ModifyRoleCommand message, 
+        public async Task HandleAsync(ModifyRoleCommand message,
             CancellationToken token = default(CancellationToken))
         {
-            var role = await this.GetRole(message.RoleId);
+            var role = await this.GetRoleAsync(message.RoleId);
             role.Modify(message.Name, message.Code, message.Version);
             if (message.PermissionIds == null || message.PermissionIds.Count == 0)
             {
@@ -76,36 +76,36 @@ namespace HouseholdExpensesTrackerServer.Application.Identities.CommandHandler
             await _roles.SaveChangesAsync(token);
         }
 
-        public async Task HandleAsync(AssignPermissionCommand message, 
+        public async Task HandleAsync(AssignPermissionCommand message,
             CancellationToken token = default(CancellationToken))
         {
-            var role = await this.GetRole(message.RoleId);
+            var role = await this.GetRoleAsync(message.RoleId);
             role.AssignPermission(message.PermissionId);
             await _roles.SaveChangesAsync(token);
         }
 
-        public async Task HandleAsync(UnassignPermissionCommand message, 
+        public async Task HandleAsync(UnassignPermissionCommand message,
             CancellationToken token = default(CancellationToken))
         {
-            var role = await this.GetRole(message.RoleId);
+            var role = await this.GetRoleAsync(message.RoleId);
             role.UnassignPermission(message.PermissionId);
             await _roles.SaveChangesAsync(token);
         }
 
         public async Task HandleAsync(DeleteRoleCommand message, CancellationToken token = default(CancellationToken))
         {
-            var role = await this.GetRole(message.RoleId);
+            var role = await this.GetRoleAsync(message.RoleId);
             role.Delete();
             _roles.Delete(role);
             await _roles.SaveChangesAsync();
         }
 
-        protected async Task<Role> GetRole(int roleId)
+        protected async Task<Role> GetRoleAsync(int roleId)
         {
             var role = await _roles.GetByIdAsync(roleId);
             if (role == null)
             {
-                throw new RoleCommandException($"Role {roleId} doesn't exists");
+                throw new HouseholdException($"Role {roleId} doesn't exists");
             }
             return role;
         }

@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HouseholdExpensesTrackerServer.Domain.SharedKernel\HouseholdExpensesTrackerServer.Domain.SharedKernel.csproj" />
+    <ProjectReference Include="..\HouseholdExpensesTrackerServer.Common\HouseholdExpensesTrackerServer.Common.csproj" />
   </ItemGroup>
 
 </Project>

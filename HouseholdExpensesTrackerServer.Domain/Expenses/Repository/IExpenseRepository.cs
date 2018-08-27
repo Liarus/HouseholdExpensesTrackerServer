@@ -1,5 +1,5 @@
-﻿using HouseholdExpensesTrackerServer.Domain.Expenses.Model;
-using HouseholdExpensesTrackerServer.Domain.SharedKernel.Repository;
+﻿using HouseholdExpensesTrackerServer.Common.Repository;
+using HouseholdExpensesTrackerServer.Domain.Expenses.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
