@@ -15,8 +15,8 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
 {
     public class CredentialTypeController : BaseController
     {
-        public CredentialTypeController(ICommandDispatcherAsync commandDispatcher,
-            IQueryDispatcherAsync queryDispatcher) : base(commandDispatcher, queryDispatcher)
+        public CredentialTypeController(Lazy<ICommandDispatcherAsync> commandDispatcher,
+            Lazy<IQueryDispatcherAsync> queryDispatcher) : base(commandDispatcher, queryDispatcher)
         {
         }
 

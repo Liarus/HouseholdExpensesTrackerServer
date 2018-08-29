@@ -14,21 +14,21 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
     [Route("api/[controller]")]
     public class BaseController : Controller
     {
-        private readonly ICommandDispatcherAsync _commandDispatcher;
+        private readonly Lazy<ICommandDispatcherAsync> _commandDispatcher;
 
-        private readonly IQueryDispatcherAsync _queryDispatcher;
+        private readonly Lazy<IQueryDispatcherAsync> _queryDispatcher;
 
-        public BaseController(ICommandDispatcherAsync commandDispatcher,
-            IQueryDispatcherAsync queryDispatcher)
+        public BaseController(Lazy<ICommandDispatcherAsync> commandDispatcher,
+            Lazy<IQueryDispatcherAsync> queryDispatcher)
         {
             _commandDispatcher = commandDispatcher;
             _queryDispatcher = queryDispatcher;
         }
 
         protected async Task SendCommandAsync<TCommand>(TCommand command) where TCommand : ICommand
-            => await _commandDispatcher.SendAsync<TCommand>(command, default(CancellationToken));
+            => await _commandDispatcher.Value.SendAsync<TCommand>(command, default(CancellationToken));
 
         protected async Task<TResult> GetQueryAsync<TResult>(IQuery query)
-            => await _queryDispatcher.ExecuteAsync<TResult>(query, default(CancellationToken));
+            => await _queryDispatcher.Value.ExecuteAsync<TResult>(query, default(CancellationToken));
     }
 }

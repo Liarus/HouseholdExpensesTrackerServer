@@ -17,8 +17,8 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
 {
     public class ExpenseTypeController : BaseController
     {
-        public ExpenseTypeController(ICommandDispatcherAsync commandDispatcher,
-            IQueryDispatcherAsync queryDispatcher) : base(commandDispatcher, queryDispatcher)
+        public ExpenseTypeController(Lazy<ICommandDispatcherAsync> commandDispatcher,
+            Lazy<IQueryDispatcherAsync> queryDispatcher) : base(commandDispatcher, queryDispatcher)
         {
         }
 

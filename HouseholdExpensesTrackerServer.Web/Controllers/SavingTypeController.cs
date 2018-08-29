@@ -17,8 +17,8 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
 {
     public class SavingTypeController : BaseController
     {
-        public SavingTypeController(ICommandDispatcherAsync commandDispatcher,
-            IQueryDispatcherAsync queryDispatcher) : base(commandDispatcher, queryDispatcher)
+        public SavingTypeController(Lazy<ICommandDispatcherAsync> commandDispatcher,
+            Lazy<IQueryDispatcherAsync> queryDispatcher) : base(commandDispatcher, queryDispatcher)
         {
         }
 

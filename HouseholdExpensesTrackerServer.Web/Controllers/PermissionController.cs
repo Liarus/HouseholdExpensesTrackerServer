@@ -15,8 +15,8 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
 {
     public class PermissionController : BaseController
     {
-        public PermissionController(ICommandDispatcherAsync commandDispatcher,
-            IQueryDispatcherAsync queryDispatcher) : base(commandDispatcher, queryDispatcher)
+        public PermissionController(Lazy<ICommandDispatcherAsync> commandDispatcher,
+            Lazy<IQueryDispatcherAsync> queryDispatcher) : base(commandDispatcher, queryDispatcher)
         {
         }
 

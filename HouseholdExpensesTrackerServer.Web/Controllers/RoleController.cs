@@ -15,8 +15,8 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
 {
     public class RoleController : BaseController
     {
-        public RoleController(ICommandDispatcherAsync commandDispatcher,
-            IQueryDispatcherAsync queryDispatcher) : base(commandDispatcher, queryDispatcher)
+        public RoleController(Lazy<ICommandDispatcherAsync> commandDispatcher,
+            Lazy<IQueryDispatcherAsync> queryDispatcher) : base(commandDispatcher, queryDispatcher)
         {
         }
 
