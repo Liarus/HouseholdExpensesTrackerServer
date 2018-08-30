@@ -30,18 +30,19 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
 
         // POST: api/CredentialType
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]ModifyCredentialTypeDto command)
+        public async Task<IActionResult> Post([FromBody]CreateCredentialTypeDto command)
         {
-            await this.SendCommandAsync<ModifyCredentialTypeCommand>(new ModifyCredentialTypeCommand(command.Id,
-             command.Name, command.Code, command.Version));
+            await this.SendCommandAsync<CreateCredentialTypeCommand>(new CreateCredentialTypeCommand(command.Name,
+                command.Code));
             return Ok();
         }
 
         // PUT: api/CredentialType
-        public async Task<IActionResult> Put([FromBody]CreateCredentialTypeDto command)
+        public async Task<IActionResult> Put([FromBody]ModifyCredentialTypeDto command)
         {
-            await this.SendCommandAsync<CreateCredentialTypeCommand>(new CreateCredentialTypeCommand(command.Name,
-                command.Code));
+           
+            await this.SendCommandAsync<ModifyCredentialTypeCommand>(new ModifyCredentialTypeCommand(command.Id,
+            command.Name, command.Code, command.Version));
             return Ok();
         }
 

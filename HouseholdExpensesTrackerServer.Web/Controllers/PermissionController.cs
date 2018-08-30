@@ -30,18 +30,18 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
 
         // POST: api/Permission
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]ModifyPermissionDto command)
+        public async Task<IActionResult> Post([FromBody]CreatePermissionDto command)
         {
-            await this.SendCommandAsync<ModifyPermissionCommand>(new ModifyPermissionCommand(command.Id,
-            command.Name, command.Code, command.Version));
+            await this.SendCommandAsync<CreatePermissionCommand>(new CreatePermissionCommand(command.Name,
+                command.Code));
             return Ok();
         }
 
         // PUT: api/Permission
-        public async Task<IActionResult> Put([FromBody]CreatePermissionDto command)
+        public async Task<IActionResult> Put([FromBody]ModifyPermissionDto command)
         {
-            await this.SendCommandAsync<CreatePermissionCommand>(new CreatePermissionCommand(command.Name,
-                command.Code));
+            await this.SendCommandAsync<ModifyPermissionCommand>(new ModifyPermissionCommand(command.Id,
+                command.Name, command.Code, command.Version));
             return Ok();
         }
 

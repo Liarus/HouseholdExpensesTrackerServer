@@ -32,11 +32,12 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
 
         // POST: api/Role
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]ModifyRoleDto command)
+        public async Task<IActionResult> Post([FromBody]CreateRoleDto command)
         {
-            await this.SendCommandAsync<ModifyRoleCommand>(new ModifyRoleCommand(command.Id,
-                command.Name, command.Code, command.PermissionIds, command.Version));
-            return Ok();
+            await this.SendCommandAsync<CreateRoleCommand>(new CreateRoleCommand(command.Name,
+               command.Code, command.PermissionIds));
+            var insertedId = await this.GetQueryAsync<int>(new GetLastIdQuery(nameof(Role)));
+            return Ok(insertedId);
         }
 
         // POST: api/Role/5/assignPermission/2
@@ -60,12 +61,11 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
         }
 
         // PUT: api/Role
-        public async Task<IActionResult> Put([FromBody]CreateRoleDto command)
+        public async Task<IActionResult> Put([FromBody]ModifyRoleDto command)
         {
-            await this.SendCommandAsync<CreateRoleCommand>(new CreateRoleCommand(command.Name,
-               command.Code, command.PermissionIds));
-            var insertedId = await this.GetQueryAsync<int>(new GetLastIdQuery(nameof(Role)));
-            return Ok(insertedId);
+            await this.SendCommandAsync<ModifyRoleCommand>(new ModifyRoleCommand(command.Id,
+                command.Name, command.Code, command.PermissionIds, command.Version));
+            return Ok();
         }
 
         // DELETE: api/ApiWithActions/5

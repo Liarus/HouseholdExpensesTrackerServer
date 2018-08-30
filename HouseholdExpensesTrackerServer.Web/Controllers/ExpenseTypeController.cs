@@ -31,21 +31,21 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
 
         // POST: api/ExpenseType
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]ModifyExpenseTypeDto command)
-        {
-            await this.SendCommandAsync<ModifyExpenseTypeCommand>(new ModifyExpenseTypeCommand(command.Id,
-              command.Name, command.Symbol, command.Version));
-            return Ok();
-        }
-
-        // PUT: api/ExpenseType
-        [HttpPut]
-        public async Task<IActionResult> Put([FromBody]CreateSavingTypeDto command)
+        public async Task<IActionResult> Post([FromBody]CreateExpenseTypeDto command)
         {
             await this.SendCommandAsync<CreateExpenseTypeCommand>(new CreateExpenseTypeCommand(command.UserId,
                command.Name, command.Symbol));
             var insertedId = await this.GetQueryAsync<int>(new GetLastIdQuery(nameof(ExpenseType)));
             return Ok(insertedId);
+        }
+
+        // PUT: api/ExpenseType
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody]ModifyExpenseTypeDto command)
+        {
+            await this.SendCommandAsync<ModifyExpenseTypeCommand>(new ModifyExpenseTypeCommand(command.Id,
+              command.Name, command.Symbol, command.Version));
+            return Ok();
         }
 
         // DELETE: api/ApiWithActions/5

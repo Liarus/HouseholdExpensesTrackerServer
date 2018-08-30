@@ -33,22 +33,22 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
 
         // POST: api/Household
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody]ModifyHouseholdDto request)
-        {
-            await this.SendCommandAsync<ModifyHouseholdCommand>(new ModifyHouseholdCommand(request.Id, request.Name,
-                request.Symbol, request.Description, request.Street, request.City, request.Country, request.ZipCode,
-                request.Version));
-            return Ok();
-        }
-
-        // PUT: api/Household
-        [HttpPut]
-        public async Task<IActionResult> Put([FromBody]CreateHouseholdDto request)
+        public async Task<IActionResult> Post([FromBody]CreateHouseholdDto request)
         {
             await this.SendCommandAsync<CreateHouseholdCommand>(new CreateHouseholdCommand(request.UserId, request.Name,
                 request.Symbol, request.Description, request.Street, request.City, request.Country, request.ZipCode));
             var insertedId = await this.GetQueryAsync<int>(new GetLastIdQuery(nameof(Household)));
             return Ok(insertedId);
+        }
+
+        // PUT: api/Household
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody]ModifyHouseholdDto request)
+        {
+            await this.SendCommandAsync<ModifyHouseholdCommand>(new ModifyHouseholdCommand(request.Id, request.Name,
+                request.Symbol, request.Description, request.Street, request.City, request.Country, request.ZipCode,
+                request.Version));
+            return Ok();
         }
 
         // DELETE: api/ApiWithActions/5
