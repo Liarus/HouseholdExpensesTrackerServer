@@ -14,6 +14,12 @@
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
+    <PackageReference Include="Serilog.AspNetCore" Version="2.1.1" />
+    <PackageReference Include="Serilog.Enrichers.Environment" Version="2.1.2" />
+    <PackageReference Include="Serilog.Enrichers.Thread" Version="3.0.0" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="2.6.1" />
+    <PackageReference Include="Serilog.Sinks.Async" Version="1.3.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +33,7 @@
     <ProjectReference Include="..\HouseholdExpensesTrackerServer.DataTransferObjects\HouseholdExpensesTrackerServer.DataTransferObjects.csproj" />
     <ProjectReference Include="..\HouseholdExpensesTrackerServer.Domain\HouseholdExpensesTrackerServer.Domain.csproj" />
     <ProjectReference Include="..\HouseholdExpensesTrackerServer.Infrastructure\HouseholdExpensesTrackerServer.Infrastructure.csproj" />
+    <ProjectReference Include="..\HouseholdExpensesTrackerServer.Web.Common\HouseholdExpensesTrackerServer.Web.Common.csproj" />
   </ItemGroup>
 
 </Project>

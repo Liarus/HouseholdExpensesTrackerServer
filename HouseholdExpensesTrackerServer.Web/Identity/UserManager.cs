@@ -14,7 +14,7 @@ namespace HouseholdExpensesTrackerServer.Web.Identity
 {
     public class UserManager : IUserManager
     {
-        private IDbContext _context;
+        private readonly IDbContext _context;
 
         public UserManager(IDbContext context)
         {
@@ -63,9 +63,7 @@ namespace HouseholdExpensesTrackerServer.Web.Identity
             if (claim == null)
                 return -1;
 
-            int currentUserId;
-
-            if (!int.TryParse(claim.Value, out currentUserId))
+            if (!int.TryParse(claim.Value, out int currentUserId))
                 return -1;
 
             return currentUserId;

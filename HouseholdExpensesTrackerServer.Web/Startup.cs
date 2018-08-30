@@ -18,6 +18,10 @@ using HouseholdExpensesTrackerServer.CompositionRoot;
 using Autofac.Extensions.DependencyInjection;
 using Autofac;
 using HouseholdExpensesTrackerServer.Domain.Identities.Model;
+using HouseholdExpensesTrackerServer.Web.Common.Mvc;
+using System.Collections.Specialized;
+using static HouseholdExpensesTrackerServer.Common.Core.Consts;
+using Serilog;
 
 namespace HouseholdExpensesTrackerServer.Web
 {
@@ -34,6 +38,9 @@ namespace HouseholdExpensesTrackerServer.Web
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
+            services.AddMvc()
+                .AddDefaultJsonOptions();
+            services.AddHttpContextAccessor();
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
             .AddCookie(options =>
@@ -43,14 +50,15 @@ namespace HouseholdExpensesTrackerServer.Web
 
             services.AddDbContext<HouseholdDbContext>(
                 options =>
-                    options.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"))
+                    options.UseSqlServer(
+                        this.Configuration.GetConnectionString(ApplicationConfigurationKeys.HouseholdConnectionString))
             );
             services.AddScoped<IDbContext>(provider => provider.GetService<HouseholdDbContext>());
+            services.AddLogging(builder => builder.AddSerilog(dispose: true));
             services.AddScoped<IUserManager, UserManager>();
-            services.AddMvc();
 
             var containerBuilder = new ContainerBuilder();
-            containerBuilder.RegisterModule<DefaultModule>();
+            containerBuilder.RegisterModule(new DefaultModule { ConfigurationProvider = this.ConfigurationProvider });
             containerBuilder.Populate(services);
             var container = containerBuilder.Build();
             return new AutofacServiceProvider(container);
@@ -73,6 +81,7 @@ namespace HouseholdExpensesTrackerServer.Web
 
             app.UseAuthentication();
             app.UseStaticFiles();
+            app.UseErrorHandler();
             app.UseMvc();
             Initialize(app.ApplicationServices).Wait();
         }
@@ -107,5 +116,11 @@ namespace HouseholdExpensesTrackerServer.Web
 
             await context.SaveChangesAsync();
         }
+
+        private NameValueCollection ConfigurationProvider() => new NameValueCollection
+        {
+            [ApplicationConfigurationKeys.HouseholdConnectionString] =
+               this.Configuration.GetConnectionString(ApplicationConfigurationKeys.HouseholdConnectionString)
+        };
     }
 }

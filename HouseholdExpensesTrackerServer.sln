@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HouseholdExpensesTrackerSer
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HouseholdExpensesTrackerServer.CompositionRoot", "HouseholdExpensesTrackerServer.CompositionRoot\HouseholdExpensesTrackerServer.CompositionRoot.csproj", "{B5A0CCC0-E409-4AA1-B91D-1791BC01D5B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseholdExpensesTrackerServer.Common", "HouseholdExpensesTrackerServer.Common\HouseholdExpensesTrackerServer.Common.csproj", "{FDC9ECD5-0A9D-4D4C-883F-2D076B52B62E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HouseholdExpensesTrackerServer.Common", "HouseholdExpensesTrackerServer.Common\HouseholdExpensesTrackerServer.Common.csproj", "{FDC9ECD5-0A9D-4D4C-883F-2D076B52B62E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseholdExpensesTrackerServer.Web.Common", "HouseholdExpensesTrackerServer.Web.Common\HouseholdExpensesTrackerServer.Web.Common.csproj", "{AF8763AB-4448-4EA5-819B-9201B84A29F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{FDC9ECD5-0A9D-4D4C-883F-2D076B52B62E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDC9ECD5-0A9D-4D4C-883F-2D076B52B62E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDC9ECD5-0A9D-4D4C-883F-2D076B52B62E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF8763AB-4448-4EA5-819B-9201B84A29F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF8763AB-4448-4EA5-819B-9201B84A29F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF8763AB-4448-4EA5-819B-9201B84A29F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF8763AB-4448-4EA5-819B-9201B84A29F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

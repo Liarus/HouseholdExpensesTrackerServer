@@ -7,24 +7,44 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace HouseholdExpensesTrackerServer.Web
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static IConfiguration Configuration { get; } = new ConfigurationBuilder()
+           .SetBasePath(Directory.GetCurrentDirectory())
+           .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+           .AddJsonFile($"appsettings.{Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production"}.json", optional: true)
+           .AddEnvironmentVariables()
+           .Build();
+
+        public static int Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(Configuration)
+                .CreateLogger();
+            try
+            {
+                Log.Information("Starting web host");
+                CreateWebHostBuilder(args).Build().Run();
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "Web Host temrinated unexpectedely");
+                return 1;
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseKestrel()
-                .UseIISIntegration()
-                .UseStartup<Startup>()
-                .UseApplicationInsights()
-                .UseDefaultServiceProvider(options => options.ValidateScopes = false)
-                .Build();
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+             WebHost.CreateDefaultBuilder(args)
+                 .UseSerilog()
+                 .UseStartup<Startup>();
     }
 }

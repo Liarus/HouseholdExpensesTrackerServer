@@ -40,7 +40,7 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
         // PUT: api/CredentialType
         public async Task<IActionResult> Put([FromBody]ModifyCredentialTypeDto command)
         {
-           
+
             await this.SendCommandAsync<ModifyCredentialTypeCommand>(new ModifyCredentialTypeCommand(command.Id,
             command.Name, command.Code, command.Version));
             return Ok();
