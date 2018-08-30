@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HouseholdExpensesTrackerServer.Application.Core.Query;
 using HouseholdExpensesTrackerServer.Application.Identities.Command;
 using HouseholdExpensesTrackerServer.Application.Identities.Query;
 using HouseholdExpensesTrackerServer.Common.Command;
 using HouseholdExpensesTrackerServer.Common.Query;
 using HouseholdExpensesTrackerServer.DataTransferObjects.Request;
 using HouseholdExpensesTrackerServer.DataTransferObjects.Response;
+using HouseholdExpensesTrackerServer.Domain.Identities.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -62,7 +64,8 @@ namespace HouseholdExpensesTrackerServer.Web.Controllers
         {
             await this.SendCommandAsync<CreateRoleCommand>(new CreateRoleCommand(command.Name,
                command.Code, command.PermissionIds));
-            return Ok();
+            var insertedId = await this.GetQueryAsync<int>(new GetLastIdQuery(nameof(Role)));
+            return Ok(insertedId);
         }
 
         // DELETE: api/ApiWithActions/5
