@@ -41,7 +41,7 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Dispatchers
             else
             {
                 throw new HouseholdException(
-                    $"Hanlder for event: {@event.GetType().Name} in dispatcher {nameof(EventDispatcher)} has not been found");
+                    $"Handler for event: {@event.GetType().Name} in dispatcher {nameof(EventDispatcher)} has not been found");
             }
         }
     }

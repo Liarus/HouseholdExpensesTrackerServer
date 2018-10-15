@@ -16,7 +16,7 @@ using System.Reflection;
 using System.Text;
 using static HouseholdExpensesTrackerServer.Common.Core.Consts;
 
-namespace HouseholdExpensesTrackerServer.CompositionRoot
+namespace HouseholdExpensesTrackerServer.Web.CompositionRoot
 {
     public class DefaultModule : Autofac.Module
     {

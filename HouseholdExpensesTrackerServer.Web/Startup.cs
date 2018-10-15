@@ -14,7 +14,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using HouseholdExpensesTrackerServer.Web.Helpers;
-using HouseholdExpensesTrackerServer.CompositionRoot;
 using Autofac.Extensions.DependencyInjection;
 using Autofac;
 using HouseholdExpensesTrackerServer.Domain.Identities.Model;
@@ -22,6 +21,7 @@ using HouseholdExpensesTrackerServer.Web.Common.Mvc;
 using System.Collections.Specialized;
 using static HouseholdExpensesTrackerServer.Common.Core.Consts;
 using Serilog;
+using HouseholdExpensesTrackerServer.Web.CompositionRoot;
 
 namespace HouseholdExpensesTrackerServer.Web
 {

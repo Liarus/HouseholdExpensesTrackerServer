@@ -28,7 +28,7 @@ namespace HouseholdExpensesTrackerServer.Infrastructure.Dispatchers
             else
             {
                 throw new HouseholdException(
-                     $"Hanlder for command: {command.GetType().Name} in dispatcher {nameof(CommandDispatcher)} has not been found");
+                     $"Handler for command: {command.GetType().Name} in dispatcher {nameof(CommandDispatcher)} has not been found");
             }
         }
     }
